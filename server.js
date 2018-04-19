@@ -57,7 +57,7 @@ app.get('*', function(req, res) {
 
 // START THE SERVER
 // ====================================
-http.listen(config.port);
+http.listen(PROCESS.env.PORT || config.port);
 console.log('Magic happens on port ' + config.port);
 
 var SOCKET_LIST = {};

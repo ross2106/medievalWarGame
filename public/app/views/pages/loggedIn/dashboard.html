@@ -1,0 +1,38 @@
+<div class="h1 text-center">
+    <h1>Welcome to your kingdom!</h1>
+</div>
+<div class="container">
+    <div class="row" style="height: 500px;">
+        <canvas ng-controller="gameController" class="card col-7" id="ctx" width="500" height="500"></canvas>
+        <div class="card col-5" ng-controller="chatController">
+            <h1 class="text-center">Game Chat</h1>
+            <div class="row" style="height:90%;">
+                <div class="card col-8">
+                    <h5 class="text-center">Chat</h5>
+                    <ul>
+                        <li ng-repeat="message in messages">
+                            <span class="username">{{message.username}}</span>
+                            <span class="message">{{message.message}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card col-4">
+                    <h5 class="text-center">Online Users</h5>
+                    <ul>
+                        <li ng-repeat="user in users">{{user}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row" style="height:10%;">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter Text Here..." ng-model="msg"
+                           id="chatInput">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit" ng-click="sendMessage(msg)">Send Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="jumbotron text-center">
+  <h1>Welcome to Medieval War!</h1>
+
+  <div ng-if="!main.loggedIn">
+    <p>Sign up to create your kingdom.</p>
+    <a href="/login" class="btn btn-primary">Login</a>
+    <a href="/register" class="btn btn-primary">Register</a>
+  </div>
+
+  <div ng-if="main.loggedIn">
+    <p>Welcome to your kingdom!</p>
+  </div>
+</div>

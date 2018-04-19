@@ -16,7 +16,7 @@
     "socket.io-client": "^2.1.0"
   },
   "engines": {
-    "node":"4.1.x"
+    "node":"8.9.4"
   },
   "scripts":{
     "start":"nodemon server.js"

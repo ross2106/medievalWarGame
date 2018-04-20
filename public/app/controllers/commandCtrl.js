@@ -1,6 +1,7 @@
 angular.module('commandCtrl', [])
     .controller('commandController', function ($scope, Socket, Auth) {
         Socket.connect();
+        $scope.commands = [];
         var username = '';
         var getUsername = function () {
             Auth.getUser()
@@ -10,22 +11,23 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-        $scope.sendCommand = function (command) {
-            if (command != null && command !== '') {
-                if (command = 'mine_gold') {
-
+        $scope.sendCommand = function (cmd) {
+            if (cmd != null && cmd !== '') {
+                if (cmd = 'mine_gold') {
+                    Socket.emit('command', {command: cmd});
+                    $scope.cmd = '';
                 }
-                if (command = 'chop_wood') {
-
+                if (cmd = 'chop_wood') {
+                    console.log('chop_wood');
                 }
-                if (command = 'gather_food') {
-
+                if (cmd = 'gather_food') {
+                    console.log('gather_food');
                 }
             }
-
-            Socket.emit('message', {message: command});
-            $scope.msg = '';
         };
 
+        Socket.on('command', function (data) {
+            $scope.commands.push(data);
+        });
 
     });

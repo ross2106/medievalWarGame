@@ -116,6 +116,10 @@ io.sockets.on('connection', function(socket){
         io.emit('message', {username: username, message: data.message});
     });
 
+    socket.on('command', function(data){
+        io.emit('command', {command: data.command});
+    });
+
     socket.on('keyPress',function(data){
         if(data.inputId === 'left')
             player.pressingLeft = data.state;

@@ -151,7 +151,7 @@ module.exports = function (app, express) {
     apiRouter.route('/inventory/:username')
         .put(function(req, res){
             Inventory.findOne({
-                'username': req.params.username
+                username: req.params.username
             }), function(inventory){
                 if (req.body.gold) inventory.gold = req.body.gold;
                 if (req.body.food) inventory.food = req.body.food;

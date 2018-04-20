@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 var config = require('./config');
 var path = require('path');
 
-require("angoose").init(app, {
+require("angoose").init(express, {
     'module-dirs':'./app/models',
     'mongo-opts': 'mongodb://admin:admin@ds247439.mlab.com:47439/medievalwar'
 });

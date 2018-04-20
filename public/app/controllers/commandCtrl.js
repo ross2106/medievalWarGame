@@ -1,5 +1,5 @@
 angular.module('commandCtrl', [])
-    .controller('commandController', function ($scope, Socket, Auth, Inventory) {
+    .controller('commandController', function ($scope, Socket, Auth) {
         Socket.connect();
         $scope.commands = [];
         var username = '';

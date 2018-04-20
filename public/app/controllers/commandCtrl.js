@@ -1,5 +1,5 @@
 angular.module('commandCtrl', [])
-    .controller('commandController', function ($scope, Socket, Auth, Inventory) {
+    .controller('commandController', ['$scope', 'Socket', 'Auth', 'Inventory', function ($scope, Socket, Auth, Inventory) {
         Socket.connect();
         $scope.commands = [];
         var inventory = Inventory.query();
@@ -60,4 +60,4 @@ angular.module('commandCtrl', [])
             $scope.commands.push(data);
         });
 
-    });
+    }]);

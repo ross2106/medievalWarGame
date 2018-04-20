@@ -44,6 +44,7 @@ angular.module('commandCtrl', [])
             Inventory.get(username)
                 .then(function (response) {
                     vm.inventoryData = response.data;
+                    console.log(vm.inventoryData);
                 });
 
         $scope.sendCommand = function (cmd) {

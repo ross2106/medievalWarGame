@@ -2,7 +2,7 @@ angular.module('commandCtrl', [])
     .controller('commandController', function ($scope, Socket, Auth, Inventory) {
         Socket.connect();
         $scope.commands = [];
-        $scope.inventory = Inventory.query();
+        var inventory = Inventory.query();
         //var Inventory = exports.Inventory;
 
         var username = '';
@@ -15,14 +15,14 @@ angular.module('commandCtrl', [])
         getUsername();
 
         var addGold = function(){
-            $scope.inventory.findOne({
+            inventory.findOne({
                 'username': getUsername()
             }, function (err, user) {
                 if(user){
                     var query = {
-                        gold: gold+(Math.floor(Math.random() * (100+1)))
+                        gold: this.gold+(Math.floor(Math.random() * (100+1)))
                     };
-                    $scope.inventory.update(query, options, callback);
+                    inventory.update(query, options, callback);
                 } else{
                     var newInventory = new Inventory();
                     newInventory.username = getUsername();

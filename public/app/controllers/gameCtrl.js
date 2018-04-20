@@ -6,8 +6,6 @@ angular.module('gameCtrl', [])
         ctx.fontStyle = 'bold';
         var map = new Image();
         var knight = new Image();
-        var gold = new Image();
-
         Socket.connect();
 
         Socket.on('newPositions',function(data){

@@ -2,7 +2,7 @@ angular.module('commandCtrl', [])
     .controller('commandController', function ($scope, Socket, Auth) {
         Socket.connect();
         $scope.commands = [];
-        var Inventory = exports.Inventory;
+        //var Inventory = exports.Inventory;
 
         var username = '';
         var getUsername = function () {
@@ -13,7 +13,7 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-        var addGold = function(){
+/*        var addGold = function(){
             Inventory.findOne({
                 'username': getUsername()
             }, function (err, user) {
@@ -37,7 +37,7 @@ angular.module('commandCtrl', [])
         };
         var addFood = function(){
 
-        };
+        };*/
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {

@@ -11,13 +11,13 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-        var addGold = require(['../medievalWarGame/app/models/inventory'], function(Intventory){
+        var addGold = require(['../medievalWarGame/app/models/inventory'], function(Inventory){
                 Inventory.findOne({
                     'username': getUsername()
                 }, function (err, user) {
                     if(user){
                         var query = {
-                            gold: gold+(Math.floor(Math.random() * (100+1)))
+                            gold: this.gold + (Math.floor(Math.random() * (100+1)))
                         };
                         Inventory.update(query, options, callback);
                     } else{

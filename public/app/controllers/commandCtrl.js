@@ -18,7 +18,7 @@ angular.module('commandCtrl', [])
             .then(function(data){
                 return data.data;
             });
-        console.log(JSON.parse(getInventory));
+        console.log(getInventory);
 
         /*        var addGold = function(){
                     inventory.$get({

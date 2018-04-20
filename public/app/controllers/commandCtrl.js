@@ -52,7 +52,7 @@ angular.module('commandCtrl', [])
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
                         $http.put('/api/inventory/' + username, {
-                            gold: gold + Math.floor(Math.random() * 100 + 1),
+                            gold: this.gold + Math.floor(Math.random() * 100 + 1),
                             food: 0,
                             wood: 0
                         })

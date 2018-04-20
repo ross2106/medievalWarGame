@@ -44,7 +44,7 @@ angular.module('commandCtrl', [])
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
                     $http.post('/api/inventory', {
-                        username: getUsername(),
+                        username: username,
                         gold: Math.floor(Math.random() * 100 + 1),
                         food: 0,
                         wood: 0

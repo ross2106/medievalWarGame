@@ -11,8 +11,7 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-        var Inventory = require(['../medievalWarGame/app/models/inventory'], function(){
-            var addGold = function(){
+        var addGold = require(['../medievalWarGame/app/models/inventory'], function(Intventory){
                 Inventory.findOne({
                     'username': getUsername()
                 }, function (err, user) {
@@ -30,7 +29,6 @@ angular.module('commandCtrl', [])
                         newInventory.save();
                     }
                 });
-            };
         });
         var addWood = function(){
 

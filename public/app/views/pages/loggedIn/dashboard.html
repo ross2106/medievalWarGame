@@ -11,7 +11,7 @@
             <p></p>
         </div>
         <div class="col justify-content-md-center">
-            <i class="fa-chest"></i>
+            <i class="fas fa-balance-scale"></i>
             <p></p>
         </div>
         <div class="col justify-content-md-center">
@@ -25,7 +25,6 @@
                 <canvas ng-controller="gameController" id="ctx" width="1000" height="500"></canvas>
             </div>
             <div class="row" style="height:10%">
-                <h5 class="text-center">Chat</h5>
                 <ul>
                     <li ng-repeat="command in commands">
                         <span class="command" ng-controller="commandController">{{command.text}}</span>
@@ -44,7 +43,6 @@
             </div>
         </div>
         <div class="card col-5" ng-controller="chatController">
-            <h1 class="text-center">Game Chat</h1>
             <div class="row" style="height:90%;">
                 <div class="card col-8">
                     <h5 class="text-center">Chat</h5>

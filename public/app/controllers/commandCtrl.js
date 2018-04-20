@@ -14,7 +14,7 @@ angular.module('commandCtrl', [])
         getUsername();
 
         var getInventory =
-            $http.get('/api/inventory' + username)
+            $http.get('/api/inventory/' + username)
             .then(function(data){
                 return data.data;
             });

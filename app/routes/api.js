@@ -146,31 +146,31 @@ module.exports = function (app, express) {
             inventory.food = req.body.food;
             inventory.wood = req.body.wood;
             inventory.save();
+            //return the inventory
+            res.json(inventory);
         });
 
-    apiRouter.route('/inventory/:username')
+    apiRouter.route('/inventory/:user_id')
         .put(function(req, res){
-            Inventory.findOne({
-                username: req.params.username
-            }), function(inventory){
+            Inventory.findById(req.params.user_id, function(inventory){
                 if (req.body.gold) inventory.gold = req.body.gold;
                 if (req.body.food) inventory.food = req.body.food;
                 if (req.body.wood) inventory.wood = req.body.wood;
 
+                //return the inventory
+                res.json(inventory);
                 // save the inventory
                 inventory.save();
-            }
+            })
         })
 
         .get(function(req, res){
-            Inventory.findOne({
-                username: req.params.username
-            }), function(err, inventory){
+            Inventory.findById(req.params.user_id, function(err, inventory){
                 if(err) res.send(err);
 
                 //return the inventory
                 res.json(inventory);
-            }
+            })
         });
 
 

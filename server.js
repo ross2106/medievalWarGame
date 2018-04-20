@@ -10,15 +10,9 @@ var mongoose = require('mongoose');
 var config = require('./config');
 var path = require('path');
 
-require("angoose").init(express, {
-    'module-dirs':'./app/models',
-    'mongo-opts': 'mongodb://admin:admin@ds247439.mlab.com:47439/medievalwar'
-});
-
 //socket IO stuff
 var http = require('http').Server(app);
 var io = require('socket.io')(http,{});
-
 
 // APP CONFIGURATION ==================
 // ====================================

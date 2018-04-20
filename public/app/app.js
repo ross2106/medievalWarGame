@@ -1,5 +1,4 @@
 angular.module('userApp', [
-    'angoose.client',
     'ngAnimate',
     'app.routes',
     'authService',
@@ -11,7 +10,6 @@ angular.module('userApp', [
     'gameCtrl',
     'userService',
     'btford.socket-io'])
-
   // application configuration to integrate token into requests
   .config(function($httpProvider) {
 

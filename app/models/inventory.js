@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var angoose = require("angoose");
+var mongoose = angoose.getMongoose();
 var Schema = mongoose.Schema;
 
 // Inventory Schema

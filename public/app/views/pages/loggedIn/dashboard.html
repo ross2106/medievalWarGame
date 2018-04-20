@@ -3,20 +3,34 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class = "col justify-content-md-center">
-            <i class="fas fa-utensils"></i><p></p>
+        <div class="col justify-content-md-center">
+            <h5>My Resources</h5>
         </div>
-        <div class = "col justify-content-md-center">
-            <i class="fa-chest"></i><p></p>
+        <div class="col justify-content-md-center">
+            <i class="fas fa-utensils"></i>
+            <p></p>
         </div>
-        <div class = "col justify-content-md-center">
-            <i class="fas fa-tree"></i><p></p>
+        <div class="col justify-content-md-center">
+            <i class="fa-chest"></i>
+            <p></p>
+        </div>
+        <div class="col justify-content-md-center">
+            <i class="fas fa-tree"></i>
+            <p></p>
         </div>
     </div>
     <div class="row" style="height: 500px;">
         <div class="card col-7">
             <div class="row">
                 <canvas ng-controller="gameController" id="ctx" width="1000" height="500"></canvas>
+            </div>
+            <div class="row" style="height:10%">
+                <h5 class="text-center">Chat</h5>
+                <ul>
+                    <li ng-repeat="command in commands">
+                        <span class="command" ng-controller="commandController">{{command.text}}</span>
+                    </li>
+                </ul>
             </div>
             <div class="row" style="height:10%">
                 <div class="input-group">

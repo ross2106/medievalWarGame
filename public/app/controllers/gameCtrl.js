@@ -19,7 +19,7 @@ angular.module('gameCtrl', [])
 
         var drawMap = function(){
             ctx.drawImage(map, 0,0);
-        }
+        };
         knight.src = "/assets/img/knight.png";
         map.src = "/assets/img/Grass.png";
 

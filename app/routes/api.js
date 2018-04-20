@@ -10,7 +10,7 @@ module.exports = function (app, express) {
 
     var apiRouter = express.Router();
 
-    // route to generate sample user
+    // route to register a user
     apiRouter.post('/register', function (req, res) {
 
         // look for the user named chris

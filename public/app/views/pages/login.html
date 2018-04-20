@@ -1,42 +1,19 @@
-<div class="row col-md-6 col-md-offset-3">
-    <div class="jumbotron">
-        <h1>Login</h1>
-
-        <form ng-submit="login.doLogin()">
-
-            <div class="form-group">
+<div class="row justify-content-md-center">
+    <div class="col-6">
+        <div class="jumbotron">
+            <body class="text-center">
+            <form class="form-signin" ng-submit="login.doLogin()">
+                <h1 class="h2 mb-3">Login</h1>
                 <label>Username</label>
-                <input type="text" class="form-control" ng-model="login.loginData.username">
-            </div>
-
-            <div class="form-group">
+                <input type="text" id="inputUsername" class="form-control" ng-model="login.loginData.username"
+                       required autofocus>
                 <label>Password</label>
-                <input type="password" class="form-control" ng-model="login.loginData.password">
-            </div>
-
-            <div class="alert alert-danger" ng-if="login.error">
-                {{ login.error }}
-            </div>
-
-            <button type="submit" class="btn btn-block btn-primary">
-                <span ng-if="!login.processing">Login</span>
-                <span ng-if="login.processing" class="spinner"><span class="glyphicon glyphicon-repeat spinner"></span></span>
-            </button>
-        </form>
+                <input type="password" class="form-control" ng-model="login.loginData.password" id="inputPassword"
+                       required>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+            </body>
+        </div>
     </div>
-</div>
-<div class="jumbotron">
-    <body class="text-center">
-    <form class="form-signin" ng-submit="login.doLogin()">
-        <h1 class="h2 mb-3">Login</h1>
-        <label>Username</label>
-        <input type="text" id="inputUsername" class="form-control" ng-model="login.loginData.username"
-               required autofocus>
-        <label>Password</label>
-        <input type="password" class="form-control" ng-model="login.loginData.password" id="inputPassword"
-               required>
-        <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form>
-    </body>
 </div>

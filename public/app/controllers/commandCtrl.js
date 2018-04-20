@@ -1,7 +1,8 @@
 angular.module('commandCtrl', [])
-    .controller('commandController', function ($http, $scope, Socket, Auth) {
+    .controller('commandController', function ($http, $scope, $routeParams, Socket, Auth, Inventory) {
         Socket.connect();
         $scope.commands = [];
+        var vm = this;
 
         //Grab the logged in user
         var username = '';
@@ -12,13 +13,6 @@ angular.module('commandCtrl', [])
                 });
         };
         getUsername();
-
-        var getInventory =
-            $http.get('/api/inventory/' + username)
-            .then(function(data){
-                return data.data;
-            });
-        console.log(getInventory.data);
 
         /*        var addGold = function(){
                     inventory.$get({
@@ -45,6 +39,13 @@ angular.module('commandCtrl', [])
                 var addFood = function(){
 
                 };*/
+
+        var getInventory =
+            Inventory.get($routeParams.username)
+            .then(function (data) {
+                vm.inventoryData = data;
+            });
+        console.log(getInventory);
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {

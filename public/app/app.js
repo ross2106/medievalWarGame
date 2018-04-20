@@ -4,10 +4,10 @@ angular.module('userApp', [
     'authService',
     'socketFactory',
     'mainCtrl',
+    'commandCtrl',
     'userCtrl',
     'chatCtrl',
     'gameCtrl',
-    'commandCtrl',
     'userService',
     'btford.socket-io'])
 

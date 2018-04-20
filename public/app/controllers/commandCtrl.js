@@ -13,15 +13,17 @@ angular.module('commandCtrl', [])
 
         $scope.sendCommand = function (cmd) {
             if (cmd != null && cmd !== '') {
-                if (cmd = 'mine_gold') {
-                    Socket.emit('command', {command: cmd});
-                    $scope.cmd = '';
-                }
-                if (cmd = 'chop_wood') {
-                    console.log('chop_wood');
-                }
-                if (cmd = 'gather_food') {
-                    console.log('gather_food');
+                switch (cmd) {
+                    case 'mine_gold':
+                        Socket.emit('command', {command: cmd});
+                        $scope.cmd = '';
+                        break;
+                    case 'chop_wood':
+                        console.log('chop_wood');
+                        break;
+                    case 'gather_food':
+                        console.log('gather_food');
+                        break;
                 }
             }
         };

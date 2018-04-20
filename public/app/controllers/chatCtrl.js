@@ -41,5 +41,4 @@ angular.module('chatCtrl', [])
         $scope.$on('$locationChangeStart', function (event) {
             Socket.disconnect(true);
         });
-    })
-;
+    });

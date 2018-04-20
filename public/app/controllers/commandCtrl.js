@@ -45,7 +45,7 @@ angular.module('commandCtrl', [])
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
-                    addGold();
+                    //addGold();
                     break;
                 case 'chop_wood':
                     Socket.emit('command', {command: cmd});

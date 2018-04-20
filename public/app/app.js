@@ -9,7 +9,8 @@ angular.module('userApp', [
     'chatCtrl',
     'gameCtrl',
     'userService',
-    'btford.socket-io'])
+    'btford.socket-io',
+    'luegg.directives'])
   // application configuration to integrate token into requests
   .config(function($httpProvider) {
 

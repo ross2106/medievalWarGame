@@ -41,7 +41,7 @@ angular.module('commandCtrl', [])
                 };*/
 
         var getInventory =
-            Inventory.get($routeParams.username)
+            Inventory.get(username)
             .then(function (data) {
                 vm.inventoryData = data;
             });
@@ -51,15 +51,15 @@ angular.module('commandCtrl', [])
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
-                    $http.post('/api/inventory', {
-                        username: username,
-                        gold: Math.floor(Math.random() * 100 + 1),
-                        food: 0,
-                        wood: 0
-                    })
-                        .then(function (data) {
-                            return data.data;
-                        });
+                        $http.post('/api/inventory', {
+                            username: username,
+                            gold: Math.floor(Math.random() * 100 + 1),
+                            food: 0,
+                            wood: 0
+                        })
+                            .then(function (data) {
+                                return data.data;
+                            });
                     break;
                 case 'chop_wood':
                     Socket.emit('command', {command: cmd});

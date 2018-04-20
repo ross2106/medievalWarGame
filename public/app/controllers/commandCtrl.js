@@ -13,7 +13,11 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-        var getInventory = $http.get('/api/inventory' + username);
+        var getInventory =
+            $http.get('/api/inventory' + username)
+            .then(function(data){
+                return data.data;
+            });
         console.log(getInventory);
 
         /*        var addGold = function(){

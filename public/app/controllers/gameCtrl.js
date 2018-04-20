@@ -13,10 +13,6 @@ angular.module('gameCtrl', [])
         Socket.on('newPositions',function(data){
             ctx.clearRect(0,0,500,500);
             drawMap();
-            drawGold(80, 80);
-            drawGold(80, 130);
-            drawGold(130, 80);
-            drawGold(130, 130);
             for(var i = 0 ; i < data.length; i++) {
                 ctx.fillText(data[i].username, data[i].x, data[i].y);
                 ctx.drawImage(knight, data[i].x-30, data[i].y-20, 100, 100);
@@ -26,16 +22,6 @@ angular.module('gameCtrl', [])
         var drawMap = function(){
             ctx.drawImage(map, 0,0);
         }
-        var drawGold = function(x, y){
-            ctx.drawImage(gold, x, y, 50, 50);
-        }
-        var drawFood = function(){
-
-        }
-        var drawWood = function(){
-
-        }
-        gold.src = "/assets/img/Gold.png"
         knight.src = "/assets/img/knight.png";
         map.src = "/assets/img/Grass.png";
 

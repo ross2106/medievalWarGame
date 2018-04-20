@@ -3,7 +3,21 @@
 </div>
 <div class="container">
     <div class="row" style="height: 500px;">
-        <canvas ng-controller="gameController" class="card col-7" id="ctx" width="500" height="500"></canvas>
+        <div class="card col-7">
+            <div class="row" style="height:90%">
+                <canvas ng-controller="gameController" id="ctx" width="500" height="500"></canvas>
+            </div>
+            <div class="row" style="height:90%">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter Text Here..."
+                           id="commandInput">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit">Send Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card col-5" ng-controller="chatController">
             <h1 class="text-center">Game Chat</h1>
             <div class="row" style="height:90%;">

@@ -15,8 +15,9 @@ angular.module('commandCtrl', [])
             if (cmd != null && cmd !== '') {
                 switch (cmd) {
                     case 'mine_gold':
-                        Socket.emit('command', {command: cmd});
-                        $scope.cmd = '';
+                        //Socket.emit('command', {command: cmd});
+                        //$scope.cmd = '';
+                        console.log('mine_gold');
                         break;
                     case 'chop_wood':
                         console.log('chop_wood');

@@ -26,9 +26,7 @@
             </div>
             <div class="row" style="height:10%">
                 <ul style="overflow-y: auto;">
-                    <li ng-repeat="command in commands">
-                        <span class="command" ng-controller="commandController">{{command.text}}</span>
-                    </li>
+                    <li ng-repeat="command in commands">{{command.text}}</li>
                 </ul>
             </div>
             <div class="row" style="height:10%" ng-controller="commandController">

@@ -164,7 +164,7 @@ module.exports = function (app, express) {
 
         .get(function(req, res){
             Inventory.findOne({
-                'username': req.params.username
+                username: req.params.username
             }), function(err, inventory){
                 if(err) res.send(err);
 

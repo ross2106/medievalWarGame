@@ -11,7 +11,7 @@ var config = require('./config');
 var path = require('path');
 
 require("angoose").init(app, {
-    'module-dirs':'../medievalWarGam/app/models',
+    'module-dirs':'./app/models',
     'mongo-opts': config.database
 });
 

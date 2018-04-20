@@ -21,9 +21,5 @@
   },
   "scripts": {
     "start": "node server.js"
-  },
-  "devDependencies": {
-    "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.14"
   }
 }

@@ -16,9 +16,9 @@
     "socket.io-client": "^2.1.0"
   },
   "engines": {
-    "node":"8.9.4"
+    "node": "8.9.4"
   },
-  "scripts":{
-    "start":"node server.js"
+  "scripts": {
+    "start": "node server.js"
   }
 }

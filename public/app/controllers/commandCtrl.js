@@ -1,8 +1,7 @@
 angular.module('commandCtrl', [])
-    .controller('commandController', function ($scope, Socket, Auth) {
+    .controller('commandController', function ($scope, Socket, Auth, Inventory) {
         Socket.connect();
         $scope.commands = [];
-        var Inventory = require('../medievalWarGame/app/models/inventory');
         var username = '';
         var getUsername = function () {
             Auth.getUser()

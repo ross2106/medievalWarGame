@@ -9,7 +9,6 @@ var morgan = require('morgan'); // used to see requests
 var mongoose = require('mongoose');
 var config = require('./config');
 var path = require('path');
-var Inventory = require('../medievalWarGame/app/models/inventory');
 
 //socket IO stuff
 var http = require('http').Server(app);

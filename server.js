@@ -12,7 +12,7 @@ var path = require('path');
 
 require("angoose").init(app, {
     'module-dirs':'./app/models',
-    'mongo-opts': config.database
+    'mongo-opts': 'mongodb://admin:admin@ds247439.mlab.com:47439/medievalwar'
 });
 
 //socket IO stuff

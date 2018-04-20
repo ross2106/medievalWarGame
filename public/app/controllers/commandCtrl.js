@@ -2,7 +2,7 @@ angular.module('commandCtrl', [])
     .controller('commandController', function ($scope, Socket, Auth) {
         Socket.connect();
         $scope.commands = [];
-        var Inventory = require('./app/models/inventory');
+        var Inventory = exports.Inventory;
 
         var username = '';
         var getUsername = function () {

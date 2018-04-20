@@ -7,6 +7,7 @@ angular.module('userApp', [
     'userCtrl',
     'chatCtrl',
     'gameCtrl',
+    'commandCtrl',
     'userService',
     'btford.socket-io'])
 

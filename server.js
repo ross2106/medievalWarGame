@@ -117,7 +117,7 @@ io.sockets.on('connection', function(socket){
     });
 
     socket.on('command', function(data){
-        io.emit('command', {command: data.command});
+        io.emit('command', {command: data.text});
     });
 
     socket.on('keyPress',function(data){

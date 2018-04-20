@@ -16,7 +16,6 @@ angular.module('commandCtrl', [])
                 switch (cmd) {
                     case 'mine_gold':
                         Socket.emit('command', {command: cmd});
-                        $scope.cmd = '';
                         //console.log('mine_gold');
                         break;
                     case 'chop_wood':
@@ -26,6 +25,7 @@ angular.module('commandCtrl', [])
                         console.log('gather_food');
                         break;
                 }
+                $scope.cmd = '';
             }
         };
 

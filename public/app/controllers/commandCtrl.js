@@ -42,9 +42,10 @@ angular.module('commandCtrl', [])
 
         var getInventory =
             Inventory.get(username)
-                .then(function (data) {
-                    vm.inventoryData = data;
+                .then(function (response) {
+                    vm.inventoryData = response.data;
                 });
+        console.log(getInventory);
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {

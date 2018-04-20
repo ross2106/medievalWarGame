@@ -2,7 +2,6 @@ angular.module('commandCtrl', [])
     .controller('commandController', function ($scope, Socket, Auth) {
         Socket.connect();
         $scope.commands = [];
-        var Inventory = require('../medievalWarGame/app/models/inventory');
         var username = '';
         var getUsername = function () {
             Auth.getUser()
@@ -12,25 +11,27 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-        var addGold = function(){
-            Inventory.findOne({
-                'username': getUsername()
-            }, function (err, user) {
-                if(user){
-                    var query = {
-                        gold: gold+(Math.floor(Math.random() * (100+1)))
-                    };
-                    Inventory.update(query, options, callback);
-                } else{
-                    var newInventory = new Inventory();
-                    newInventory.username = getUsername();
-                    newInventory.gold = (Math.floor(Math.random() * (100+1)));
-                    newInventory.gold = 0;
-                    newInventory.gold = 0;
-                    newInventory.save();
-                }
-            });
-        };
+        var Inventory = require(['../medievalWarGame/app/models/inventory'], function(){
+            var addGold = function(){
+                Inventory.findOne({
+                    'username': getUsername()
+                }, function (err, user) {
+                    if(user){
+                        var query = {
+                            gold: gold+(Math.floor(Math.random() * (100+1)))
+                        };
+                        Inventory.update(query, options, callback);
+                    } else{
+                        var newInventory = new Inventory();
+                        newInventory.username = getUsername();
+                        newInventory.gold = (Math.floor(Math.random() * (100+1)));
+                        newInventory.gold = 0;
+                        newInventory.gold = 0;
+                        newInventory.save();
+                    }
+                });
+            };
+        });
         var addWood = function(){
 
         };

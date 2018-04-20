@@ -47,8 +47,8 @@
       <file leaf-file-name="commandCtrl.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/app/controllers/commandCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="75" />
+            <state relative-caret-position="473">
+              <caret line="33" column="11" lean-forward="false" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -360,7 +360,7 @@
       <workItem from="1524123605538" duration="495000" />
       <workItem from="1524124118717" duration="2112000" />
       <workItem from="1524126245576" duration="20938000" />
-      <workItem from="1524223411873" duration="11648000" />
+      <workItem from="1524223411873" duration="11794000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1524146162575</created>
@@ -373,7 +373,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74016000" />
+    <option name="totallyTimeSpent" value="74162000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -805,8 +805,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/controllers/commandCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="75" />
+        <state relative-caret-position="473">
+          <caret line="33" column="11" lean-forward="false" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
           <folding />
         </state>
       </provider>

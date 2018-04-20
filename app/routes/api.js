@@ -1,5 +1,6 @@
 var bodyParser = require('body-parser'); // get body-parser
 var User = require('../models/user');
+var Inventory = require('../models/inventory');
 var jwt = require('jsonwebtoken');
 var config = require('../../config');
 
@@ -131,6 +132,49 @@ module.exports = function (app, express) {
             message: 'hooray! welcome to our api!'
         });
     });
+
+    apiRouter.route('/dashboard');
+
+    // on routes that end in /resources
+
+    apiRouter.route('/inventory')
+        //create an inventory for a user
+        .post(function(req, res){
+            var inventory = new Inventory();
+            inventory.username = req.body.username;
+            inventory.gold = req.body.gold;
+            inventory.food = req.body.food;
+            inventory.wood = req.body.wood;
+            inventory.save();
+        });
+
+    apiRouter.route('/inventory/:username')
+        .put(function(req, res){
+            Inventory.findOne({
+                'username': req.params.username
+            }), function(inventory){
+                if (req.body.gold) inventory.gold = req.body.gold;
+                if (req.body.food) inventory.food = req.body.food;
+                if (req.body.wood) inventory.wood = req.body.wood;
+
+                // save the inventory
+                inventory.save();
+            }
+        })
+
+        .get(function(req, res){
+            Inventory.findOne({
+                'username': req.params.username
+            }), function(err, inventory){
+                if(err) res.send(err);
+
+                //return the inventory
+                res.json(inventory);
+            }
+        });
+
+
+
 
     // on routes that end in /users
     // ----------------------------------------------------

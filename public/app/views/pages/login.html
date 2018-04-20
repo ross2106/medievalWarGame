@@ -1,46 +1,43 @@
 <div class="row col-md-6 col-md-offset-3">
+    <div class="jumbotron">
+        <h1>Login</h1>
 
+        <form ng-submit="login.doLogin()">
 
-  <div class="jumbotron">
-    <h1>Login</h1>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" ng-model="login.loginData.username">
+            </div>
 
-    <form ng-submit="login.doLogin()">
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" ng-model="login.loginData.password">
+            </div>
 
-      <div class="form-group">
-        <label>Username</label>
-        <input type="text" class="form-control" ng-model="login.loginData.username">
-      </div>
+            <div class="alert alert-danger" ng-if="login.error">
+                {{ login.error }}
+            </div>
 
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" class="form-control" ng-model="login.loginData.password">
-      </div>
-
-      <div class="alert alert-danger" ng-if="login.error">
-        {{ login.error }}
-      </div>
-
-      <button type="submit" class="btn btn-block btn-primary">
-				<span ng-if="!login.processing">Login</span>
-				<span ng-if="login.processing" class="spinner"><span class="glyphicon glyphicon-repeat spinner"></span></span>
-			</button>
-    </form>
-  </div>
+            <button type="submit" class="btn btn-block btn-primary">
+                <span ng-if="!login.processing">Login</span>
+                <span ng-if="login.processing" class="spinner"><span class="glyphicon glyphicon-repeat spinner"></span></span>
+            </button>
+        </form>
+    </div>
 </div>
-<body class="text-center">
-<form class="form-signin">
-  <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-  <label for="inputEmail" class="sr-only">Email address</label>
-  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-  <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-  <div class="checkbox mb-3">
-    <label>
-      <input type="checkbox" value="remember-me"> Remember me
-    </label>
-  </div>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-</form>
-</body>
+<div class="row col-md-6 col-md-offset-3">
+    <div class="jumbotron">
+        <body class="text-center">
+        <form class="form-signin">
+            <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+            <label for="inputUsername" class="sr-only">Username</label>
+            <input type="text" id="inputUsername" class="form-control" ng-model="login.loginData.username"
+                   placeholder="Username" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" class="form-control" ng-model="login.loginData.password" id="inputPassword"
+                   placeholder="Password" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+        </body>
+    </div>
+</div>

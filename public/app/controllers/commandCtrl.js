@@ -13,6 +13,14 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
+        var getInventory = $http.get('/api/inventory' + username);
+        console.log(getInventory);
+        
+            // get a users resources
+            resourceFactory.get = function(username) {
+                return $http.get('/api/inventory/' + username);
+            };
+
         /*        var addGold = function(){
                     inventory.$get({
                         'username': getUsername()

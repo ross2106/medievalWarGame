@@ -19,7 +19,6 @@
     "node": "8.9.4"
   },
   "scripts": {
-    "build": "webpack",
     "start": "node server.js"
   },
   "devDependencies": {

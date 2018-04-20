@@ -1,4 +1,5 @@
 angular.module('userApp', [
+    'angoose.client',
     'ngAnimate',
     'app.routes',
     'authService',

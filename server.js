@@ -10,6 +10,11 @@ var mongoose = require('mongoose');
 var config = require('./config');
 var path = require('path');
 
+require("angoose").init(app, {
+    'module-dirs':'../medievalWarGam/app/models',
+    'mongo-opts': config.database
+});
+
 //socket IO stuff
 var http = require('http').Server(app);
 var io = require('socket.io')(http,{});

@@ -4,19 +4,6 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="angular" level="application" />
-    <orderEntry type="library" name="angular-animate" level="application" />
-    <orderEntry type="library" name="angular-route" level="application" />
-    <orderEntry type="library" name="bootbox" level="application" />
-    <orderEntry type="library" name="bootstrap" level="application" />
-    <orderEntry type="library" name="jquery" level="application" />
-    <orderEntry type="library" name="jQuery-2.0.0" level="application" />
-    <orderEntry type="library" name="jquery-2.1.4" level="application" />
-    <orderEntry type="library" name="jquery-2.2.1" level="application" />
-    <orderEntry type="library" name="jquery-3.3.1.slim" level="application" />
-    <orderEntry type="library" name="jquery-latest" level="application" />
-    <orderEntry type="library" name="popper" level="application" />
-    <orderEntry type="library" name="socket.io" level="application" />
-    <orderEntry type="library" name="socket.io-1.4.0" level="application" />
+    <orderEntry type="library" name="socket.io-1.4.5" level="application" />
   </component>
 </module>

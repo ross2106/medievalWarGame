@@ -45,14 +45,13 @@ angular.module('commandCtrl', [])
                 .then(function (response) {
                     vm.inventoryData = response.data;
                 });
-        console.log(getInventory);
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
                         $http.put('/api/inventory/' + username, {
-                            gold: this.gold + Math.floor(Math.random() * 100 + 1),
+                            gold: vm.inventoryData.gold + Math.floor(Math.random() * 100 + 1),
                             food: 0,
                             wood: 0
                         })

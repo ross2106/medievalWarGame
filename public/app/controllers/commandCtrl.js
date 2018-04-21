@@ -40,12 +40,14 @@ angular.module('commandCtrl', [])
 
                 };*/
 
-        var getInventory =
+        var getInventory = function(){
             Inventory.get(username)
                 .then(function (response) {
                     vm.inventoryData = response.data;
                     console.log(vm.inventoryData);
-                });
+                })
+        };
+        getInventory();
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {

@@ -22,7 +22,7 @@ angular.module('commandCtrl', [])
                     console.log(data.data);
                 });
             for(var i = 0; i<vm.inventories.length; i++){
-                if(vm.inventories.username === username){
+                if(vm.inventories[i].username === username){
                     Inventory.get(vm.inventories.id)
                         .then(function(data){
                             vm.userInventory = data.data;

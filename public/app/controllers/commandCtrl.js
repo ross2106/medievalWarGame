@@ -21,12 +21,14 @@ angular.module('commandCtrl', [])
                     vm.inventories = data.data;
                     console.log(data.data);
                 });
-            if(vm.inventories.username === username){
-                Inventory.get(vm.inventories.id)
-                    .then(function(data){
-                        vm.userInventory = data.data;
-                        console.log(vm.userInventory);
-                    })
+            for(var i = 0; i<vm.inventories.length; i++){
+                if(vm.inventories.username === username){
+                    Inventory.get(vm.inventories.id)
+                        .then(function(data){
+                            vm.userInventory = data.data;
+                            console.log(vm.userInventory);
+                        })
+                }
             }
         };
         getInventory();

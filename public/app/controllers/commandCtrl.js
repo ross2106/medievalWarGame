@@ -14,7 +14,6 @@ angular.module('commandCtrl', [])
                 });
         };
         getUsername();
-        console.log("username" + username);
 
         var getInventoryId = function () {
             Inventory.all()
@@ -28,13 +27,13 @@ angular.module('commandCtrl', [])
                 });
         };
         getInventoryId();
-        console.log("inventory id: " + inventoryId);
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
                     console.log('######' + username);
+                    console.log('%%%%%' + inventoryId);
                     $http.put('/api/inventory/' + username, {
                         gold: Math.floor(Math.random() * 100 + 1),
                         food: 0,

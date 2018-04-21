@@ -175,7 +175,7 @@ module.exports = function (app, express) {
                     res.json({
                         message: 'Inventory updated!'
                     });
-            })
+            });
         })
 
         .get(function(req, res){

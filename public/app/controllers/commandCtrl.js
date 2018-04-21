@@ -43,14 +43,14 @@ angular.module('commandCtrl', [])
                                 if (res) {
                                     Inventory.update(inventoryId, {
                                         gold: gold + Math.floor(Math.random() * 100 + 1)
-                                    })
+                                    });
                                 } else {
                                     Inventory.create({
                                         username: username,
                                         gold: Math.floor(Math.random() * 100 + 1),
                                         food: 0,
                                         wood: 0
-                                    })
+                                    });
                                 }
                             }
                         );

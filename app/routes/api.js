@@ -168,14 +168,8 @@ module.exports = function (app, express) {
                 //return the inventory
                 res.json(inventory);
                 // save the inventory
-                inventory.save(function (err) {
-                    if (err) res.send(err);
-
-                    // return a message
-                    res.json({
-                        message: 'Inventory updated!'
-                    });
-            });
+                inventory.save();
+            })
         })
 
         .get(function(req, res){

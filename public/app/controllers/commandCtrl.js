@@ -24,9 +24,11 @@ angular.module('commandCtrl', [])
                 // bind the users that come back to vm.users
                 vm.inventories = data.data;
                 console.log(vm.inventories);
+                console.log(vm.inventories.username);
+                console.log(vm.inventories.data);
             });
 
-        var getInventory = function(){
+/*        var getInventory = function(){
             if(vm.inventories.username === username){
                 Inventory.get(vm.inventories.id)
                     .then(function(response){
@@ -35,7 +37,7 @@ angular.module('commandCtrl', [])
                     })
             }
         };
-        getInventory();
+        getInventory();*/
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {

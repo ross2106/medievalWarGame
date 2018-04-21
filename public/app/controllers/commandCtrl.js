@@ -41,6 +41,10 @@ angular.module('commandCtrl', [])
                 };*/
 
         var getInventory = function(){
+            Inventory.all()
+                .then(function(response){
+                    vm.inventoryData = response.data;
+                });
             Inventory.get(username)
                 .then(function (response) {
                     vm.inventoryData = response.data;

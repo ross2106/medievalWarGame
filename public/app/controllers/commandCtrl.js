@@ -15,7 +15,7 @@ angular.module('commandCtrl', [])
         getUsername();
 
         // grab all the inventories at page load
-        Inventory.all()
+/*        Inventory.all()
             .then(function(data) {
 
                 // when all the users come back, remove the processing variable
@@ -28,7 +28,7 @@ angular.module('commandCtrl', [])
                 console.log(vm.inventories.data);
             });
 
-/*        var getInventory = function(){
+/!*        var getInventory = function(){
             if(vm.inventories.username === username){
                 Inventory.get(vm.inventories.id)
                     .then(function(response){
@@ -37,7 +37,7 @@ angular.module('commandCtrl', [])
                     })
             }
         };
-        getInventory();*/
+        getInventory();*!/*/
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {
@@ -84,32 +84,4 @@ angular.module('commandCtrl', [])
             $scope.commands.push(data);
         });
 
-    })
-
-    .controller('createInventoryController'), function (Inventory) {
-    var vm = this;
-    vm.createInventory = function () {
-        vm.message = '';
-        Inventory.create(vm.userData)
-            .success(function (data) {
-                vm.userData = {};
-                vm.message = data.message;
-            })
-    }
-
-        .controller('amendInventoryController'), function ($routeParams, Inventory) {
-        var vm = this;
-
-        Inventory.get($routeParams.username)
-            .then(function (data) {
-                vm.inventoryData = data;
-            });
-
-        Inventory.update($routeParams.username, vm.userData)
-            .then(function (data) {
-                vm.userData = {};
-                vm.message = data.message;
-            })
-    }
-
-};
+    });

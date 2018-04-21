@@ -15,7 +15,7 @@ angular.module('inventoryService', [])
             return $http.put('/api/inventory/' + username, resourceData);
         };
 
-        // get all users
+        // get all inventories
         resourceFactory.all = function() {
             return $http.get('/api/inventory/');
         };

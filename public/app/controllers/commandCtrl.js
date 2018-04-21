@@ -15,10 +15,22 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-        Inventory.all()
-            .then(function (data) {
-                console.log(data.data);
-            });
+        var getInventory = function(){
+            Inventory.all()
+                .then(function (data) {
+                    vm.inventories = data.data;
+                    console.log(data.data);
+                });
+            if(vm.inventories.username === username){
+                Inventory.get(vm.inventories.id)
+                    .then(function(data){
+                        vm.userInventory = data.data;
+                        console.log(vm.userInventory);
+                    })
+            }
+        };
+        getInventory();
+
 
 /*        Inventory.get()
             .then(function(data){

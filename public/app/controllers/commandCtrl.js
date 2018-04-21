@@ -25,9 +25,10 @@ angular.module('commandCtrl', [])
                         }
                     }
                 });
+            return vm.inventoryId;
         };
         getInventoryId();
-        console.log("inventory id: " + vm.inventoryId);
+        console.log("inventory id: " + getInventoryId());
 
 
         /*        Inventory.get()

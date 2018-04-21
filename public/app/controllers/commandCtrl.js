@@ -39,7 +39,7 @@ angular.module('commandCtrl', [])
                     Socket.emit('command', {command: cmd});
                     if (inventoryId) {
                         Inventory.update(username, {
-                            gold: gold + (Math.floor(Math.random() * 100) + 1)
+                            gold: (Math.floor(Math.random() * 100) + 1)
                         })
                             .then(function (data) {
                                 return data.data;

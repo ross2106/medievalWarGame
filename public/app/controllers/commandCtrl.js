@@ -2,7 +2,7 @@ angular.module('commandCtrl', [])
     .controller('commandController', function ($http, $scope, $routeParams, Socket, Auth, Inventory) {
         Socket.connect();
         $scope.commands = [];
-        var json;
+        var vm = this;
 
         //Grab the logged in user
         var username = '';
@@ -20,14 +20,14 @@ angular.module('commandCtrl', [])
                 .then(function (data) {
                     for(var i =0; i<data.data.length; i++){
                         if(data.data[i].username === username){
-                            inventoryId = data.data[i]._id;
+                            vm.inventoryId = data.data[i]._id;
                             //console.log(inventoryId);
                         }
                     }
                 });
         };
-        //getInventoryId();
-        console.log("inventory id: " + getInventoryId());
+        getInventoryId();
+        console.log("inventory id: " + vm.inventoryId);
 
 
         /*        Inventory.get()

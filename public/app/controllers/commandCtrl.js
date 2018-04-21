@@ -6,6 +6,7 @@ angular.module('commandCtrl', [])
 
         //Grab the logged in user
         var username = '';
+        var id = '';
         var getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
@@ -14,21 +15,15 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-        // grab all the inventories at page load
-/*        Inventory.all()
+      Inventory.all()
             .then(function(data) {
 
                 // when all the users come back, remove the processing variable
                 vm.processing = false;
-
-                // bind the users that come back to vm.users
-                vm.inventories = data.data;
-                console.log(vm.inventories);
-                console.log(vm.inventories.username);
-                console.log(vm.inventories.data);
+                console.log(data.data);
             });
 
-/!*        var getInventory = function(){
+/*        var getInventory = function(){
             if(vm.inventories.username === username){
                 Inventory.get(vm.inventories.id)
                     .then(function(response){

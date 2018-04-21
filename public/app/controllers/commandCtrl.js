@@ -48,8 +48,7 @@ angular.module('commandCtrl', [])
         var getInventory = function(){
             Inventory.get($routeParams.inventory_id)
                 .then(function (response) {
-                    vm.inventoryData = data;
-                    console.log(response.data.gold);
+                    vm.inventoryData = response;
                 })
         };
         getInventory();

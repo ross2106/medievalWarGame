@@ -32,11 +32,11 @@ angular.module('commandCtrl', [])
                     }
                 });
         };
-        getInventoryId();
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {
                 case 'mine_gold':
+                    getInventoryId();
                     Socket.emit('command', {command: cmd});
                     if(inventoryId){
                         Inventory.get(inventoryId)

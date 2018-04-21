@@ -6,7 +6,7 @@ angular.module('commandCtrl', [])
 
         //Grab the logged in user
         var username = '';
-        var id = '';
+        var inventory;
         var getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
@@ -15,35 +15,44 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-        var getInventory = function(){
+        var getInventory = function () {
             Inventory.all()
                 .then(function (data) {
                     json = data.data;
                     console.log(data.data);
                     console.log(json);
+                    for (var i = 0; i < json.length; i++) {
+                        if (json[i].username === username) {
+                            Inventory.get(json[i].id)
+                                .then(function (data) {
+                                    inventory = data.data;
+                                    console.log(inventory);
+                                })
+                        }
+                    }
                 });
-            console.log("This is json" + json);
-/*            for(var i = 0; i < json.length(); i++) {
-                var obj = json[i];
-                console.log(obj.id);
-            }*/
-/*            for(var i = 0; i<vm.inventories.length; i++){
-                if(vm.inventories[i].username === username){
-                    Inventory.get(vm.inventories[i].id)
-                        .then(function(data){
-                            vm.userInventory = data.data;
-                            console.log(vm.userInventory);
-                        })
-                }
-            }*/
+            //console.log("This is json" + json);
+            /*            for(var i = 0; i < json.length(); i++) {
+                            var obj = json[i];
+                            console.log(obj.id);
+                        }*/
+            /*            for(var i = 0; i<vm.inventories.length; i++){
+                            if(vm.inventories[i].username === username){
+                                Inventory.get(vm.inventories[i].id)
+                                    .then(function(data){
+                                        vm.userInventory = data.data;
+                                        console.log(vm.userInventory);
+                                    })
+                            }
+                        }*/
         };
         getInventory();
 
 
-/*        Inventory.get()
-            .then(function(data){
-                console.log(data.data);
-            })*/
+        /*        Inventory.get()
+                    .then(function(data){
+                        console.log(data.data);
+                    })*/
 
         /*        var getInventory = function(){
                     if(vm.inventories.username === username){

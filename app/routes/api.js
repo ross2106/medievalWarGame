@@ -160,7 +160,7 @@ module.exports = function (app, express) {
 
     apiRouter.route('/inventory/:user_id')
         .put(function(req, res){
-            Inventory.findById(req.params.user_id, function(inventory){
+            Inventory.findById(req.params._id, function(inventory){
                 if (req.body.gold) inventory.gold = req.body.gold;
                 if (req.body.food) inventory.food = req.body.food;
                 if (req.body.wood) inventory.wood = req.body.wood;
@@ -173,7 +173,7 @@ module.exports = function (app, express) {
 
                     // return a message
                     res.json({
-                        message: 'User updated!'
+                        message: 'Inventory updated!'
                     });
                 });
             })

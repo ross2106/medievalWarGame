@@ -154,7 +154,7 @@ module.exports = function (app, express) {
                 if (err) res.send(err);
 
                 // return the inventories
-                res.send(req.decoded)
+                res.json(inventories)
             });
         });
 

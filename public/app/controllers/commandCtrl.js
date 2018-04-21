@@ -21,7 +21,7 @@ angular.module('commandCtrl', [])
                     for(var i =0; i<data.data.length; i++){
                         if(data.data[i].username === username){
                             vm.inventoryId = data.data[i]._id;
-                            //console.log(inventoryId);
+                            console.log(vm.inventoryId);
                         }
                     }
                 });

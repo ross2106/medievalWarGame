@@ -15,21 +15,21 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-        var getInventory = function () {
+        var getInventoryId = function () {
             Inventory.all()
                 .then(function (data) {
                     json = data.data;
-                    console.log(json);
-                    console.log($routeParams.id);
-/*                    for (var i = 0; i < json.length; i++) {
-                        if (json[i].username === username) {
-                            Inventory.get($routeParams.id)
+                    //console.log(json);
+                    for (var i = 0; i < json.length; i++) {
+                        console.log(json[i]);
+/*                        if (json[i].username === username) {
+                            Inventory.get()
                                 .then(function (data) {
                                     inventory = data.data;
                                     console.log(inventory);
                                 })
-                        }
-                    }*/
+                        }*/
+                    }
                 });
             //console.log("This is json" + json);
             /*            for(var i = 0; i < json.length(); i++) {

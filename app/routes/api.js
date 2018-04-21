@@ -158,7 +158,7 @@ module.exports = function (app, express) {
             });
         });
 
-    apiRouter.route('/inventory/:user_id')
+    apiRouter.route('/inventory/:_id')
         .put(function(req, res){
             Inventory.findById(req.params._id, function(inventory){
                 if (req.body.gold) inventory.gold = req.body.gold;

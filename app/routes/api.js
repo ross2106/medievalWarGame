@@ -152,7 +152,6 @@ module.exports = function (app, express) {
         .get(function(req, res){
             Inventory.find(function(err, inventories){
                 if(err) return res.send(err);
-
                 res.json(inventories);
             })
         })

@@ -40,19 +40,20 @@ angular.module('commandCtrl', [])
 
                 };*/
 
-        Inventory.all()
-            .then(function(data){
-                vm.inventories = data.data;
-                console.log(vm.inventories);
-            });
 
-/*        var getInventory = function(){
-            Inventory.get($routeParams.id)
+
+        var getInventory = function(){
+            Inventory.all()
+                .then(function(data){
+                    vm.inventories = data.data;
+                    console.log(vm.inventories);
+                });
+            Inventory.get(vm.inventories.id)
                 .then(function (response) {
                     vm.inventoryData = response;
+                    console.log(vm.inventories);
                 })
         };
-        getInventory();*/
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {

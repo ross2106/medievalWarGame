@@ -14,6 +14,7 @@ angular.module('commandCtrl', [])
                 });
         };
         getUsername();
+        console.log("username" + username);
 
         var getInventoryId = function () {
             Inventory.all()

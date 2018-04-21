@@ -16,18 +16,18 @@ angular.module('commandCtrl', [])
         getUsername();
 
         var getInventoryId = function () {
+            var id = '';
             Inventory.all()
                 .then(function (data) {
                     for(var i =0; i<data.data.length; i++){
                         if(data.data[i].username === username){
-                            vm.inventoryId = data.data[i]._id;
+                            id = data.data[i]._id;
                             console.log(vm.inventoryId);
                         }
                     }
                 });
-            return vm.inventoryId;
+            return id;
         };
-        getInventoryId();
         console.log("inventory id: " + getInventoryId());
 
 

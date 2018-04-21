@@ -43,7 +43,6 @@ angular.module('commandCtrl', [])
         var getInventory = function(){
             Inventory.get(username)
                 .then(function (response) {
-                    if()
                     vm.inventoryData = response.data;
                     console.log(vm.inventoryData.username);
                 })

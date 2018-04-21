@@ -11,7 +11,7 @@ var config = require('./config');
 var path = require('path');
 
 //socket IO stuff
-var http = require('https').Server(app);
+var http = require('http').Server(app);
 var io = require('socket.io')(http,{});
 
 // APP CONFIGURATION ==================

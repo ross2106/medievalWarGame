@@ -158,9 +158,11 @@ module.exports = function (app, express) {
             });
         });
 
+
     apiRouter.route('/inventory/:username')
         .put(function(req, res){
-            Inventory.findOne(req.params.username, function(inventory){
+            Inventory.findOne(req.params.username, function(err, inventory){
+                if (err) res.send(err);
                 if (req.body.gold) inventory.gold = req.body.gold;
                 if (req.body.food) inventory.food = req.body.food;
                 if (req.body.wood) inventory.wood = req.body.wood;

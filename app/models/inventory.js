@@ -12,18 +12,15 @@ var InventorySchema = new Schema({
     },
     gold: {
         type: String,
-        required: true,
-        select: false
+        required: true
     },
     food: {
         type: String,
-        required: true,
-        select: false
+        required: true
     },
     wood: {
         type: String,
-        required: true,
-        select: false
+        required: true
     }
 });
 

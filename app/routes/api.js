@@ -150,11 +150,11 @@ module.exports = function (app, express) {
             res.json(inventory);
         })
         .get(function(req, res){
-            Inventory.find({}, function (err) {
+            Inventory.find({}, function (err, inventories) {
                 if (err) res.send(err);
 
                 // return the inventories
-                res.send(req.decoded);
+                res.json(inventories)
             });
         });
 

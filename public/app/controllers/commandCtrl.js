@@ -17,9 +17,6 @@ angular.module('commandCtrl', [])
 
         Inventory.all()
             .then(function (data) {
-
-                // when all the users come back, remove the processing variable
-                vm.processing = false;
                 console.log(data.data);
             });
 

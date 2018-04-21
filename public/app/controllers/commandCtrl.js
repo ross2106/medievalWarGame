@@ -32,24 +32,19 @@ angular.module('commandCtrl', [])
                 });
         };
         getInventoryId();
-        console.log('get inventory id called');
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {
                 case 'mine_gold':
-                    console.log(inventoryId);
                     Socket.emit('command', {command: cmd});
-                    if(inventoryId){
-                        Inventory.get(inventoryId)
-                            .then(function(){
-                                Inventory.update(username, {
-                                    gold: gold + (Math.floor(Math.random() * 100 + 1))
-                                })
-                                    .then(function(data){
-                                        return data.data;
-                                    });
+                    if (inventoryId) {
+                        Inventory.update(username, {
+                            gold: gold + (Math.floor(Math.random() * 100) + 1)
+                        })
+                            .then(function (data) {
+                                return data.data;
                             });
-                    } else{
+                    } else {
                         Inventory.create({
                             username: username,
                             gold: Math.floor(Math.random() * 100 + 1),
@@ -57,8 +52,8 @@ angular.module('commandCtrl', [])
                             wood: 0
                         })
                             .then(function (data) {
-                            return data.data;
-                        });
+                                return data.data;
+                            });
                     }
                     break;
                 case 'chop_wood':

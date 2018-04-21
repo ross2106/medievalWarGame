@@ -11,18 +11,13 @@ angular.module('inventoryService', [])
         };
 
         // update a users resources
-        resourceFactory.update = function(id, resourceData) {
-            return $http.put('/api/inventory/' + id, resourceData);
-        };
-
-        // get all users
-        resourceFactory.all = function() {
-            return $http.get('/api/inventory/');
+        resourceFactory.update = function(username, resourceData) {
+            return $http.put('/api/inventory/' + username, resourceData);
         };
 
         // get a users inventory
-        resourceFactory.get = function(id) {
-            return $http.get('/api/inventory/' + id);
+        resourceFactory.get = function(username) {
+            return $http.get('/api/inventory/' + username);
         };
 
         return resourceFactory;

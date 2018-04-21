@@ -40,38 +40,25 @@ angular.module('commandCtrl', [])
 
                 };*/
 
-
-
-        var getInventory = function(){
-            Inventory.all()
-                .then(function(data){
-                    vm.inventories = data.data;
-                    console.log(vm.inventories);
-                });
-            Inventory.get($routeParams.username)
+        var getInventory =
+            Inventory.get(username)
                 .then(function (response) {
-                    vm.inventoryData = response;
+                    vm.inventoryData = response.data;
                     console.log(vm.inventoryData);
-                })
-        };
-        getInventory();
+                });
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
-                    //if(getInventory()){
                         $http.put('/api/inventory/' + username, {
-                            gold: Math.floor(Math.random() * 100 + 1),
+                            gold: vm.inventoryData.gold + Math.floor(Math.random() * 100 + 1),
                             food: 0,
                             wood: 0
                         })
                             .then(function (data) {
                                 return data.data;
                             });
-                    //} else{
-                   //     console.log('No Inventory');
-                   // }
                     break;
                 case 'chop_wood':
                     Socket.emit('command', {command: cmd});

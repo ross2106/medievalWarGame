@@ -148,13 +148,7 @@ module.exports = function (app, express) {
             inventory.save();
             //return the inventory
             res.json(inventory);
-        })
-        .get(function(req, res){
-            Inventory.find(function(err, inventories){
-                if(err) return res.send(err);
-                res.json(inventories);
-            })
-        })
+        });
 
     apiRouter.route('/inventory/:user_id')
         .put(function(req, res){
@@ -175,7 +169,7 @@ module.exports = function (app, express) {
                 if(err) res.send(err);
 
                 //return the inventory
-                res.json(inventory.data);
+                res.json(inventory);
             })
         });
 

@@ -12,7 +12,7 @@ var path = require('path');
 
 //socket IO stuff
 var http = require('http').Server(app);
-var io = require('socket.io').listen(http);
+var io = require('socket.io')(http,{});
 
 // APP CONFIGURATION ==================
 // ====================================

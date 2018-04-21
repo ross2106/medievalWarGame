@@ -23,7 +23,7 @@ angular.module('commandCtrl', [])
                     console.log(json);
                 });
 
-            for(var i = 0; i < json.length(); i++) {
+            for(var i = 0; i < json.size(); i++) {
                 var obj = json[i];
                 console.log(obj.id);
             }

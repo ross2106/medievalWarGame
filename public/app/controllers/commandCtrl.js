@@ -43,21 +43,22 @@ angular.module('commandCtrl', [])
         Inventory.all()
             .then(function(data){
                 vm.inventories = data.data;
+                console.log(vm.inventories);
             });
 
-        var getInventory = function(){
+/*        var getInventory = function(){
             Inventory.get($routeParams.id)
                 .then(function (response) {
                     vm.inventoryData = response;
                 })
         };
-        getInventory();
+        getInventory();*/
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
-                    if(getInventory()){
+                    //if(getInventory()){
                         $http.put('/api/inventory/' + username, {
                             gold: Math.floor(Math.random() * 100 + 1),
                             food: 0,
@@ -66,9 +67,9 @@ angular.module('commandCtrl', [])
                             .then(function (data) {
                                 return data.data;
                             });
-                    } else{
-                        console.log('No Inventory');
-                    }
+                    //} else{
+                   //     console.log('No Inventory');
+                   // }
                     break;
                 case 'chop_wood':
                     Socket.emit('command', {command: cmd});

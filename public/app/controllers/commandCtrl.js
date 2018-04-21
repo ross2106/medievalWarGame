@@ -19,17 +19,17 @@ angular.module('commandCtrl', [])
             Inventory.all()
                 .then(function (data) {
                     json = data.data;
-                    console.log(data.data);
                     console.log(json);
-                    for (var i = 0; i < json.length; i++) {
+                    console.log($routeParams.id);
+/*                    for (var i = 0; i < json.length; i++) {
                         if (json[i].username === username) {
-                            Inventory.get(json[i].id)
+                            Inventory.get($routeParams.id)
                                 .then(function (data) {
                                     inventory = data.data;
                                     console.log(inventory);
                                 })
                         }
-                    }
+                    }*/
                 });
             //console.log("This is json" + json);
             /*            for(var i = 0; i < json.length(); i++) {

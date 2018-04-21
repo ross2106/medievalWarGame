@@ -41,7 +41,7 @@ angular.module('commandCtrl', [])
                     Inventory.get(inventoryId)
                         .then(function (res) {
                                 if (res) {
-                                    Inventory.update(inventoryId, {
+                                    Inventory.update(username, {
                                         gold: gold + Math.floor(Math.random() * 100 + 1)
                                     });
                                 } else {

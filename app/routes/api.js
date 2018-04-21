@@ -158,9 +158,9 @@ module.exports = function (app, express) {
             });
         });
 
-    apiRouter.route('/inventory/:_id')
+    apiRouter.route('/inventory/:username')
         .put(function(req, res){
-            Inventory.findById(req.params._id, function(inventory){
+            Inventory.findOne(req.params.username, function(inventory){
                 if (req.body.gold) inventory.gold = req.body.gold;
                 if (req.body.food) inventory.food = req.body.food;
                 if (req.body.wood) inventory.wood = req.body.wood;

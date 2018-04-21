@@ -39,25 +39,19 @@ angular.module('commandCtrl', [])
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
                     Inventory.get(inventoryId)
-                        .then(function (data) {
-                            if (data) {
-                                Inventory.update(inventoryId, {
-                                    gold: this.gold + Math.floor(Math.random() * 100 + 1)
-                                })
-                                    .then(function (data) {
-                                        return data.data;
-                                    });
-                            } else {
-                                Inventory.create({
-                                    username: username,
-                                    gold: Math.floor(Math.random() * 100 + 1),
-                                    food: 0,
-                                    wood: 0
-                                })
-                                    .then(function (data) {
-                                        return data.data;
-                                    });
-                            }
+                        .then(function () {
+                            /*                            if (data) {
+                                                            Inventory.update(inventoryId, {
+                                                                gold: this.gold + Math.floor(Math.random() * 100 + 1)
+                                                            })
+                                                        } else {*/
+                            Inventory.create({
+                                username: username,
+                                gold: Math.floor(Math.random() * 100 + 1),
+                                food: 0,
+                                wood: 0
+                            })
+                            /*                            }*/
                         });
                     break;
                 case 'chop_wood':

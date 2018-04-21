@@ -20,8 +20,9 @@ angular.module('commandCtrl', [])
                 .then(function (data) {
                     //json = data.data;
                     //console.log(json);
-                    for (var i = 0; i < data.length+1; i++) {
-                        console.log(data[i].data.id);
+                    console.log(data.data.id);
+/*                    for (var i = 0; i < data.length; i++) {
+                        console.log(data[i].data.id);*/
 /*                        if (json[i].username === username) {
                             Inventory.get()
                                 .then(funct
@@ -30,7 +31,7 @@ angular.module('commandCtrl', [])
                                     console.log(inventory);
                                 })
                         }*/
-                    }
+                   // }
                 });
             //console.log("This is json" + json);
             /*            for(var i = 0; i < json.length(); i++) {

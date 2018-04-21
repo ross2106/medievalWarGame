@@ -20,8 +20,8 @@ angular.module('commandCtrl', [])
                 .then(function (data) {
                     //json = data.data;
                     //console.log(json);
-                    var t = JSON.parse(data.data);
-                    console.log(t.id);
+                    //var t = JSON.parse(data.data);
+                    console.log(data.id);
 /*                    for (var i = 0; i < data.length; i++) {
                         console.log(data[i].data.id);*/
 /*                        if (json[i].username === username) {

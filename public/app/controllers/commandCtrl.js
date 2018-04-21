@@ -24,11 +24,8 @@ angular.module('commandCtrl', [])
                     //console.log(data.data);
                     for(var i =0; i<data.data.length; i++){
                         if(data.data[i].username === username){
-                            Inventory.get()
-                                .then(function(data){
-                                    inventoryId = data.data[i]._id;
-                                    console.log(inventoryId)
-                                })
+                            inventoryId = data.data[i]._id;
+                            console.log(inventoryId);
                         }
                     }
 /*                    for (var i = 0; i < data.length; i++) {

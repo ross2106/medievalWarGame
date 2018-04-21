@@ -22,6 +22,11 @@ angular.module('commandCtrl', [])
                     console.log(data.data);
                     console.log(vm.inventories);
                 });
+
+            for(var i = 0; i < vm.inventories.length(); i++) {
+                var obj = vm.inventories[i];
+                console.log(obj.id);
+            }
 /*            for(var i = 0; i<vm.inventories.length; i++){
                 if(vm.inventories[i].username === username){
                     Inventory.get(vm.inventories[i].id)

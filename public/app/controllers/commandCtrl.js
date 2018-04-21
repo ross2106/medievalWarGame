@@ -40,14 +40,15 @@ angular.module('commandCtrl', [])
 
                 };*/
 
+        Inventory.all()
+            .then(function(data){
+                vm.inventories = data.data;
+            });
+
         var getInventory = function(){
-            Inventory.all()
-                .then(function(response){
-                    vm.inventoryData = response.data;
-                });
-            Inventory.get(username)
+            Inventory.get($routeParams.inventory_id)
                 .then(function (response) {
-                    vm.inventoryData = response.data;
+                    vm.inventoryData = data;
                     console.log(response.data.gold);
                 })
         };
@@ -57,18 +58,18 @@ angular.module('commandCtrl', [])
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
-                    Inventory.get(username)
-                        .then(function(response){
-                            vm.gold = response.data.gold;
-                        });
+                    if(getInventory()){
                         $http.put('/api/inventory/' + username, {
-                            gold: vm.gold + Math.floor(Math.random() * 100 + 1),
+                            gold: Math.floor(Math.random() * 100 + 1),
                             food: 0,
                             wood: 0
                         })
                             .then(function (data) {
                                 return data.data;
                             });
+                    } else{
+
+                    }
                     break;
                 case 'chop_wood':
                     Socket.emit('command', {command: cmd});

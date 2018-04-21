@@ -157,9 +157,9 @@ module.exports = function (app, express) {
             })
         })
 
-    apiRouter.route('/inventory/:username')
+    apiRouter.route('/inventory/:inventory_id')
         .put(function(req, res){
-            Inventory.findById(req.params.username, function(inventory){
+            Inventory.findById(req.params.user_id, function(inventory){
                 if (req.body.gold) inventory.gold = req.body.gold;
                 if (req.body.food) inventory.food = req.body.food;
                 if (req.body.wood) inventory.wood = req.body.wood;
@@ -172,7 +172,7 @@ module.exports = function (app, express) {
         })
 
         .get(function(req, res){
-            Inventory.findById(req.params.username, function(err, inventory){
+            Inventory.findById(req.params.user_id, function(err, inventory){
                 if(err) res.send(err);
 
                 //return the inventory

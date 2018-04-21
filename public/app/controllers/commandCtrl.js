@@ -25,38 +25,17 @@ angular.module('commandCtrl', [])
                 vm.inventories = data.data;
                 console.log(vm.inventories);
             });
-        /*        var addGold = function(){
-                    inventory.$get({
-                        'username': getUsername()
-                    }, function (err, user) {
-                        if(user){
-                            var query = {
-                                gold: this.gold+(Math.floor(Math.random() * (100+1)))
-                            };
-                            inventory.update(query, options, callback);
-                        } else{
-                            var newInventory = new Inventory();
-                            newInventory.username = getUsername();
-                            newInventory.gold = (Math.floor(Math.random() * (100+1)));
-                            newInventory.gold = 0;
-                            newInventory.gold = 0;
-                            newInventory.save();
-                        }
-                    });
-                };
-                var addWood = function(){
 
-                };
-                var addFood = function(){
-
-                };*/
-
-/*        var getInventory =
-            Inventory.get(username)
-                .then(function (response) {
-                    vm.inventoryData = response.data;
-                    console.log(vm.inventoryData);
-                });*/
+        var getInventory = function(){
+            if(vm.inventories.username === username){
+                Inventory.get(vm.inventories.id)
+                    .then(function(response){
+                        vm.inventoryData = response.data;
+                        console.log(vm.inventoryData);
+                    })
+            }
+        };
+        getInventory();
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {

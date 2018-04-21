@@ -20,7 +20,7 @@ angular.module('commandCtrl', [])
 
                 // when all the users come back, remove the processing variable
                 vm.processing = false;
-                console.log(data.headers);
+                console.log(data.body);
             });
 
 /*        Inventory.get()

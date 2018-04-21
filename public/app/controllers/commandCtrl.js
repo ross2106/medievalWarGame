@@ -46,7 +46,7 @@ angular.module('commandCtrl', [])
                             }
                         }*/
         };
-        getInventory();
+        getInventoryId();
 
 
         /*        Inventory.get()

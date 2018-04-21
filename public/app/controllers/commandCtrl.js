@@ -18,10 +18,10 @@ angular.module('commandCtrl', [])
         var getInventoryId = function () {
             Inventory.all()
                 .then(function (data) {
-                    json = data.data;
+                    //json = data.data;
                     //console.log(json);
-                    for (var i = 0; i < json.length; i++) {
-                        console.log(JSON.parse(json[i].id));
+                    for (var i = 0; i < data.length; i++) {
+                        console.log(data[i].data.id);
 /*                        if (json[i].username === username) {
                             Inventory.get()
                                 .then(funct

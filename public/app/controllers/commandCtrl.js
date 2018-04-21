@@ -22,11 +22,11 @@ angular.module('commandCtrl', [])
                     console.log(data.data);
                     console.log(json);
                 });
-
-            for(var i = 0; i < json.size(); i++) {
+            console.log("This is json" + json);
+/*            for(var i = 0; i < json.length(); i++) {
                 var obj = json[i];
                 console.log(obj.id);
-            }
+            }*/
 /*            for(var i = 0; i<vm.inventories.length; i++){
                 if(vm.inventories[i].username === username){
                     Inventory.get(vm.inventories[i].id)

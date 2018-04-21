@@ -6,7 +6,7 @@ angular.module('commandCtrl', [])
 
         //Grab the logged in user
         var username = '';
-        var inventoryId;
+        var inventoryId = '';
         var getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
@@ -16,19 +16,19 @@ angular.module('commandCtrl', [])
         getUsername();
 
         var getInventoryId = function () {
-            var id = '';
             Inventory.all()
                 .then(function (data) {
                     for(var i =0; i<data.data.length; i++){
                         if(data.data[i].username === username){
-                            id = data.data[i]._id;
-                            console.log(vm.inventoryId);
+                            inventoryId = data.data[i]._id;
+                            console.log(inventoryId);
                         }
                     }
                 });
             return id;
         };
-        console.log("inventory id: " + getInventoryId());
+        getInventoryId();
+        console.log("inventory id: " + inventoryId);
 
 
         /*        Inventory.get()

@@ -20,8 +20,9 @@ angular.module('commandCtrl', [])
                 .then(function (data) {
                     vm.inventories = data.data;
                     console.log(data.data);
+                    console.log(vm.inventories);
                 });
-            for(var i = 0; i<vm.inventories.length; i++){
+/*            for(var i = 0; i<vm.inventories.length; i++){
                 if(vm.inventories[i].username === username){
                     Inventory.get(vm.inventories[i].id)
                         .then(function(data){
@@ -29,7 +30,7 @@ angular.module('commandCtrl', [])
                             console.log(vm.userInventory);
                         })
                 }
-            }
+            }*/
         };
         getInventory();
 

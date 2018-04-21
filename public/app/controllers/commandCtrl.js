@@ -30,27 +30,11 @@ angular.module('commandCtrl', [])
         getInventoryId();
         console.log("inventory id: " + inventoryId);
 
-
-        /*        Inventory.get()
-                    .then(function(data){
-                        console.log(data.data);
-                    })*/
-
-        /*        var getInventory = function(){
-                    if(vm.inventories.username === username){
-                        Inventory.get(vm.inventories.id)
-                            .then(function(response){
-                                vm.inventoryData = response.data;
-                                console.log(vm.inventoryData);
-                            })
-                    }
-                };
-                getInventory();*!/*/
-
         $scope.sendCommand = function (cmd) {
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
+                    console.log('######' + username);
                     $http.put('/api/inventory/' + username, {
                         gold: Math.floor(Math.random() * 100 + 1),
                         food: 0,

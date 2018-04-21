@@ -57,7 +57,6 @@ app.get('*', function(req, res) {
 // START THE SERVER
 // ====================================
 http.listen(process.env.PORT || config.port);
-console.log('Magic happens on port ' + config.port);
 
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};

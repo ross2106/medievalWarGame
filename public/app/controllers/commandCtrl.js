@@ -38,28 +38,27 @@ angular.module('commandCtrl', [])
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
-                    Inventory.get(inventoryId)
-                        .then(function (res) {
-                                if (res) {
-                                    Inventory.update(username, {
-                                        gold: gold + Math.floor(Math.random() * 100 + 1)
-                                    })
-                                        .then(function (data) {
-                                            return data.data;
-                                        });
-                                } else {
-                                    Inventory.create({
-                                        username: username,
-                                        gold: Math.floor(Math.random() * 100 + 1),
-                                        food: 0,
-                                        wood: 0
-                                    })
-                                        .then(function (data) {
-                                            return data.data;
-                                        });
-                                }
-                            }
-                        );
+                    if(inventoryId){
+                        Inventory.get(inventoryId)
+                            .then(function(){
+                                Inventory.update(username, {
+                                    gold: gold + (Math.floor(Math.random() * 100 + 1))
+                                })
+                                    .then(function(data){
+                                        return data.data;
+                                    });
+                            });
+                    } else{
+                        Inventory.create({
+                            username: username,
+                            gold: Math.floor(Math.random() * 100 + 1),
+                            food: 0,
+                            wood: 0
+                        })
+                            .then(function (data) {
+                            return data.data;
+                        });
+                    }
                     break;
                 case 'chop_wood':
                     Socket.emit('command', {command: cmd});

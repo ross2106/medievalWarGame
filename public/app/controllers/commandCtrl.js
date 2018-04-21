@@ -68,7 +68,7 @@ angular.module('commandCtrl', [])
                                 return data.data;
                             });
                     } else{
-
+                        console.log('No Inventory');
                     }
                     break;
                 case 'chop_wood':

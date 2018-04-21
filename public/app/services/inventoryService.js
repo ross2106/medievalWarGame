@@ -11,8 +11,8 @@ angular.module('inventoryService', [])
         };
 
         // update a users resources
-        resourceFactory.update = function(username, resourceData) {
-            return $http.put('/api/inventory/' + username, resourceData);
+        resourceFactory.update = function(id, resourceData) {
+            return $http.put('/api/inventory/' + id, resourceData);
         };
 
         // get all users
@@ -21,8 +21,8 @@ angular.module('inventoryService', [])
         };
 
         // get a users inventory
-        resourceFactory.get = function(username) {
-            return $http.get('/api/inventory/' + username);
+        resourceFactory.get = function(id) {
+            return $http.get('/api/inventory/' + id);
         };
 
         return resourceFactory;

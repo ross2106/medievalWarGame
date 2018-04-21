@@ -48,7 +48,7 @@ angular.module('commandCtrl', [])
                     vm.inventories = data.data;
                     console.log(vm.inventories);
                 });
-            Inventory.get(vm.inventories.id)
+            Inventory.get($routeParams.username)
                 .then(function (response) {
                     vm.inventoryData = response;
                     console.log(vm.inventoryData);

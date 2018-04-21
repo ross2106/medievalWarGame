@@ -15,37 +15,42 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
-      Inventory.all()
-            .then(function(data) {
+        Inventory.all()
+            .then(function (data) {
 
                 // when all the users come back, remove the processing variable
                 vm.processing = false;
-                console.log(data.data);
+                console.log(data.username);
             });
 
-/*        var getInventory = function(){
-            if(vm.inventories.username === username){
-                Inventory.get(vm.inventories.id)
-                    .then(function(response){
-                        vm.inventoryData = response.data;
-                        console.log(vm.inventoryData);
-                    })
-            }
-        };
-        getInventory();*!/*/
+/*        Inventory.get()
+            .then(function(data){
+                console.log(data.data);
+            })*/
+
+        /*        var getInventory = function(){
+                    if(vm.inventories.username === username){
+                        Inventory.get(vm.inventories.id)
+                            .then(function(response){
+                                vm.inventoryData = response.data;
+                                console.log(vm.inventoryData);
+                            })
+                    }
+                };
+                getInventory();*!/*/
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
-                        $http.put('/api/inventory/' + username, {
-                            gold: Math.floor(Math.random() * 100 + 1),
-                            food: 0,
-                            wood: 0
-                        })
-                            .then(function (data) {
-                                return data.data;
-                            });
+                    $http.put('/api/inventory/' + username, {
+                        gold: Math.floor(Math.random() * 100 + 1),
+                        food: 0,
+                        wood: 0
+                    })
+                        .then(function (data) {
+                            return data.data;
+                        });
                     break;
                 case 'chop_wood':
                     Socket.emit('command', {command: cmd});

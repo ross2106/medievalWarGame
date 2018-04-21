@@ -18,44 +18,16 @@ angular.module('commandCtrl', [])
         var getInventoryId = function () {
             Inventory.all()
                 .then(function (data) {
-                    //json = data.data;
-                    //console.log(json);
-                    //var t = JSON.parse(data.data);
-                    //console.log(data.data);
                     for(var i =0; i<data.data.length; i++){
                         if(data.data[i].username === username){
                             inventoryId = data.data[i]._id;
-                            console.log(inventoryId);
+                            //console.log(inventoryId);
                         }
                     }
-/*                    for (var i = 0; i < data.length; i++) {
-                        console.log(data[i].data.id);*/
-/*                        if (json[i].username === username) {
-                            Inventory.get()
-                                .then(funct
-                                ion (data) {
-                                    inventory = data.data;
-                                    console.log(inventory);
-                                })
-                        }*/
-                   // }
                 });
-            //console.log("This is json" + json);
-            /*            for(var i = 0; i < json.length(); i++) {
-                            var obj = json[i];
-                            console.log(obj.id);
-                        }*/
-            /*            for(var i = 0; i<vm.inventories.length; i++){
-                            if(vm.inventories[i].username === username){
-                                Inventory.get(vm.inventories[i].id)
-                                    .then(function(data){
-                                        vm.userInventory = data.data;
-                                        console.log(vm.userInventory);
-                                    })
-                            }
-                        }*/
         };
-        getInventoryId();
+        //getInventoryId();
+        console.log("inventory id: " + getInventoryId());
 
 
         /*        Inventory.get()

@@ -1,73 +1,73 @@
-<div class="h1 text-center">
-    <h1>Welcome to your kingdom!</h1>
+<div class="jumbotron h1 text-center">
+    <h1>Welcome to the main lobby!</h1>
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col justify-content-md-center">
+<div class="container-fluid">
+    <!--    <div class="col justify-content-md-center">
             <h5>My Resources</h5>
         </div>
-        <div class="col justify-content-md-center">
-            <i class="fas fa-utensils"></i>
-            <p></p>
-        </div>
-        <div class="col justify-content-md-center">
-            <i class="fas fa-balance-scale"></i>
-            <p></p>
-        </div>
-        <div class="col justify-content-md-center">
-            <i class="fas fa-tree"></i>
-            <p></p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="card col-7">
-            <div class="row">
-                <canvas ng-controller="gameController" id="ctx" width="500" height="500" style="width: 100%; height: 80%;"></canvas>
+        <div class="row" ng-controller="gameController as game">
+            <div class="col justify-content-md-center">
+                <p><i class="fas fa-utensils"></i>{{ game.food }}</p>
             </div>
-            <div class="row" style="height:10%" ng-controller="commandController">
-                <ul style="overflow-y: auto; width: 100%;" scroll-glue>
-                    <li ng-repeat="command in commands">Command: {{command.command}}</li>
+            <div class="col justify-content-md-center">
+                <p><i class="fas fa-balance-scale"></i>{{ game.gold }}</p>
+            </div>
+            <div class="col justify-content-md-center">
+                <p><i class="fas fa-tree"></i>{{ game.wood }}</p>
+            </div>
+        </div>-->
+</div>
+<div class="row" style="height: 600px">
+    <div class="card col-7" ng-controller="gameController as game">
+        <div class="row">
+            <canvas id="ctx" width="500" height="500" style="width: 100%; height: 70%;"></canvas>
+        </div>
+        <div class="row" style="height:20%">
+            <ul style="overflow-y: auto; width: 100%;" scroll-glue>
+                <li ng-repeat="command in game.commands track by $index">{{ command }}</li>
+            </ul>
+        </div>
+        <div class="row" style="height: 10%">
+            <div class="col" ng-click="game.gatherFood()">
+                <button class="submit btn-lg btn-block"><i class="fas fa-utensils"></i>Gather Food</button>
+            </div>
+            <div class="col" ng-click="game.mineGold()">
+                <button class="submit btn-lg btn-block"><i class="fas fa-balance-scale"></i>Mine gold</button>
+            </div>
+            <div class="col" ng-click="game.chopWood()">
+                <button class="submit btn-lg btn-block"><i class="fas fa-tree"></i>Chop Wood</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="card col-5" ng-controller="chatController">
+        <div class="row" style="height:90%;">
+            <div class="card col-8">
+                <h5 class="text-center">Chat</h5>
+                <ul style="overflow-y: auto;" scroll-glue>
+                    <li ng-repeat="message in messages">
+                        <span class="username">{{message.username}}</span>
+                        <span class="message">{{message.message}}</span>
+                    </li>
                 </ul>
             </div>
-            <div class="row" style="height:10%" ng-controller="commandController">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter Command..." ng-model="cmd"
-                           id="commandInput">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="submit" ng-click="sendCommand(cmd)">Enter Command
-                        </button>
-                    </div>
-                </div>
+            <div class="card col-4">
+                <h5 class="text-center">Online Users</h5>
+                <ul>
+                    <li ng-repeat="user in users">{{user}}</li>
+                </ul>
             </div>
         </div>
-        <div class="card col-5" ng-controller="chatController">
-            <div class="row" style="height:90%;">
-                <div class="card col-8">
-                    <h5 class="text-center">Chat</h5>
-                    <ul style="overflow-y: auto;" scroll-glue>
-                        <li ng-repeat="message in messages">
-                            <span class="username">{{message.username}}</span>
-                            <span class="message">{{message.message}}</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card col-4">
-                    <h5 class="text-center">Online Users</h5>
-                    <ul>
-                        <li ng-repeat="user in users">{{user}}</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row" style="height:10%;">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter Text Here..." ng-model="msg"
-                           id="chatInput">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="submit" ng-click="sendMessage(msg)">Send Message
-                        </button>
-                    </div>
+        <div class="row" style="height:10%;">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Enter Text Here..." ng-model="msg"
+                       id="chatInput">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit" ng-click="sendMessage(msg)">Send Message
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

@@ -25,7 +25,7 @@
                 <a class = "nav-link" href="/dashboard"><i class="fas fa-home"></i>Dashboard</a>
             </li>
             <li class="nav-item" ng-if="main.loggedIn">
-                <a class="nav-link" href="/dashboard"><i class="fas fa-shield-alt"></i>Armoury</a>
+                <a class="nav-link" href="/armoury"><i class="fas fa-shield-alt"></i>Armoury</a>
             </li>
             <li class="nav-item" ng-if="main.loggedIn">
                 <a class="nav-link" href="/dashboard"><i class="fab fa-fort-awesome"></i>Go into Battle</a>
@@ -70,12 +70,13 @@
 <script type="text/javascript" src="app/controllers/userCtrl.js"></script>
 <script type="text/javascript" src="app/controllers/chatCtrl.js"></script>
 <script type="text/javascript" src="app/controllers/gameCtrl.js"></script>
-<script type="text/javascript" src="app/controllers/commandCtrl.js"></script>
+<script type="text/javascript" src="app/controllers/armouryCtrl.js"></script>
 
 <!-- services -->
 <script type="text/javascript" src="app/services/authService.js"></script>
 <script type="text/javascript" src="app/services/userService.js"></script>
 <script type="text/javascript" src="app/services/inventoryService.js"></script>
+<script type="text/javascript" src="app/services/armyService.js"></script>
 <script type="text/javascript" src="app/services/SocketFactory.js"></script>
 
 <!--Tools-->

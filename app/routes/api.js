@@ -1,6 +1,7 @@
 var bodyParser = require('body-parser'); // get body-parser
 var User = require('../models/user');
 var Inventory = require('../models/inventory');
+var Army = require('../models/army');
 var jwt = require('jsonwebtoken');
 var config = require('../../config');
 
@@ -136,20 +137,29 @@ module.exports = function (app, express) {
     apiRouter.route('/dashboard');
 
     // on routes that end in /resources
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
 
     apiRouter.route('/inventory')
-        //create an inventory for a user
-        .post(function(req, res){
+    //create an inventory for a user
+        .post(function (req, res) {
             var inventory = new Inventory();
             inventory.username = req.body.username;
             inventory.gold = req.body.gold;
             inventory.food = req.body.food;
             inventory.wood = req.body.wood;
-            inventory.save();
-            //return the inventory
-            res.json(inventory);
+            inventory.save(function (err) {
+                if (err) return res.send();
+                res.json({message: 'Inventory Created!'});
+            });
         })
-        .get(function(req, res){
+        .get(function (req, res) {
             Inventory.find({}, function (err, inventories) {
                 if (err) res.send(err);
 
@@ -160,36 +170,96 @@ module.exports = function (app, express) {
 
 
     apiRouter.route('/inventory/:username')
-        .put(function(req, res){
-            Inventory.findOne(req.params.username, function(err, inventory){
+        .put(function (req, res) {
+            Inventory.findOne(req.params.username, function (err, inventory) {
                 if (err) res.send(err);
                 if (req.body.gold) inventory.gold = req.body.gold;
                 if (req.body.food) inventory.food = req.body.food;
                 if (req.body.wood) inventory.wood = req.body.wood;
-
-                //return the inventory
-                res.json(inventory);
                 // save the inventory
                 inventory.save(function (err) {
-                    if (err) res.send(err);
-                    // return a message
-                    res.json({
-                        message: 'Inventory updated!'
-                    });
+                    if (err) {
+                        return res.send();
+                    }
+                    res.json({message: 'Inventory Updated!'});
                 });
             })
         })
 
-        .get(function(req, res){
-            Inventory.findById(req.params.user_id, function(err, inventory){
-                if(err) res.send(err);
+        .get(function (req, res) {
+            Inventory.findById(req.params.user_id, function (err, inventory) {
+                if (err) res.send(err);
 
                 //return the inventory
                 res.json(inventory);
             })
         });
 
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
 
+    apiRouter.route('/army')
+    //create an army for a user
+        .post(function (req, res) {
+            var army = new Army();
+            army.username = req.body.username;
+            army.infantry = req.body.infantry;
+            army.archers = req.body.archers;
+            army.cavalry = req.body.cavalry;
+            army.save(function (err) {
+                if (err) return res.send();
+                res.json({message: 'Army Created!'});
+            });
+        })
+        .get(function (req, res) {
+            Army.find({}, function (err, armies) {
+                if (err) res.send(err);
+                // return the armies
+                res.json(armies)
+            });
+        });
+
+
+    apiRouter.route('/army/:username')
+        .put(function (req, res) {
+            Army.findOne(req.params.username, function (err, army) {
+                if (err) res.send(err);
+                if (req.body.infantry) army.infantry = req.body.infantry;
+                if (req.body.archers) army.archers = req.body.archers;
+                if (req.body.cavalry) army.cavalry = req.body.cavalry;
+                // save the inventory
+                army.save(function (err) {
+                    if (err) {
+                        return res.send();
+                    }
+                    res.json({message: 'Army Updated!'});
+                });
+            })
+        })
+
+        .get(function (req, res) {
+            Army.findById(req.params.user_id, function (err, army) {
+                if (err) res.send(err);
+
+                //return the inventory
+                res.json(army);
+            })
+        });
+
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
+    // *********************************************************************************
 
 
     // on routes that end in /users

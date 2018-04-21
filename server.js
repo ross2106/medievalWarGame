@@ -34,7 +34,7 @@ app.use(function(req, res, next) {
 app.use(morgan('dev'));
 
 // connect to our database (hosted on modulus.io)
-mongoose.connect(config.database);
+mongoose.connect(config.localdb);
 
 // set static files location
 // used for requests that our frontend will make
@@ -112,10 +112,6 @@ io.sockets.on('connection', function(socket){
 
     socket.on('message', function(data){
         io.emit('message', {username: username, message: data.message});
-    });
-
-    socket.on('command', function(data){
-        socket.emit('command', {command: data.command});
     });
 
     socket.on('keyPress',function(data){

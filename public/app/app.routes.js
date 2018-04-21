@@ -22,10 +22,16 @@ angular.module('app.routes', ['ngRoute'])
                 controllerAs: 'register'
             })
 
-            .when('/dashboard',{
+            .when('/dashboard', {
                 templateUrl: 'app/views/pages/loggedIn/dashboard.html',
                 controller: 'mainController',
                 controllerAs: 'dashboard'
+            })
+
+            .when('/armoury', {
+                templateUrl: 'app/views/pages/loggedIn/armoury.html',
+                controller: 'mainController',
+                controllerAs: 'armoury'
             });
 
         $locationProvider.html5Mode(true);

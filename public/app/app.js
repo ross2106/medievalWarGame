@@ -4,12 +4,13 @@ angular.module('userApp', [
     'authService',
     'socketFactory',
     'mainCtrl',
-    'commandCtrl',
     'userCtrl',
     'chatCtrl',
     'gameCtrl',
+    'armouryCtrl',
     'userService',
     'inventoryService',
+    'armyService',
     'btford.socket-io',
     'luegg.directives'])
   // application configuration to integrate token into requests

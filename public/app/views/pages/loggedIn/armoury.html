@@ -1,0 +1,96 @@
+<div class="jumbotron h1 text-center">
+    <h1>Welcome to your armoury!</h1>
+</div>
+<br>
+<div class="container">
+    <div class="row" ng-controller="armouryController as armoury">
+        <div class="col-3">
+            <div class="col">
+                <div class = "row">
+                    <h5>My Resources</h5>
+                </div>
+                <div class="row">
+                    <span><i class="fas fa-utensils"></i>       {{ armoury.food }}</span>
+                </div>
+                <div class="row">
+                    <span><i class="fas fa-balance-scale"></i>      {{ armoury.gold }}</span>
+                </div>
+                <div class="row">
+                    <span><i class="fas fa-tree"></i>       {{ armoury.wood }}</span>
+                </div>
+                <br>
+                <div class = "row">
+                    <h5>My Army</h5>
+                </div>
+                <div class="row">
+                    <span><i class="fas fa-utensils"></i>       {{ armoury.infantry }}</span>
+                </div>
+                <div class="row">
+                    <span><i class="fas fa-balance-scale"></i>      {{ armoury.cavalry }}</span>
+                </div>
+                <div class="row">
+                    <span><i class="fas fa-tree"></i>       {{ armoury.archers }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h5>Infantry</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span>Cost: 150 Food, 120 Gold</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" ng-click="armoury.buyInfantry()">
+                            <button class="submit btn-lg btn-block"></i>Buy Infantry</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h5>Cavalry</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span>Cost: 300 Food, 200 Gold</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" ng-click="armoury.buyCavalry()">
+                            <button class="submit btn-lg btn-block">Buy Cavalry</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h5>Archers</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span>Cost: 100 Food, 100 Gold, 200 wood</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" ng-click="armoury.buyArchers()">
+                            <button class="submit btn-lg btn-block">Buy Archers</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

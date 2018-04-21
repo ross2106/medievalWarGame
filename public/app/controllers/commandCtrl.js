@@ -14,6 +14,17 @@ angular.module('commandCtrl', [])
         };
         getUsername();
 
+        // grab all the inventories at page load
+        Inventory.all()
+            .then(function(data) {
+
+                // when all the users come back, remove the processing variable
+                vm.processing = false;
+
+                // bind the users that come back to vm.users
+                vm.inventories = data.data;
+                console.log(vm.inventories);
+            });
         /*        var addGold = function(){
                     inventory.$get({
                         'username': getUsername()
@@ -40,19 +51,19 @@ angular.module('commandCtrl', [])
 
                 };*/
 
-        var getInventory =
+/*        var getInventory =
             Inventory.get(username)
                 .then(function (response) {
                     vm.inventoryData = response.data;
                     console.log(vm.inventoryData);
-                });
+                });*/
 
         $scope.sendCommand = function (cmd) {
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
                         $http.put('/api/inventory/' + username, {
-                            gold: vm.inventoryData.gold + Math.floor(Math.random() * 100 + 1),
+                            gold: Math.floor(Math.random() * 100 + 1),
                             food: 0,
                             wood: 0
                         })

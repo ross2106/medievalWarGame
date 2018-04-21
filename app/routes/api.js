@@ -176,7 +176,7 @@ module.exports = function (app, express) {
                 if(err) res.send(err);
 
                 //return the inventory
-                res.json(inventory);
+                res.json(inventory.data);
             })
         });
 

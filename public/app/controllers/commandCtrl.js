@@ -25,7 +25,6 @@ angular.module('commandCtrl', [])
                         }
                     }
                 });
-            return id;
         };
         getInventoryId();
         console.log("inventory id: " + inventoryId);

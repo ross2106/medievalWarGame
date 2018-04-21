@@ -27,7 +27,6 @@ angular.module('commandCtrl', [])
                             gold = data.data[i].gold;
                             wood = data.data[i].wood;
                             food = data.data[i].food;
-                            console.log(inventoryId);
                         }
                     }
                 });
@@ -37,6 +36,8 @@ angular.module('commandCtrl', [])
             switch (cmd) {
                 case 'mine_gold':
                     getInventoryId();
+                    console.log('get inventory id called');
+                    console.log(inventoryId);
                     Socket.emit('command', {command: cmd});
                     if(inventoryId){
                         Inventory.get(inventoryId)

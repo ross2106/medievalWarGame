@@ -21,7 +21,7 @@ angular.module('commandCtrl', [])
                     json = data.data;
                     //console.log(json);
                     for (var i = 0; i < json.length; i++) {
-                        console.log(json[i].id);
+                        console.log(json[i].data.id);
 /*                        if (json[i].username === username) {
                             Inventory.get()
                                 .then(function (data) {

@@ -6,7 +6,7 @@ angular.module('commandCtrl', [])
 
         //Grab the logged in user
         var username = '';
-        var inventory;
+        var inventoryId;
         var getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
@@ -23,7 +23,13 @@ angular.module('commandCtrl', [])
                     //var t = JSON.parse(data.data);
                     //console.log(data.data);
                     for(var i =0; i<data.data.length; i++){
-                        console.log(data.data[i].username)
+                        if(data.data[i].username === username){
+                            Inventory.get()
+                                .then(function(data){
+                                    inventoryId = data.data[i]._id;
+                                    console.log(inventoryId)
+                                })
+                        }
                     }
 /*                    for (var i = 0; i < data.length; i++) {
                         console.log(data[i].data.id);*/

@@ -7,6 +7,9 @@ angular.module('commandCtrl', [])
         //Grab the logged in user
         var username = '';
         var inventoryId = '';
+        var gold = 0;
+        var wood = 0;
+        var food = 0;
         var getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
@@ -18,9 +21,12 @@ angular.module('commandCtrl', [])
         var getInventoryId = function () {
             Inventory.all()
                 .then(function (data) {
-                    for(var i =0; i<data.data.length; i++){
-                        if(data.data[i].username === username){
+                    for (var i = 0; i < data.data.length; i++) {
+                        if (data.data[i].username === username) {
                             inventoryId = data.data[i]._id;
+                            gold = data.data[i].gold;
+                            wood = data.data[i].wood;
+                            food = data.data[i].food;
                             console.log(inventoryId);
                         }
                     }
@@ -32,15 +38,25 @@ angular.module('commandCtrl', [])
             switch (cmd) {
                 case 'mine_gold':
                     Socket.emit('command', {command: cmd});
-                    console.log('######' + username);
-                    console.log('%%%%%' + inventoryId);
-                    $http.put('/api/inventory/' + username, {
-                        gold: Math.floor(Math.random() * 100 + 1),
-                        food: 0,
-                        wood: 0
-                    })
+                    Inventory.get(inventoryId)
                         .then(function (data) {
-                            return data.data;
+                            if (data) {
+                                Inventory.update(inventoryId, {
+                                    gold: this.gold + Math.floor(Math.random() * 100 + 1)
+                                })
+                                    .then(function (data) {
+                                        return data.data;
+                                    });
+                            } else {
+                                Inventory.create(username, {
+                                    gold: Math.floor(Math.random() * 100 + 1),
+                                    food: 0,
+                                    wood: 0
+                                })
+                                    .then(function (data) {
+                                        return data.data;
+                                    });
+                            }
                         });
                     break;
                 case 'chop_wood':

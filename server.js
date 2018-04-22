@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
 app.use(morgan('dev'));
 
 // connect to our database (hosted on modulus.io)
-mongoose.connect(process.env.PORT || config.localdb);
+mongoose.connect(config.localdb || config.database);
 
 // set static files location
 // used for requests that our frontend will make
@@ -56,7 +56,7 @@ app.get('*', function (req, res) {
 
 // START THE SERVER
 // ====================================
-http.listen(config.port);
+http.listen(process.env.PORT || config.port);
 
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};

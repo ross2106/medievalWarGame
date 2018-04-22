@@ -1,20 +1,14 @@
-<div class="jumbotron text-center">
-    <h1>Welcome to Medieval War!</h1>
-    <div ng-if="!main.loggedIn">
-        <p>Sign up to create your kingdom.</p>
-        <a href="/login" class="btn btn-primary">Login</a>
-        <a href="/register" class="btn btn-primary">Register</a>
-    </div>
-
-    <div ng-if="main.loggedIn">
-        <p>Welcome to your kingdom!</p>
-    </div>
-</div>
 <div class="container-fluid">
-    <div class="jumbotron text-center">
+    <div class="jumbotron text-center" ng-if="!main.loggedIn">
         <h1>Welcome to Medieval War!</h1>
         <h5>Log in or Sign up to create your kingdom.</h5>
-        <span class="btn btn-large btn-primary">Login</span>
-        <span class="btn btn-large btn-primary">Login</span>
+        <span href="/login" class="btn btn-large btn-primary">Login</span>
+        <span href="/register" class="btn btn-large btn-primary">Register</span>
+    </div>
+    <div class="jumbotron text-center" ng-if="main.loggedIn">
+        <h1>Welcome to your kingdom!</h1>
+        <p>Go to the dashboard to interact with other players and gather resources.</p>
+        <p>The armoury will let you build up forces to ambush other players!</p>
+        <p>Once you think you're strong enough, go to battle and ambush other players!</p>
     </div>
 </div>

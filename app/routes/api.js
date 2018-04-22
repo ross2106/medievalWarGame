@@ -52,7 +52,7 @@ module.exports = function (app, express) {
             if (!user) {
                 res.json({
                     success: false,
-                    message: 'Authentication failed. User not found.'
+                    message: 'Incorrect username or password'
                 });
             } else if (user) {
 
@@ -61,10 +61,9 @@ module.exports = function (app, express) {
                 if (!validPassword) {
                     res.json({
                         success: false,
-                        message: 'Authentication failed. Wrong password.'
+                        message: 'Incorrect username or password'
                     });
                 } else {
-
                     // if user is found and password is right
                     // create a token
                     var token = jwt.sign({

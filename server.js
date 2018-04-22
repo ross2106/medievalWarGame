@@ -56,7 +56,7 @@ app.get('*', function (req, res) {
 
 // START THE SERVER
 // ====================================
-http.listen(process.env.PORT || config.port);
+http.listen(config.port);
 
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};

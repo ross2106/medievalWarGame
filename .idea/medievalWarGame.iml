@@ -9,5 +9,6 @@
     <orderEntry type="library" name="angular-aria" level="application" />
     <orderEntry type="library" name="angular-messages" level="application" />
     <orderEntry type="library" name="angular-material" level="application" />
+    <orderEntry type="module" module-name="userCRM-final" />
   </component>
 </module>

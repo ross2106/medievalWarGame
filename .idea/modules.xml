@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/medievalWarGame.iml" filepath="$PROJECT_DIR$/.idea/medievalWarGame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../userCRM-final/.idea/userCRM-final.iml" filepath="$PROJECT_DIR$/../userCRM-final/.idea/userCRM-final.iml" />
     </modules>
   </component>
 </project>

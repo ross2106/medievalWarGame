@@ -10,6 +10,9 @@
                 <label>Password</label>
                 <input type="password" class="form-control" ng-model="login.loginData.password" id="inputPassword"
                        required>
+                <div class="alert alert-danger" ng-if="login.error">
+                    {{ login.error }}
+                </div>
                 <br>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>

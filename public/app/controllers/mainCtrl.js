@@ -45,6 +45,7 @@ angular.module('mainCtrl', [])
     vm.registerUser = function () {
         vm.processing = true;
         vm.message = '';
+        vm.error = '';
         // use the create function in the userService
         Auth.register(vm.userData.name, vm.userData.username, vm.userData.password)
             .then(function (data) {

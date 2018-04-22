@@ -169,9 +169,9 @@ module.exports = function (app, express) {
         });
 
 
-    apiRouter.route('/inventory/:username')
+    apiRouter.route('/inventory/:id')
         .put(function (req, res) {
-            Inventory.findOne(req.params.username, function (err, inventory) {
+            Inventory.findById(req.params.id, function (err, inventory) {
                 if (err) res.send(err);
                 if (req.body.gold) inventory.gold = req.body.gold;
                 if (req.body.food) inventory.food = req.body.food;
@@ -187,7 +187,7 @@ module.exports = function (app, express) {
         })
 
         .get(function (req, res) {
-            Inventory.findById(req.params.user_id, function (err, inventory) {
+            Inventory.findById(req.params.id, function (err, inventory) {
                 if (err) res.send(err);
 
                 //return the inventory
@@ -212,6 +212,8 @@ module.exports = function (app, express) {
             army.infantry = req.body.infantry;
             army.archers = req.body.archers;
             army.cavalry = req.body.cavalry;
+            army.level = req.body.level;
+            army.winCount = req.body.winCount;
             army.save(function (err) {
                 if (err) return res.send();
                 res.json({message: 'Army Created!'});
@@ -226,13 +228,15 @@ module.exports = function (app, express) {
         });
 
 
-    apiRouter.route('/army/:username')
+    apiRouter.route('/army/:id')
         .put(function (req, res) {
-            Army.findOne(req.params.username, function (err, army) {
+            Army.findById(req.params.id, function (err, army) {
                 if (err) res.send(err);
                 if (req.body.infantry) army.infantry = req.body.infantry;
                 if (req.body.archers) army.archers = req.body.archers;
                 if (req.body.cavalry) army.cavalry = req.body.cavalry;
+                if (req.body.level) army.level = req.body.level;
+                if (req.body.winCount) army.winCount = req.body.winCount;
                 // save the inventory
                 army.save(function (err) {
                     if (err) {
@@ -244,12 +248,25 @@ module.exports = function (app, express) {
         })
 
         .get(function (req, res) {
-            Army.findById(req.params.user_id, function (err, army) {
+            Army.findById(req.params.id, function (err, army) {
                 if (err) res.send(err);
 
                 //return the inventory
                 res.json(army);
             })
+        })
+
+        // delete the user with this id
+        .delete(function (req, res) {
+            Army.remove({
+                _id: req.params.id
+            }, function (err) {
+                if (err) res.send(err);
+
+                res.json({
+                    message: 'Army destroyed.'
+                });
+            });
         });
 
     // *********************************************************************************

@@ -12,7 +12,7 @@ var path = require('path');
 
 //socket IO stuff
 var http = require('http').Server(app);
-var io = require('socket.io')(http,{});
+var io = require('socket.io')(http);
 
 // APP CONFIGURATION ==================
 // ====================================
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // configure our app to handle CORS requests
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
@@ -50,37 +50,37 @@ app.use('/api', apiRoutes);
 // MAIN CATCHALL ROUTE ---------------
 // SEND USERS TO FRONTEND ------------
 // has to be registered after API ROUTES
-app.get('*', function(req, res) {
+app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
 });
 
 // START THE SERVER
 // ====================================
-http.listen(process.env.PORT || config.port);
+http.listen(config.port);
 
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 
-var Player = function(id, username){
+var Player = function (id, username) {
     var self = {
-        x:250,
-        y:250,
-        id:id,
+        x: 250,
+        y: 250,
+        id: id,
         username: username,
-        pressingRight:false,
-        pressingLeft:false,
-        pressingUp:false,
-        pressingDown:false,
-        maxSpd:10
+        pressingRight: false,
+        pressingLeft: false,
+        pressingUp: false,
+        pressingDown: false,
+        maxSpd: 5
     };
-    self.updatePosition = function(){
-        if(self.pressingRight)
+    self.updatePosition = function () {
+        if (self.pressingRight)
             self.x += self.maxSpd;
-        if(self.pressingLeft)
+        if (self.pressingLeft)
             self.x -= self.maxSpd;
-        if(self.pressingUp)
+        if (self.pressingUp)
             self.y -= self.maxSpd;
-        if(self.pressingDown)
+        if (self.pressingDown)
             self.y += self.maxSpd;
     };
     return self;
@@ -88,7 +88,7 @@ var Player = function(id, username){
 
 //SOCKET
 var users = [];
-io.sockets.on('connection', function(socket){
+io.on('connection', function (socket) {
     var username = '';
     var player = '';
     socket.id = Math.random();
@@ -96,59 +96,68 @@ io.sockets.on('connection', function(socket){
 
     console.log('A user has connected');
 
-    socket.on('request-users', function(){
+    socket.on('request-users', function () {
         socket.emit('users', {users: users});
     });
 
-    socket.on('add-user', function(data){
+    socket.on('message', function (data) {
+        io.emit('message', {username: username, message: data.message});
+    });
+
+    socket.on('challenge', function (data) {
+        socket.emit('challenge', {username: username, message: data.message});
+    });
+
+    socket.on('announcement', function (data) {
+        socket.emit('announcement', {message: data.message});
+    });
+
+    socket.on('add-user', function (data) {
         io.emit('add-user', {
             username: data.username
         });
         username = data.username;
+        users.push(data.username);
         player = Player(socket.id, username);
         PLAYER_LIST[socket.id] = player;
-        users.push(data.username);
     });
 
-    socket.on('message', function(data){
-        io.emit('message', {username: username, message: data.message});
-    });
-
-    socket.on('keyPress',function(data){
-        if(data.inputId === 'left')
-            player.pressingLeft = data.state;
-        else if(data.inputId === 'right')
-            player.pressingRight = data.state;
-        else if(data.inputId === 'up')
-            player.pressingUp = data.state;
-        else if(data.inputId === 'down')
-            player.pressingDown = data.state;
-    });
-
-    socket.on('disconnect', function(){
+    socket.on('disconnect', function () {
         console.log(username + ' has disconnected!');
         users.splice(users.indexOf(username), 1);
-        io.emit('remove-user', {username: username});
         delete SOCKET_LIST[socket.id];
         delete PLAYER_LIST[socket.id];
+        io.emit('remove-user', {username: username});
+        io.emit('battle-remove-user', {username: username});
+    });
+
+    socket.on('keyPress', function (data) {
+        if (data.inputId === 'left')
+            player.pressingLeft = data.state;
+        else if (data.inputId === 'right')
+            player.pressingRight = data.state;
+        else if (data.inputId === 'up')
+            player.pressingUp = data.state;
+        else if (data.inputId === 'down')
+            player.pressingDown = data.state;
     });
 });
-setInterval(function(){
+setInterval(function () {
     var pack = [];
-    for(var i in PLAYER_LIST){
+    for (var i in PLAYER_LIST) {
         var player = PLAYER_LIST[i];
         player.updatePosition();
         pack.push({
-            x:player.x,
-            y:player.y,
-            username:player.username
+            x: player.x,
+            y: player.y,
+            username: player.username
         });
     }
-    for(var i in SOCKET_LIST){
+    for (var i in SOCKET_LIST) {
         var socket = SOCKET_LIST[i];
-        socket.emit('newPositions',pack);
+        socket.emit('newPositions', pack);
     }
-},40);
+}, 40);
 
 
 

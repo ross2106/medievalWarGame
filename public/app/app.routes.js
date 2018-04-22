@@ -24,14 +24,20 @@ angular.module('app.routes', ['ngRoute'])
 
             .when('/dashboard', {
                 templateUrl: 'app/views/pages/loggedIn/dashboard.html',
-                controller: 'mainController',
+                controller: 'dashboardController',
                 controllerAs: 'dashboard'
             })
 
             .when('/armoury', {
                 templateUrl: 'app/views/pages/loggedIn/armoury.html',
-                controller: 'mainController',
+                controller: 'armouryController',
                 controllerAs: 'armoury'
+            })
+
+            .when('/battle', {
+                templateUrl: 'app/views/pages/loggedIn/battle.html',
+                controller: 'battleController',
+                controllerAs: 'battle'
             });
 
         $locationProvider.html5Mode(true);

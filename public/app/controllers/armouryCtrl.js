@@ -1,5 +1,5 @@
 angular.module('armouryCtrl', [])
-    .controller('armouryController', function ($http, $route, $scope, $routeParams, Socket, Auth, Army, Inventory) {
+    .controller('armouryController', function ($http, Auth, Army, Inventory) {
         var vm = this;
         vm.username = '';
 
@@ -52,10 +52,14 @@ angular.module('armouryCtrl', [])
         getInventory();
 
         vm.buyInfantry = function () {
-            if(vm.gold >= 120 && vm.food >= 150) {
+            if (vm.gold >= 120 && vm.food >= 150) {
                 if (vm.armyId !== '') {
-                    Army.update(vm.username, {
+                    Army.update(vm.armyId, {
                         infantry: vm.infantry + 1
+                    });
+                    Inventory.update(vm.inventoryId, {
+                        gold: vm.gold - 120,
+                        food: vm.food - 150
                     });
                     vm.gold -= 120;
                     vm.food -= 150;
@@ -65,52 +69,95 @@ angular.module('armouryCtrl', [])
                         username: vm.username,
                         infantry: 1,
                         archers: 0,
-                        cavalry: 0
+                        cavalry: 0,
+                        level: 1,
+                        winCount: 0
                     });
+                    Inventory.update(vm.inventoryId, {
+                        gold: vm.gold - 120,
+                        food: vm.food - 150
+                    });
+                    vm.gold -= 120;
+                    vm.food -= 150;
                     getInventory();
                     getArmy();
                 }
-            } else{
+            } else {
 
             }
         };
         vm.buyCavalry = function () {
-            if (vm.armyId !== '') {
-                Army.update(vm.username, {
-                    cavalry: vm.cavalry + 1
-                });
-                vm.gold -= 200;
-                vm.food -= 300;
-                vm.cavalry += 1;
+            if (vm.gold >= 300 && vm.food >= 300) {
+                if (vm.armyId !== '') {
+                    Army.update(vm.armyId, {
+                        cavalry: vm.cavalry + 1
+                    });
+                    Inventory.update(vm.inventoryId, {
+                        gold: vm.gold - 200,
+                        food: vm.food - 300
+                    });
+                    vm.gold -= 200;
+                    vm.food -= 300;
+                    vm.cavalry += 1;
+                } else {
+                    Army.create({
+                        username: vm.username,
+                        infantry: 0,
+                        archers: 0,
+                        cavalry: 1,
+                        level: 1,
+                        winCount: 0
+                    });
+                    Inventory.update(vm.inventoryId, {
+                        gold: vm.gold - 200,
+                        food: vm.food - 300
+                    });
+                    vm.gold -= 200;
+                    vm.food -= 300;
+                    getInventory();
+                    getArmy();
+                }
             } else {
-                Army.create({
-                    username: vm.username,
-                    infantry: 0,
-                    archers: 0,
-                    cavalry: 1
-                });
-                getInventory();
-                getArmy();
+
             }
         };
         vm.buyArchers = function () {
-            if (vm.armyId !== '') {
-                Army.update(vm.username, {
-                    archers: vm.archers + 1
-                });
-                vm.gold -= 100;
-                vm.food -= 100;
-                vm.wood -= 200;
-                vm.archers += 1;
+            if (vm.gold >= 100 && vm.food >= 100 && vm.wood >= 200) {
+                if (vm.armyId !== '') {
+                    Army.update(vm.armyId, {
+                        archers: vm.archers + 1
+                    });
+                    Inventory.update(vm.inventoryId, {
+                        gold: vm.gold - 100,
+                        food: vm.food - 100,
+                        wood: vm.wood - 200
+                    });
+                    vm.gold -= 100;
+                    vm.food -= 100;
+                    vm.wood -= 200;
+                    vm.archers += 1;
+                } else {
+                    Army.create({
+                        username: vm.username,
+                        infantry: 0,
+                        archers: 1,
+                        cavalry: 0,
+                        level: 1,
+                        winCount: 0
+                    });
+                    Inventory.update(vm.inventoryId, {
+                        gold: vm.gold - 100,
+                        food: vm.food - 100,
+                        wood: vm.wood - 200
+                    });
+                    vm.gold -= 100;
+                    vm.food -= 100;
+                    vm.wood -= 200;
+                    getInventory();
+                    getArmy();
+                }
             } else {
-                Army.create({
-                    username: vm.username,
-                    infantry: 0,
-                    archers: 1,
-                    cavalry: 0
-                });
-                getInventory();
-                getArmy();
+
             }
         };
     });

@@ -11,8 +11,8 @@ angular.module('armyService', [])
         };
 
         // update a users resources
-        armyFactory.update = function(username, resourceData) {
-            return $http.put('/api/army/' + username, resourceData);
+        armyFactory.update = function(id, resourceData) {
+            return $http.put('/api/army/' + id, resourceData);
         };
 
         // get all inventories
@@ -21,8 +21,13 @@ angular.module('armyService', [])
         };
 
         // get a users inventory
-        armyFactory.get = function(username) {
-            return $http.get('/api/army/' + username);
+        armyFactory.get = function(id) {
+            return $http.get('/api/army/' + id);
+        };
+
+        // delete a user
+        armyFactory.delete = function(id) {
+            return $http.delete('/api/army/' + id);
         };
 
         return armyFactory;

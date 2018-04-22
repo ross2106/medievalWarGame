@@ -1,5 +1,6 @@
-angular.module('gameCtrl', [])
-    .controller('gameController', function ($http, $route, $scope, $routeParams, Socket, Auth, Inventory) {
+angular.module('dashboardCtrl', [])
+    .controller('dashboardController', function ($http, $scope, Socket, Auth, Inventory, User) {
+        Socket.connect();
         var vm = this;
         var canvas = document.getElementById('ctx');
         var ctx = canvas.getContext('2d');
@@ -9,19 +10,79 @@ angular.module('gameCtrl', [])
         var knight = new Image();
         vm.username = '';
         vm.inventoryId = '';
-        vm.gold = 0;
-        vm.wood = 0;
-        vm.food = 0;
+        vm.inventoryId = '';
         vm.commands = [];
+
+        $scope.users = [];
+        $scope.messages = [];
 
         var getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
                     vm.username = response.data.username;
+                    console.log(response.data);
+                    Socket.emit('add-user', {username: response.data.username});
                 });
         };
         getUsername();
-        Socket.connect();
+
+        var test = function(){
+            User.all()
+                .then(function(response){
+                    for(var i = 0; i < response.length; i++){
+                        if(response.data[i].username === vm.username){
+                            myId = response.data[i]._id
+                        }
+                    }
+                })
+        };
+        test();
+
+        var getInventory = function () {
+            Inventory.all()
+                .then(function (data) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        if (data.data[i].username === vm.username) {
+                            vm.inventoryId = data.data[i]._id;
+                            vm.gold = parseInt(data.data[i].gold);
+                            vm.wood = parseInt(data.data[i].wood);
+                            vm.food = parseInt(data.data[i].food);
+                        }
+                    }
+                });
+        };
+        getInventory();
+
+        $scope.sendMessage = function (msg) {
+            if (msg != null && msg !== '')
+                Socket.emit('message', {message: msg});
+            $scope.msg = '';
+
+        };
+
+        Socket.emit('request-users', {});
+
+        Socket.on('users', function (data) {
+            $scope.users = data.users;
+        });
+
+        Socket.on('message', function (data) {
+            $scope.messages.push(data);
+        });
+
+        Socket.on('add-user', function (data) {
+            $scope.users.push(data.username);
+            $scope.messages.push({username: data.username, message: 'has entered the channel'});
+        });
+
+        Socket.on('remove-user', function (data) {
+            $scope.users.splice($scope.users.indexOf(data.username), 1);
+            $scope.messages.push({username: data.username, message: 'has left the channel'});
+        });
+
+        $scope.$on('$locationChangeStart', function (event) {
+            Socket.disconnect(true);
+        });
 
         Socket.on('newPositions', function (data) {
             ctx.clearRect(0, 0, 500, 500);
@@ -60,30 +121,15 @@ angular.module('gameCtrl', [])
                 Socket.emit('keyPress', {inputId: 'up', state: false});
         };
 
-        var getInventory = function () {
-            Inventory.all()
-                .then(function (data) {
-                    for (var i = 0; i < data.data.length; i++) {
-                        if (data.data[i].username === vm.username) {
-                            vm.inventoryId = data.data[i]._id;
-                            vm.gold = parseInt(data.data[i].gold);
-                            vm.wood = parseInt(data.data[i].wood);
-                            vm.food = parseInt(data.data[i].food);
-                        }
-                    }
-                });
-        };
-        getInventory();
-
         vm.mineGold = function () {
             var random = Math.floor(Math.random() * 100) + 1;
             var chance = Math.floor(Math.random() * 50) + 1;
-            if (chance > 45) {
+            if (chance > 35) {
                 vm.commands.push('You mined ' + random + ' gold!');
                 vm.command = '';
                 console.log(vm.commands);
-                if (vm.inventoryId != '') {
-                    Inventory.update(vm.username, {
+                if (vm.inventoryId !== '') {
+                    Inventory.update(vm.inventoryId, {
                         gold: vm.gold + random
                     });
                     vm.gold += random;
@@ -105,11 +151,13 @@ angular.module('gameCtrl', [])
         vm.gatherFood = function () {
             var random = Math.floor(Math.random() * 100) + 1;
             var chance = Math.floor(Math.random() * 50) + 1;
-            if (chance > 30) {
+            if (chance > 25) {
                 vm.commands.push('You gathered ' + random + ' food!');
                 vm.command = '';
-                if (vm.inventoryId != '') {
-                    Inventory.update(vm.username, {
+                console.log(vm.inventoryId);
+                if (vm.inventoryId !== '') {
+                    console.log('updating db...');
+                    Inventory.update(vm.inventoryId, {
                         food: vm.food + random
                     });
                     vm.food += random;
@@ -131,11 +179,11 @@ angular.module('gameCtrl', [])
         vm.chopWood = function () {
             var random = Math.floor(Math.random() * 100) + 1;
             var chance = Math.floor(Math.random() * 50) + 1;
-            if (chance > 30) {
+            if (chance > 25) {
                 vm.commands.push('You chopped ' + random + ' wood!');
                 vm.command = '';
                 if (vm.inventoryId != '') {
-                    Inventory.update(vm.username, {
+                    Inventory.update(vm.inventoryId, {
                         wood: vm.wood + random
                     });
                     vm.wood += random;
@@ -153,4 +201,5 @@ angular.module('gameCtrl', [])
                 vm.command = '';
             }
         };
+
     });

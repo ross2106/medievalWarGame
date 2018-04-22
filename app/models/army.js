@@ -11,15 +11,23 @@ var ArmySchema = new Schema({
         }
     },
     infantry: {
-        type: String,
+        type: Number,
         required: true
     },
     archers: {
-        type: String,
+        type: Number,
         required: true
     },
     cavalry: {
-        type: String,
+        type: Number,
+        required: true
+    },
+    level: {
+        type: Number,
+        required: true
+    },
+    winCount: {
+        type: Number,
         required: true
     }
 });

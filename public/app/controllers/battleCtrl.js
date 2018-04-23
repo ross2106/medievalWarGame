@@ -99,6 +99,7 @@ angular.module('battleCtrl', [])
 
         //When somebody is challenged, get the details about the person being challenged
         $scope.getChallenger = function (index) {
+            vm.getAllArmies();
             $scope.challenge = index; //The person who is being challenged
             vm.challengeUser = $scope.users[$scope.challenge];
             if ($scope.users[$scope.challenge] === vm.username) {
@@ -133,7 +134,6 @@ angular.module('battleCtrl', [])
         //Set up the armies for battle
         //This function takes the units from each army and gives them an attack score
         vm.setArmies = function () {
-            vm.getAllArmies();
             //The person who is logged in
             vm.userAttack = 0;
             //The person being challenged

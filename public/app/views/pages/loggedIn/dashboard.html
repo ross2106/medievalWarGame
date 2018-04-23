@@ -3,20 +3,20 @@
     <h5>Interact with other players while you search for resources...</h5>
 </div>
 <div class="container-fluid">
-    <!--    <div class="col justify-content-md-center">
-            <h5>My Resources</h5>
+    <div class="col justify-content-md-center">
+        <h5>My Resources</h5>
+    </div>
+    <div class="row" ng-controller="gameController as game">
+        <div class="col justify-content-md-center">
+            <p><i class="fas fa-utensils"></i>{{ dashboard.food }}</p>
         </div>
-        <div class="row" ng-controller="gameController as game">
-            <div class="col justify-content-md-center">
-                <p><i class="fas fa-utensils"></i>{{ game.food }}</p>
-            </div>
-            <div class="col justify-content-md-center">
-                <p><i class="fas fa-balance-scale"></i>{{ game.gold }}</p>
-            </div>
-            <div class="col justify-content-md-center">
-                <p><i class="fas fa-tree"></i>{{ game.wood }}</p>
-            </div>
-        </div>-->
+        <div class="col justify-content-md-center">
+            <p><i class="fas fa-balance-scale"></i>{{ dashboard.gold }}</p>
+        </div>
+        <div class="col justify-content-md-center">
+            <p><i class="fas fa-tree"></i>{{ dashboard.wood }}</p>
+        </div>
+    </div>
 </div>
 <div class="container-fluid">
     <div class="row" style="height: 600px">

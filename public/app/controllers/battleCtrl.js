@@ -98,6 +98,7 @@ angular.module('battleCtrl', [])
         };
 
         $scope.challengeRequest = function(index){
+            vm.resetArmies();
             console.log(vm.armies);
             vm.getAllArmies();
             console.log(vm.armies);

@@ -99,9 +99,8 @@ angular.module('battleCtrl', [])
 
         $scope.challengeRequest = function(index){
             vm.resetArmies();
-            vm.armies = '';
             $scope.getChallenger(index);
-        }
+        };
 
         //When somebody is challenged, get the details about the person being challenged
         $scope.getChallenger = function (index) {

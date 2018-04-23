@@ -122,6 +122,7 @@ angular.module('battleCtrl', [])
                 }
                 //If they have an army, set up the armies for battle
                 if (vm.challengeHasArmy && vm.userHasArmy) {
+                    console.log(vm.armies);
                     vm.setArmies();
                 }
                 //If they dont have an army, then display a message to the logged in user

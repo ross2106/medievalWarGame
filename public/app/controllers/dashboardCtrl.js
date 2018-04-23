@@ -12,6 +12,9 @@ angular.module('dashboardCtrl', [])
         vm.inventoryId = '';
         vm.inventoryId = '';
         vm.commands = [];
+        vm.gold = 0;
+        vm.wood = 0;
+        vm.food = 0;
 
         $scope.users = [];
         $scope.messages = [];

@@ -301,6 +301,13 @@ angular.module('battleCtrl', [])
                                 }
                             }
                         });
+                    //This user challenged and won, so their wincount increases
+                    Army.update(vm.armyId, {
+                        infantry: vm.infantry,
+                        cavalry: vm.cavalry,
+                        archers: vm.archers,
+                        winCount: vm.userWinCount
+                    });
                 }
                 //Otherwise, update their army based on the units lost
                 else {

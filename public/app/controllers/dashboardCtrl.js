@@ -29,18 +29,6 @@ angular.module('dashboardCtrl', [])
         };
         getUsername();
 
-        var test = function(){
-            User.all()
-                .then(function(response){
-                    for(var i = 0; i < response.length; i++){
-                        if(response.data[i].username === vm.username){
-                            myId = response.data[i]._id
-                        }
-                    }
-                })
-        };
-        test();
-
         var getInventory = function () {
             Inventory.all()
                 .then(function (data) {
@@ -60,7 +48,6 @@ angular.module('dashboardCtrl', [])
             if (msg != null && msg !== '')
                 Socket.emit('message', {message: msg});
             $scope.msg = '';
-
         };
 
         Socket.emit('request-users', {});

@@ -71,7 +71,7 @@ var Player = function (id, username) {
         pressingLeft: false,
         pressingUp: false,
         pressingDown: false,
-        maxSpd: 5
+        maxSpd: 10
     };
     self.updatePosition = function () {
         if (self.pressingRight)

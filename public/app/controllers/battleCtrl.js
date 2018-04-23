@@ -72,7 +72,6 @@ angular.module('battleCtrl', [])
         };
 
         vm.resetArmies = function () {
-            vm.armies = '';
             //User army variables
             vm.userHasArmy = false;
             vm.userArmy = '';

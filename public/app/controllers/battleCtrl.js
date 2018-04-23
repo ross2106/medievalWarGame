@@ -45,7 +45,7 @@ angular.module('battleCtrl', [])
         };
         getUsername();
 
-        //Get an army given a username
+/*        //Get an army given a username
         vm.getArmy = function (username) {
             Army.all()
                 .then(function (data) {
@@ -61,7 +61,7 @@ angular.module('battleCtrl', [])
                     }
                 });
         };
-        vm.getArmy(vm.username);
+        vm.getArmy(vm.username);*/
 
         //Get all of the armies
         vm.getAllArmies = function () {
@@ -464,7 +464,7 @@ angular.module('battleCtrl', [])
                     if (vm.userLevel < 0) {
                         vm.userLevel = 0;
                     }
-                    Army.update(vm.userArmy._id, {
+                    Army.update(vm.armyId, {
                         infantry: vm.infantry,
                         cavalry: vm.cavalry,
                         archers: vm.archers,

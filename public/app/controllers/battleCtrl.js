@@ -273,7 +273,6 @@ angular.module('battleCtrl', [])
                             }
                         });
                 }
-                console.log('Win count 4...' + vm.userWinCount)
                 //Otherwise, update their army based on the units lost
                 else {
                     //This user was challenged so their wincount isn't affected
@@ -282,7 +281,7 @@ angular.module('battleCtrl', [])
                         cavalry: vm.challengeCavalry,
                         archers: vm.challengeArchers
                     });
-                    console.log('Win count 5...' + vm.userWinCount)
+                    console.log('Win count 4...' + vm.userWinCount)
                     //This user challenged and won, so their wincount increases
                     Army.update(vm.armyId, {
                         infantry: vm.infantry,

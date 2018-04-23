@@ -204,6 +204,7 @@ angular.module('battleCtrl', [])
                 //Coin toss
                 challengedUnitsLost = Math.floor(Math.random() * 3) + 1;
                 challengedPercentLost = 0;
+                console.log('Win count 1...' + vm.userWinCount);
                 switch (challengedUnitsLost) {
                     case 1:
                         //Half their forces were destroyed
@@ -225,6 +226,7 @@ angular.module('battleCtrl', [])
                 //This will also be based on a coin toss with a much smaller chunk of army lost
                 var userUnitsLost = Math.floor(Math.random() * 4) + 1;
                 var userPercentLost = 0;
+                console.log('Win count 2...' + vm.userWinCount);
                 switch (userUnitsLost) {
                     case 1:
                         userPercentLost = 10;
@@ -258,6 +260,7 @@ angular.module('battleCtrl', [])
                 vm.infantry = vm.infantry - userInfantryLost;
                 vm.cavalry = vm.cavalry - userCavalryLost;
                 vm.archers = vm.archers - userArchersLost;
+                console.log('Win count 3...' + vm.userWinCount);
                 //If their whole army was destroyed, delete from DB and from variables
                 if (challengedPercentLost === 100) {
                     Army.delete(vm.challengeArmyId)
@@ -270,6 +273,7 @@ angular.module('battleCtrl', [])
                             }
                         });
                 }
+                console.log('Win count 4...' + vm.userWinCount)
                 //Otherwise, update their army based on the units lost
                 else {
                     //This user was challenged so their wincount isn't affected
@@ -278,6 +282,7 @@ angular.module('battleCtrl', [])
                         cavalry: vm.challengeCavalry,
                         archers: vm.challengeArchers
                     });
+                    console.log('Win count 5...' + vm.userWinCount)
                     //This user challenged and won, so their wincount increases
                     Army.update(vm.armyId, {
                         infantry: vm.infantry,

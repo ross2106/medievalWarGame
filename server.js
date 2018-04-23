@@ -71,7 +71,7 @@ var Player = function (id, username) {
         pressingLeft: false,
         pressingUp: false,
         pressingDown: false,
-        maxSpd: 10
+        maxSpd: 7
     };
     self.updatePosition = function () {
         if (self.pressingRight)
@@ -157,7 +157,7 @@ setInterval(function () {
         var socket = SOCKET_LIST[i];
         socket.emit('newPositions', pack);
     }
-}, 60);
+}, 40);
 
 
 

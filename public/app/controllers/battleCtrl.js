@@ -187,18 +187,32 @@ angular.module('battleCtrl', [])
                 vm.userWinCount = vm.userWinCount + 1;
                 console.log('after count has increased.... ' + vm.userWinCount);
                 //Increase their level if they've reached a certain win count
-                if (vm.userWinCount = 5) {
-                    vm.userLevel++;
+                switch(vm.userWinCount){
+                    case 5:
+                        vm.userLevel++;
+                        break;
+                    case 10:
+                        vm.userLevel++;
+                        break;
+                    case 15:
+                        vm.userLevel++;
+                        break;
+                    case 20:
+                        vm.userLevel++;
+                        break;
                 }
-                if (vm.userWinCount = 10) {
-                    vm.userLevel++;
-                }
-                if (vm.userWinCount = 15) {
-                    vm.userLevel++;
-                }
-                if (vm.userWinCount = 20) {
-                    vm.userLevel++;
-                }
+                // if (vm.userWinCount = 5) {
+                //     vm.userLevel++;
+                // }
+                // if (vm.userWinCount = 10) {
+                //     vm.userLevel++;
+                // }
+                // if (vm.userWinCount = 15) {
+                //     vm.userLevel++;
+                // }
+                // if (vm.userWinCount = 20) {
+                //     vm.userLevel++;
+                // }
                 //Challenge attack is going to lose.
                 //They will either lost half their army or their whole army
                 //Coin toss

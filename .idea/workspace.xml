@@ -49,8 +49,8 @@
       <file leaf-file-name="battleCtrl.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/app/controllers/battleCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="211" column="20" lean-forward="true" selection-start-line="211" selection-start-column="20" selection-end-line="211" selection-end-column="20" />
+            <state relative-caret-position="323">
+              <caret line="446" column="27" lean-forward="false" selection-start-line="446" selection-start-column="27" selection-end-line="446" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -403,7 +403,7 @@
       <workItem from="1524313497400" duration="23362000" />
       <workItem from="1524380068203" duration="24608000" />
       <workItem from="1524409036846" duration="22160000" />
-      <workItem from="1524469879534" duration="4882000" />
+      <workItem from="1524469879534" duration="5095000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1524146162575</created>
@@ -416,7 +416,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="172224000" />
+    <option name="totallyTimeSpent" value="172437000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -814,8 +814,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/controllers/battleCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="211" column="20" lean-forward="true" selection-start-line="211" selection-start-column="20" selection-end-line="211" selection-end-column="20" />
+        <state relative-caret-position="323">
+          <caret line="446" column="27" lean-forward="false" selection-start-line="446" selection-start-column="27" selection-end-line="446" selection-end-column="27" />
           <folding />
         </state>
       </provider>

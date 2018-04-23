@@ -218,7 +218,6 @@ angular.module('battleCtrl', [])
                 //Coin toss
                 challengedUnitsLost = Math.floor(Math.random() * 3) + 1;
                 challengedPercentLost = 0;
-                console.log('Win count 1...' + vm.userWinCount);
                 switch (challengedUnitsLost) {
                     case 1:
                         //Half their forces were destroyed
@@ -240,7 +239,6 @@ angular.module('battleCtrl', [])
                 //This will also be based on a coin toss with a much smaller chunk of army lost
                 var userUnitsLost = Math.floor(Math.random() * 4) + 1;
                 var userPercentLost = 0;
-                console.log('Win count 2...' + vm.userWinCount);
                 switch (userUnitsLost) {
                     case 1:
                         userPercentLost = 10;
@@ -274,7 +272,6 @@ angular.module('battleCtrl', [])
                 vm.infantry = vm.infantry - userInfantryLost;
                 vm.cavalry = vm.cavalry - userCavalryLost;
                 vm.archers = vm.archers - userArchersLost;
-                console.log('Win count 3...' + vm.userWinCount);
                 //If their whole army was destroyed, delete from DB and from variables
                 if (challengedPercentLost === 100) {
                     Army.delete(vm.challengeArmyId)
@@ -295,7 +292,6 @@ angular.module('battleCtrl', [])
                         cavalry: vm.challengeCavalry,
                         archers: vm.challengeArchers
                     });
-                    console.log('Win count 4...' + vm.userWinCount)
                     //This user challenged and won, so their wincount increases
                     Army.update(vm.armyId, {
                         infantry: vm.infantry,
@@ -303,11 +299,12 @@ angular.module('battleCtrl', [])
                         archers: vm.archers,
                         winCount: vm.userWinCount
                     });
-                    console.log('User win count after win...' + vm.userWinCount);
+                    console.log('Win count after win...' + vm.userWinCount);
                 }
             }
             //If the opponents manages to get a higher attack score
             else {
+                console.log('User win count at start of loss...' + vm.userWinCount);
                 //The person being challenged won, increase their win count
                 vm.challengeWinCount++;
                 //The logged in user lost, decrease their wincount
@@ -442,6 +439,7 @@ angular.module('battleCtrl', [])
                         winCount: vm.userWinCount,
                         level: vm.userLevel
                     })
+                    console.log('User win count at end of loss...' + vm.userWinCount);
                 }
             }
             vm.armies = '';

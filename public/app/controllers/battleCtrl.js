@@ -99,6 +99,8 @@ angular.module('battleCtrl', [])
 
         //When somebody is challenged, get the details about the person being challenged
         $scope.getChallenger = function (index) {
+            vm.resetArmies();
+            vm.armies = '';
             vm.getAllArmies();
             $scope.challenge = index; //The person who is being challenged
             vm.challengeUser = $scope.users[$scope.challenge];
@@ -470,8 +472,6 @@ angular.module('battleCtrl', [])
                     console.log('User win count at end of loss...' + vm.userWinCount);
                 }
             }
-            vm.resetArmies();
-            vm.armies = '';
         };
 
         $scope.sendMessage = function (msg) {

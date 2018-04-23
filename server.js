@@ -157,7 +157,7 @@ setInterval(function () {
         var socket = SOCKET_LIST[i];
         socket.emit('newPositions', pack);
     }
-}, 40);
+}, 60);
 
 
 

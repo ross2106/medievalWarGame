@@ -474,7 +474,7 @@ angular.module('battleCtrl', [])
                     console.log('User win count at end of loss...' + vm.userWinCount);
                 }
             }
-            vm.resetArmies();
+            //vm.resetArmies();
         };
 
         $scope.sendMessage = function (msg) {

@@ -34,6 +34,7 @@ angular.module('battleCtrl', [])
         vm.challengeLevel = 0;
 
         vm.armies = [];
+        var gettingArmies = true;
 
         //Get the username of the person logged in
         var getUsername = function () {
@@ -68,10 +69,12 @@ angular.module('battleCtrl', [])
             Army.all()
                 .then(function (data) {
                     vm.armies = data.data;
+                    gettingArmies = false;
                 })
+
         };
 
-        vm.resetArmies = function(){
+        vm.resetArmies = function () {
             vm.armies = '';
             //User army variables
             vm.userHasArmy = false;
@@ -98,7 +101,7 @@ angular.module('battleCtrl', [])
             vm.challengeLevel = 0;
         };
 
-        $scope.challengeRequest = function(index){
+        $scope.challengeRequest = function (index) {
             vm.resetArmies();
             console.log(vm.armies);
             $scope.getChallenger(index);
@@ -107,37 +110,38 @@ angular.module('battleCtrl', [])
         //When somebody is challenged, get the details about the person being challenged
         $scope.getChallenger = function (index) {
             vm.getAllArmies();
-            console.log(vm.armies);
-            $scope.challenge = index; //The person who is being challenged
-            vm.challengeUser = $scope.users[$scope.challenge];
-            if ($scope.users[$scope.challenge] === vm.username) {
-                Socket.emit('challenge', {message: 'You cannot challenge yourself!'}); //Make sure the logged in user is not trying to challenge themself
-            }
-            if ($scope.users[$scope.challenge] !== vm.username) {
-                for (var i = 0; i < vm.armies.length; i++) {
-                    //Make sure the person being challenged actually has an army
-                    if (vm.armies[i].username === vm.challengeUser) {
-                        vm.challengeHasArmy = true;
+            while (gettingArmies) {
+                console.log(vm.armies);
+                $scope.challenge = index; //The person who is being challenged
+                vm.challengeUser = $scope.users[$scope.challenge];
+                if ($scope.users[$scope.challenge] === vm.username) {
+                    Socket.emit('challenge', {message: 'You cannot challenge yourself!'}); //Make sure the logged in user is not trying to challenge themself
+                }
+                if ($scope.users[$scope.challenge] !== vm.username) {
+                    for (var i = 0; i < vm.armies.length; i++) {
+                        //Make sure the person being challenged actually has an army
+                        if (vm.armies[i].username === vm.challengeUser) {
+                            vm.challengeHasArmy = true;
+                        }
+                        if (vm.armies[i].username === vm.username) {
+                            vm.userHasArmy = true;
+                        }
                     }
-                    if (vm.armies[i].username === vm.username) {
-                        vm.userHasArmy = true;
+                    //If they have an army, set up the armies for battle
+                    if (vm.challengeHasArmy && vm.userHasArmy) {
+                        console.log('Going to set armies request...' + vm.armies);
+                        vm.setArmies();
                     }
-                }
-                //If they have an army, set up the armies for battle
-                if (vm.challengeHasArmy && vm.userHasArmy) {
-                    console.log('Going to set armies request...' + vm.armies);
-                    vm.setArmies();
-                }
-                //If they dont have an army, then display a message to the logged in user
-                if (!vm.challengeHasArmy) {
-                    Socket.emit('challenge', {message: 'This player does not currently have an army!'});
-                }
-                if (!vm.userHasArmy) {
-                    Socket.emit('challenge', {message: 'You need to make an army to do this!'});
+                    //If they dont have an army, then display a message to the logged in user
+                    if (!vm.challengeHasArmy) {
+                        Socket.emit('challenge', {message: 'This player does not currently have an army!'});
+                    }
+                    if (!vm.userHasArmy) {
+                        Socket.emit('challenge', {message: 'You need to make an army to do this!'});
+                    }
                 }
             }
         };
-
 
 
         //Set up the armies for battle
@@ -225,7 +229,7 @@ angular.module('battleCtrl', [])
                 vm.userWinCount = vm.userWinCount + 1;
                 console.log('after count has increased.... ' + vm.userWinCount);
                 //Increase their level if they've reached a certain win count
-                switch(vm.userWinCount){
+                switch (vm.userWinCount) {
                     case 5:
                         vm.userLevel++;
                         break;

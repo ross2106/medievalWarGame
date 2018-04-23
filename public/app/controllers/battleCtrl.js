@@ -97,11 +97,15 @@ angular.module('battleCtrl', [])
             vm.challengeLevel = 0;
         };
 
-        //When somebody is challenged, get the details about the person being challenged
-        $scope.getChallenger = function (index) {
+        $scope.challengeRequest = function(index){
             vm.resetArmies();
             vm.armies = '';
             vm.getAllArmies();
+            $scope.getChallenger(index);
+        }
+
+        //When somebody is challenged, get the details about the person being challenged
+        $scope.getChallenger = function (index) {
             $scope.challenge = index; //The person who is being challenged
             vm.challengeUser = $scope.users[$scope.challenge];
             if ($scope.users[$scope.challenge] === vm.username) {

@@ -109,7 +109,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('announcement', function (data) {
-        socket.emit('announcement', {message: data.message});
+        io.emit('announcement', {message: data.message});
     });
 
     socket.on('add-user', function (data) {

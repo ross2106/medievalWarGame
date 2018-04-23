@@ -137,6 +137,7 @@ angular.module('battleCtrl', [])
                     vm.userArmy = vm.armies[i];
                     vm.armyId = vm.armies[i]._id;
                     vm.userWinCount = vm.armies[i].winCount;
+                    console.log('User win count at start...' + vm.userWinCount);
                     vm.userLevel = vm.armies[i].level;
                     vm.infantry = vm.armies[i].infantry;
                     vm.cavalry = vm.armies[i].cavalry;
@@ -182,9 +183,9 @@ angular.module('battleCtrl', [])
             var userArchersLost = 0;
             if (vm.userAttack > vm.challengeAttack) {
                 //Logged in user has won, increase their win count
-                console.log('before...' + vm.userWinCount);
+                console.log('before win...' + vm.userWinCount);
                 vm.userWinCount++;
-                console.log('after.... ' + vm.userWinCount);
+                console.log('after count has increased.... ' + vm.userWinCount);
                 //Increase their level if they've reached a certain win count
                 if (vm.userWinCount = 5) {
                     vm.userLevel++;
@@ -283,7 +284,8 @@ angular.module('battleCtrl', [])
                         cavalry: vm.cavalry,
                         archers: vm.archers,
                         winCount: vm.userWinCount
-                    })
+                    });
+                    console.log('User win count after win...' + vm.userWinCount);
                 }
             }
             //If the opponents manages to get a higher attack score

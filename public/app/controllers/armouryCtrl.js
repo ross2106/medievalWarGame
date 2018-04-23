@@ -70,7 +70,7 @@ angular.module('armouryCtrl', [])
                     });
                     vm.gold -= 120;
                     vm.food -= 150;
-                    vm.infantry += 1;
+                    vm.infantry += 10;
                 } else {
                     Army.create({
                         username: vm.username,
@@ -108,7 +108,7 @@ angular.module('armouryCtrl', [])
                     });
                     vm.gold -= 200;
                     vm.food -= 300;
-                    vm.cavalry += 1;
+                    vm.cavalry += 10;
                 } else {
                     Army.create({
                         username: vm.username,
@@ -148,7 +148,7 @@ angular.module('armouryCtrl', [])
                     vm.gold -= 100;
                     vm.food -= 100;
                     vm.wood -= 200;
-                    vm.archers += 1;
+                    vm.archers += 10;
                 } else {
                     Army.create({
                         username: vm.username,

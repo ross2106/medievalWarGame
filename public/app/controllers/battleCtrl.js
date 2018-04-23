@@ -1,5 +1,5 @@
 angular.module('battleCtrl', [])
-    .controller('battleController', function ($http, $scope, $mdDialog, Socket, Auth, Inventory, Army) {
+    .controller('battleController', function ($http, $scope, $mdDialog, Socket, Auth, Inventory, Army, $location) {
         //Connect the socket
         Socket.connect();
         var vm = this;
@@ -50,7 +50,7 @@ angular.module('battleCtrl', [])
             Army.all()
                 .then(function (data) {
                     for (var i = 0; i < data.data.length; i++) {
-                            vm.armies.push(data.data[i]);
+                        vm.armies.push(data.data[i]);
                         if (data.data[i].username === username) {
                             vm.armyId = data.data[i]._id;
                             vm.infantry = parseInt(data.data[i].infantry);
@@ -64,9 +64,9 @@ angular.module('battleCtrl', [])
         vm.getArmy(vm.username);
 
         //Get all of the armies
-        vm.getAllArmies = function(){
+        vm.getAllArmies = function () {
             Army.all()
-                .then(function(data){
+                .then(function (data) {
                     vm.armies = data.data;
                 })
         };
@@ -183,16 +183,16 @@ angular.module('battleCtrl', [])
                 vm.userArmy.winCount = vm.userArmy.winCount + 1;
                 console.log('after.... ' + vm.userArmy.winCount);
                 //Increase their level if they've reached a certain win count
-                if(vm.userArmy.winCount = 5){
+                if (vm.userArmy.winCount = 5) {
                     vm.userArmy.level++;
                 }
-                if(vm.userArmy.winCount = 10){
+                if (vm.userArmy.winCount = 10) {
                     vm.userArmy.level++;
                 }
-                if(vm.userArmy.winCount = 15){
+                if (vm.userArmy.winCount = 15) {
                     vm.userArmy.level++;
                 }
-                if(vm.userArmy.winCount = 20){
+                if (vm.userArmy.winCount = 20) {
                     vm.userArmy.level++;
                 }
                 //Challenge attack is going to lose.
@@ -393,6 +393,8 @@ angular.module('battleCtrl', [])
                                     vm.armies.splice(vm.armies.indexOf(vm.username), 1);
                                     vm.userHasArmy = false;
                                 }
+                                $location.path("/armoury");
+                                alert('Your entire army was destroyed!');
                             }
                         });
                 }

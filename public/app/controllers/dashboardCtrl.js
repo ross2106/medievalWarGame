@@ -1,5 +1,5 @@
 angular.module('dashboardCtrl', [])
-    .controller('dashboardController', function ($http, $scope, Socket, Auth, Inventory, User) {
+    .controller('dashboardController', function ($http, $scope, Socket, Auth, Inventory) {
         Socket.connect();
         var vm = this;
         var canvas = document.getElementById('ctx');

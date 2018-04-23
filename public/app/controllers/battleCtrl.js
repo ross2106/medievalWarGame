@@ -69,9 +69,8 @@ angular.module('battleCtrl', [])
             Army.all()
                 .then(function (data) {
                     vm.armies = data.data;
-                    gettingArmies = false;
-                })
-
+                });
+            gettingArmies = false;
         };
 
         vm.resetArmies = function () {

@@ -105,6 +105,7 @@ angular.module('battleCtrl', [])
         //Set up the armies for battle
         //This function takes the units from each army and gives them an attack score
         vm.setArmies = function () {
+            vm.getAllArmies();
             //The person who is logged in
             vm.userAttack = 0;
             //The person being challenged
@@ -393,9 +394,9 @@ angular.module('battleCtrl', [])
                                     vm.armies.splice(vm.armies.indexOf(vm.username), 1);
                                     vm.userHasArmy = false;
                                 }
-                                $location.path("/armoury");
-                                alert('Your entire army was destroyed!');
                             }
+                            $location.path("/armoury");
+                            alert('Your entire army was destroyed!');
                         });
                 }
                 //Otherwise, update their army based on the units lost

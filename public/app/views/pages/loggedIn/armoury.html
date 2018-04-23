@@ -56,6 +56,11 @@
                             <button class="submit btn-lg btn-block"></i>Buy Infantry</button>
                         </div>
                     </div>
+                    <div class = "row">
+                        <div class="alert alert-danger" ng-if="armoury.error">
+                            {{ armoury.error }}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -80,6 +85,11 @@
                             <button class="submit btn-lg btn-block">Buy Cavalry</button>
                         </div>
                     </div>
+                    <div class = "row">
+                        <div class="alert alert-danger" ng-if="armoury.error">
+                            {{ armoury.error }}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -102,6 +112,11 @@
                     <div class="row">
                         <div class="col" ng-click="armoury.buyArchers()">
                             <button class="submit btn-lg btn-block">Buy Archers</button>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class="alert alert-danger" ng-if="armoury.error">
+                            {{ armoury.error }}
                         </div>
                     </div>
                 </div>

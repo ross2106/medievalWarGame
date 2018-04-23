@@ -13,6 +13,8 @@ angular.module('armouryCtrl', [])
         vm.wood = 0;
         vm.food = 0;
 
+        vm.error = '';
+
         var getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
@@ -52,6 +54,7 @@ angular.module('armouryCtrl', [])
         getInventory();
 
         vm.buyInfantry = function () {
+            vm.error = '';
             if (vm.gold >= 120 && vm.food >= 150) {
                 if (vm.armyId !== '') {
                     Army.update(vm.armyId, {
@@ -83,10 +86,11 @@ angular.module('armouryCtrl', [])
                     getArmy();
                 }
             } else {
-
+                vm.error = 'You do not have the resources to purchase this unit!';
             }
         };
         vm.buyCavalry = function () {
+            vm.error = '';
             if (vm.gold >= 300 && vm.food >= 300) {
                 if (vm.armyId !== '') {
                     Army.update(vm.armyId, {
@@ -118,10 +122,11 @@ angular.module('armouryCtrl', [])
                     getArmy();
                 }
             } else {
-
+                vm.error = 'You do not have the resources to purchase this unit!';
             }
         };
         vm.buyArchers = function () {
+            vm.error = '';
             if (vm.gold >= 100 && vm.food >= 100 && vm.wood >= 200) {
                 if (vm.armyId !== '') {
                     Army.update(vm.armyId, {
@@ -157,7 +162,7 @@ angular.module('armouryCtrl', [])
                     getArmy();
                 }
             } else {
-
+                vm.error = 'You do not have the resources to purchase this unit!';
             }
         };
     });

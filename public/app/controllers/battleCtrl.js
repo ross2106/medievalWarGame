@@ -421,6 +421,7 @@ angular.module('battleCtrl', [])
                     })
                 }
             }
+            vm.getAllArmies();
         };
 
         $scope.sendMessage = function (msg) {

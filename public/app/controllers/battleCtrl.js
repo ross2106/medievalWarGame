@@ -72,7 +72,7 @@ angular.module('battleCtrl', [])
                     }
                 });
         };
-        vm.getAllArmies();
+        //vm.getAllArmies();
 
         vm.resetArmies = function () {
             //User army variables
@@ -106,7 +106,6 @@ angular.module('battleCtrl', [])
 
         //When somebody is challenged, get the details about the person being challenged
         $scope.getChallenger = function (index) {
-            console.log(vm.armies);
             $scope.challenge = index; //The person who is being challenged
             vm.challengeUser = $scope.users[$scope.challenge];
             if ($scope.users[$scope.challenge] === vm.username) {

@@ -100,12 +100,12 @@ angular.module('battleCtrl', [])
         $scope.challengeRequest = function(index){
             vm.resetArmies();
             vm.armies = '';
-            vm.getAllArmies();
             $scope.getChallenger(index);
         }
 
         //When somebody is challenged, get the details about the person being challenged
         $scope.getChallenger = function (index) {
+            vm.getAllArmies();
             $scope.challenge = index; //The person who is being challenged
             vm.challengeUser = $scope.users[$scope.challenge];
             if ($scope.users[$scope.challenge] === vm.username) {

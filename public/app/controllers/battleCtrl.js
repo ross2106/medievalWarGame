@@ -279,7 +279,7 @@ angular.module('battleCtrl', [])
                         infantry: vm.infantry,
                         cavalry: vm.cavalry,
                         archers: vm.archers,
-                        winCount: vm.userNewWinCount
+                        winCount: vm.userArmy.winCount
                     })
                 }
             }

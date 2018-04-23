@@ -56,7 +56,9 @@ angular.module('armouryCtrl', [])
         getInventory();
 
         vm.buyInfantry = function () {
+            vm.cavalryError = '';
             vm.infantryError = '';
+            vm.archerError = '';
             if (vm.gold >= 120 && vm.food >= 150) {
                 if (vm.armyId !== '') {
                     Army.update(vm.armyId, {
@@ -93,6 +95,8 @@ angular.module('armouryCtrl', [])
         };
         vm.buyCavalry = function () {
             vm.cavalryError = '';
+            vm.infantryError = '';
+            vm.archerError = '';
             if (vm.gold >= 300 && vm.food >= 300) {
                 if (vm.armyId !== '') {
                     Army.update(vm.armyId, {
@@ -128,6 +132,8 @@ angular.module('armouryCtrl', [])
             }
         };
         vm.buyArchers = function () {
+            vm.cavalryError = '';
+            vm.infantryError = '';
             vm.archerError = '';
             if (vm.gold >= 100 && vm.food >= 100 && vm.wood >= 200) {
                 if (vm.armyId !== '') {

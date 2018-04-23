@@ -98,9 +98,9 @@ angular.module('battleCtrl', [])
         };
 
         $scope.challengeRequest = function(index){
-            console.log('Before get all armies...' + vm.armies);
+            console.log(vm.armies);
             vm.getAllArmies();
-            console.log('After get all armies...' + vm.armies);
+            console.log(vm.armies);
             $scope.getChallenger(index);
         };
 

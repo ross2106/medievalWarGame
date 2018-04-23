@@ -6,7 +6,7 @@
     <div class="row" ng-controller="armouryController as armoury">
         <div class="col-3">
             <div class="col">
-                <div class = "row">
+                <div class="row">
                     <h5>My Resources</h5>
                 </div>
                 <div class="row">
@@ -19,7 +19,7 @@
                     <span><i class="fas fa-tree"></i>       {{ armoury.wood }}</span>
                 </div>
                 <br>
-                <div class = "row">
+                <div class="row">
                     <h5>My Army</h5>
                 </div>
                 <div class="row">
@@ -56,9 +56,9 @@
                             <button class="submit btn-lg btn-block"></i>Buy Infantry</button>
                         </div>
                     </div>
-                    <div class = "row">
-                        <div class="alert alert-danger" ng-if="armoury.error">
-                            {{ armoury.error }}
+                    <div class="row">
+                        <div class="alert alert-danger" ng-if="armoury.infantryError">
+                            {{ armoury.infantryError }}
                         </div>
                     </div>
                 </div>
@@ -81,13 +81,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col" ng-click="armoury.buyCavalry()">
-                            <button class="submit btn-lg btn-block">Buy Cavalry</button>
-                        </div>
+                        <button ng-click="armoury.buyCavalry()" class="submit btn-lg btn-block">Buy Cavalry</button>
                     </div>
-                    <div class = "row">
-                        <div class="alert alert-danger" ng-if="armoury.error">
-                            {{ armoury.error }}
+                    <div class="row">
+                        <div class="alert alert-danger" ng-if="armoury.cavalryError">
+                            {{ armoury.cavalryError }}
                         </div>
                     </div>
                 </div>
@@ -110,13 +108,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col" ng-click="armoury.buyArchers()">
-                            <button class="submit btn-lg btn-block">Buy Archers</button>
-                        </div>
+                        <button ng-click="armoury.buyArchers()" class="submit btn-lg btn-block">Buy Archers</button>
                     </div>
-                    <div class = "row">
-                        <div class="alert alert-danger" ng-if="armoury.error">
-                            {{ armoury.error }}
+                    <div class="row">
+                        <div class="alert alert-danger" ng-if="armoury.archerError">
+                            {{ armoury.archerError }}
                         </div>
                     </div>
                 </div>

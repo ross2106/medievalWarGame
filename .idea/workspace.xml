@@ -49,8 +49,18 @@
       <file leaf-file-name="battleCtrl.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/app/controllers/battleCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="477" column="37" lean-forward="false" selection-start-line="477" selection-start-column="37" selection-end-line="477" selection-end-column="37" />
+            <state relative-caret-position="335">
+              <caret line="479" column="44" lean-forward="false" selection-start-line="479" selection-start-column="44" selection-end-line="479" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="api.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/routes/api.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="237" column="52" lean-forward="false" selection-start-line="237" selection-start-column="44" selection-end-line="237" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -93,16 +103,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="321">
               <caret line="135" column="34" lean-forward="true" selection-start-line="135" selection-start-column="34" selection-end-line="135" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/app/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="46" column="40" lean-forward="false" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -405,7 +405,7 @@
       <workItem from="1524313497400" duration="23362000" />
       <workItem from="1524380068203" duration="24608000" />
       <workItem from="1524409036846" duration="22160000" />
-      <workItem from="1524469879534" duration="8046000" />
+      <workItem from="1524469879534" duration="8196000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1524146162575</created>
@@ -418,7 +418,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="175388000" />
+    <option name="totallyTimeSpent" value="175538000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -683,14 +683,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes/api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1235">
-          <caret line="65" column="24" lean-forward="false" selection-start-line="65" selection-start-column="24" selection-end-line="65" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../userCRM-final/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-370">
@@ -817,10 +809,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes/api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="237" column="52" lean-forward="false" selection-start-line="237" selection-start-column="44" selection-end-line="237" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/app/controllers/battleCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="477" column="37" lean-forward="false" selection-start-line="477" selection-start-column="37" selection-end-line="477" selection-end-column="37" />
+        <state relative-caret-position="335">
+          <caret line="479" column="44" lean-forward="false" selection-start-line="479" selection-start-column="44" selection-end-line="479" selection-end-column="44" />
           <folding />
         </state>
       </provider>

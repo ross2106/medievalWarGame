@@ -476,6 +476,8 @@ angular.module('battleCtrl', [])
             }
             vm.userWinCount = 0;
             vm.challengeWinCount = 0;
+            console.log('Finished user...' + vm.userWinCount);
+            console.log('Finished challenged...' + vm.userWinCount);
         };
 
         $scope.sendMessage = function (msg) {

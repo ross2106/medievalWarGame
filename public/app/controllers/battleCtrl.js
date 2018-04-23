@@ -100,13 +100,11 @@ angular.module('battleCtrl', [])
 
         $scope.challengeRequest = function (index) {
             vm.getAllArmies();
-            console.log(vm.armies);
             $scope.getChallenger(index);
         };
 
         //When somebody is challenged, get the details about the person being challenged
         $scope.getChallenger = function (index) {
-            console.log(vm.armies);
             $scope.challenge = index; //The person who is being challenged
             vm.challengeUser = $scope.users[$scope.challenge];
             if ($scope.users[$scope.challenge] === vm.username) {
@@ -124,7 +122,6 @@ angular.module('battleCtrl', [])
                 }
                 //If they have an army, set up the armies for battle
                 if (vm.challengeHasArmy && vm.userHasArmy) {
-                    console.log('Going to set armies request...' + vm.armies);
                     vm.setArmies();
                 }
                 //If they dont have an army, then display a message to the logged in user
@@ -478,6 +475,8 @@ angular.module('battleCtrl', [])
                     console.log('User win count at end of loss...' + vm.userWinCount);
                 }
             }
+            vm.armies = '';
+            vm.resetArmies();
         };
 
         $scope.sendMessage = function (msg) {

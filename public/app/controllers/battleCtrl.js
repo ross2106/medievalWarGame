@@ -71,6 +71,32 @@ angular.module('battleCtrl', [])
                 })
         };
 
+        vm.resetArmies = function(){
+            //User army variables
+            vm.userHasArmy = false;
+            vm.userArmy = '';
+            vm.armyId = '';
+            vm.infantry = 0;
+            vm.archers = 0;
+            vm.cavalry = 0;
+            vm.userAttack = 0;
+            vm.userWinCount = 0;
+            vm.userLevel = 0;
+
+            //Information about the user being challenged
+            $scope.challenge = null;
+            vm.challengeHasArmy = false;
+            vm.challengeArmy = '';
+            vm.challengeArmyId = '';
+            vm.challengeUser = '';
+            vm.challengeInfantry = 0;
+            vm.challengeArchers = 0;
+            vm.challengeCavalry = 0;
+            vm.challengeAttack = 0;
+            vm.challengeWinCount = 0;
+            vm.challengeLevel = 0;
+        };
+
         //When somebody is challenged, get the details about the person being challenged
         $scope.getChallenger = function (index) {
             $scope.challenge = index; //The person who is being challenged
@@ -101,6 +127,8 @@ angular.module('battleCtrl', [])
                 }
             }
         };
+
+
 
         //Set up the armies for battle
         //This function takes the units from each army and gives them an attack score
@@ -442,6 +470,7 @@ angular.module('battleCtrl', [])
                     console.log('User win count at end of loss...' + vm.userWinCount);
                 }
             }
+            vm.resetArmies();
             vm.armies = '';
         };
 

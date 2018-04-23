@@ -67,9 +67,12 @@ angular.module('battleCtrl', [])
         vm.getAllArmies = function () {
             Army.all()
                 .then(function (data) {
-                    vm.armies = data.data;
+                    for(var i = 0; i < data.length; i++){
+                        vm.armies.push(data.data[i]);
+                    }
                 });
         };
+        vm.getAllArmies();
 
         vm.resetArmies = function () {
             //User army variables
@@ -98,12 +101,12 @@ angular.module('battleCtrl', [])
         };
 
         $scope.challengeRequest = function (index) {
-            vm.getAllArmies();
             $scope.getChallenger(index);
         };
 
         //When somebody is challenged, get the details about the person being challenged
         $scope.getChallenger = function (index) {
+            console.log(vm.armies);
             $scope.challenge = index; //The person who is being challenged
             vm.challengeUser = $scope.users[$scope.challenge];
             if ($scope.users[$scope.challenge] === vm.username) {
@@ -137,7 +140,6 @@ angular.module('battleCtrl', [])
         //Set up the armies for battle
         //This function takes the units from each army and gives them an attack score
         vm.setArmies = function () {
-            console.log('Start of set armies request...' + vm.armies);
             //The person who is logged in
             vm.userAttack = 0;
             //The person being challenged
@@ -169,7 +171,6 @@ angular.module('battleCtrl', [])
                     vm.userArmy = vm.armies[i];
                     vm.armyId = vm.armies[i]._id;
                     vm.userWinCount = vm.armies[i].winCount;
-                    console.log('User win count at start...' + vm.userWinCount);
                     vm.userLevel = vm.armies[i].level;
                     vm.infantry = vm.armies[i].infantry;
                     vm.cavalry = vm.armies[i].cavalry;
@@ -215,9 +216,7 @@ angular.module('battleCtrl', [])
             var userArchersLost = 0;
             if (vm.userAttack > vm.challengeAttack) {
                 //Logged in user has won, increase their win count
-                console.log('before win...' + vm.userWinCount);
                 vm.userWinCount = vm.userWinCount + 1;
-                console.log('after count has increased.... ' + vm.userWinCount);
                 //Increase their level if they've reached a certain win count
                 switch (vm.userWinCount) {
                     case 5:
@@ -233,18 +232,6 @@ angular.module('battleCtrl', [])
                         vm.userLevel++;
                         break;
                 }
-                // if (vm.userWinCount = 5) {
-                //     vm.userLevel++;
-                // }
-                // if (vm.userWinCount = 10) {
-                //     vm.userLevel++;
-                // }
-                // if (vm.userWinCount = 15) {
-                //     vm.userLevel++;
-                // }
-                // if (vm.userWinCount = 20) {
-                //     vm.userLevel++;
-                // }
                 //Challenge attack is going to lose.
                 //They will either lost half their army or their whole army
                 //Coin toss
@@ -331,12 +318,10 @@ angular.module('battleCtrl', [])
                         archers: vm.archers,
                         winCount: vm.userWinCount
                     });
-                    console.log('Win count after win...' + vm.userWinCount);
                 }
             }
             //If the opponents manages to get a higher attack score
             else {
-                console.log('User win count at start of loss...' + vm.userWinCount);
                 //The person being challenged won, increase their win count
                 vm.challengeWinCount++;
                 //The logged in user lost, decrease their wincount
@@ -471,13 +456,8 @@ angular.module('battleCtrl', [])
                         winCount: vm.userWinCount,
                         level: vm.userLevel
                     })
-                    console.log('User win count at end of loss...' + vm.userWinCount);
                 }
             }
-            vm.userWinCount = 0;
-            vm.challengeWinCount = 0;
-            console.log('Finished user...' + vm.userWinCount);
-            console.log('Finished challenged...' + vm.userWinCount);
         };
 
         $scope.sendMessage = function (msg) {

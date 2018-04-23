@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f46b6fe7-6d15-4602-99f9-447a87e8889f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/public/app/controllers/battleCtrl.js" afterPath="$PROJECT_DIR$/public/app/controllers/battleCtrl.js" />
+      <change beforePath="$PROJECT_DIR$/public/app/controllers/armouryCtrl.js" afterPath="$PROJECT_DIR$/public/app/controllers/armouryCtrl.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="battleCtrl.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="battleCtrl.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/app/controllers/battleCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="464" column="55" lean-forward="true" selection-start-line="464" selection-start-column="55" selection-end-line="464" selection-end-column="55" />
+            <state relative-caret-position="246">
+              <caret line="456" column="43" lean-forward="true" selection-start-line="456" selection-start-column="43" selection-end-line="456" selection-end-column="43" />
               <folding>
                 <element signature="e#1153#1394#0" expanded="false" />
                 <element signature="e#2580#3363#0" expanded="false" />
@@ -101,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="armouryCtrl.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="armouryCtrl.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/app/controllers/armouryCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="135" column="34" lean-forward="true" selection-start-line="135" selection-start-column="34" selection-end-line="135" selection-end-column="34" />
+            <state relative-caret-position="245">
+              <caret line="155" column="35" lean-forward="false" selection-start-line="155" selection-start-column="35" selection-end-line="155" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -211,9 +211,9 @@
         <option value="$PROJECT_DIR$/public/app/views/pages/loggedIn/armoury.html" />
         <option value="$PROJECT_DIR$/public/app/controllers/dashboardCtrl.js" />
         <option value="$PROJECT_DIR$/public/app/views/pages/loggedIn/dashboard.html" />
-        <option value="$PROJECT_DIR$/public/app/controllers/armouryCtrl.js" />
         <option value="$PROJECT_DIR$/public/app/views/pages/loggedIn/battle.html" />
         <option value="$PROJECT_DIR$/public/app/controllers/battleCtrl.js" />
+        <option value="$PROJECT_DIR$/public/app/controllers/armouryCtrl.js" />
       </list>
     </option>
   </component>
@@ -408,7 +408,7 @@
       <workItem from="1524313497400" duration="23362000" />
       <workItem from="1524380068203" duration="24608000" />
       <workItem from="1524409036846" duration="22160000" />
-      <workItem from="1524469879534" duration="9589000" />
+      <workItem from="1524469879534" duration="9766000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1524146162575</created>
@@ -421,7 +421,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176931000" />
+    <option name="totallyTimeSpent" value="177108000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -435,7 +435,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293979" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293979" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821724" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32821724" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -754,14 +754,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/armouryCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="135" column="34" lean-forward="true" selection-start-line="135" selection-start-column="34" selection-end-line="135" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/app/app.routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -822,12 +814,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/controllers/battleCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="464" column="55" lean-forward="true" selection-start-line="464" selection-start-column="55" selection-end-line="464" selection-end-column="55" />
+        <state relative-caret-position="246">
+          <caret line="456" column="43" lean-forward="true" selection-start-line="456" selection-start-column="43" selection-end-line="456" selection-end-column="43" />
           <folding>
             <element signature="e#1153#1394#0" expanded="false" />
             <element signature="e#2580#3363#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/armouryCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="155" column="35" lean-forward="false" selection-start-line="155" selection-start-column="35" selection-end-line="155" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>

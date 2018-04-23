@@ -62,7 +62,7 @@ angular.module('armouryCtrl', [])
             if (vm.gold >= 120 && vm.food >= 150) {
                 if (vm.armyId !== '') {
                     Army.update(vm.armyId, {
-                        infantry: vm.infantry + 1
+                        infantry: vm.infantry + 10
                     });
                     Inventory.update(vm.inventoryId, {
                         gold: vm.gold - 120,
@@ -74,7 +74,7 @@ angular.module('armouryCtrl', [])
                 } else {
                     Army.create({
                         username: vm.username,
-                        infantry: 1,
+                        infantry: 10,
                         archers: 0,
                         cavalry: 0,
                         level: 1,
@@ -100,7 +100,7 @@ angular.module('armouryCtrl', [])
             if (vm.gold >= 300 && vm.food >= 300) {
                 if (vm.armyId !== '') {
                     Army.update(vm.armyId, {
-                        cavalry: vm.cavalry + 1
+                        cavalry: vm.cavalry + 10
                     });
                     Inventory.update(vm.inventoryId, {
                         gold: vm.gold - 200,
@@ -114,7 +114,7 @@ angular.module('armouryCtrl', [])
                         username: vm.username,
                         infantry: 0,
                         archers: 0,
-                        cavalry: 1,
+                        cavalry: 10,
                         level: 1,
                         winCount: 0
                     });
@@ -138,7 +138,7 @@ angular.module('armouryCtrl', [])
             if (vm.gold >= 100 && vm.food >= 100 && vm.wood >= 200) {
                 if (vm.armyId !== '') {
                     Army.update(vm.armyId, {
-                        archers: vm.archers + 1
+                        archers: vm.archers + 10
                     });
                     Inventory.update(vm.inventoryId, {
                         gold: vm.gold - 100,
@@ -153,7 +153,7 @@ angular.module('armouryCtrl', [])
                     Army.create({
                         username: vm.username,
                         infantry: 0,
-                        archers: 1,
+                        archers: 10,
                         cavalry: 0,
                         level: 1,
                         winCount: 0

@@ -180,7 +180,7 @@ angular.module('battleCtrl', [])
             if (vm.userAttack > vm.challengeAttack) {
                 //Logged in user has won, increase their win count
                 console.log('before...' + vm.userArmy.winCount);
-                vm.userArmy.winCount = vm.userArmy.winCount + 1;
+                vm.userArmy.winCount++;
                 console.log('after.... ' + vm.userArmy.winCount);
                 //Increase their level if they've reached a certain win count
                 if (vm.userArmy.winCount = 5) {

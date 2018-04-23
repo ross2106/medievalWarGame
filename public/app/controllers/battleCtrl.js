@@ -116,6 +116,7 @@ angular.module('battleCtrl', [])
                 if (vm.armies[i].username === vm.challengeUser) {
                     //Set the army for the person being challenged
                     vm.challengeArmy = vm.armies[i];
+                    vm.challengeArmyId = vm.armies[i]._id;
                     vm.challengeWinCount = vm.armies[i].winCount;
                     vm.challengeLevel = vm.armies[i].level;
                     //Set the units for that army
@@ -134,6 +135,7 @@ angular.module('battleCtrl', [])
                 if (vm.armies[i].username === vm.username) {
                     //Same process as above
                     vm.userArmy = vm.armies[i];
+                    vm.armyId = vm.armies[i]._id;
                     vm.userWinCount = vm.armies[i].winCount;
                     vm.userLevel = vm.armies[i].level;
                     vm.infantry = vm.armies[i].infantry;
@@ -180,21 +182,21 @@ angular.module('battleCtrl', [])
             var userArchersLost = 0;
             if (vm.userAttack > vm.challengeAttack) {
                 //Logged in user has won, increase their win count
-                console.log('before...' + vm.userArmy.winCount);
-                vm.userArmy.winCount++;
-                console.log('after.... ' + vm.userArmy.winCount);
+                console.log('before...' + vm.userWinCount);
+                vm.userWinCount++;
+                console.log('after.... ' + vm.userWinCount);
                 //Increase their level if they've reached a certain win count
-                if (vm.userArmy.winCount = 5) {
-                    vm.userArmy.level++;
+                if (vm.userWinCount = 5) {
+                    vm.userLevel++;
                 }
-                if (vm.userArmy.winCount = 10) {
-                    vm.userArmy.level++;
+                if (vm.userWinCount = 10) {
+                    vm.userLevel++;
                 }
-                if (vm.userArmy.winCount = 15) {
-                    vm.userArmy.level++;
+                if (vm.userWinCount = 15) {
+                    vm.userLevel++;
                 }
-                if (vm.userArmy.winCount = 20) {
-                    vm.userArmy.level++;
+                if (vm.userWinCount = 20) {
+                    vm.userLevel++;
                 }
                 //Challenge attack is going to lose.
                 //They will either lost half their army or their whole army
@@ -257,11 +259,11 @@ angular.module('battleCtrl', [])
                 vm.archers = vm.archers - userArchersLost;
                 //If their whole army was destroyed, delete from DB and from variables
                 if (challengedPercentLost === 100) {
-                    Army.delete(vm.challengeArmy._id)
+                    Army.delete(vm.challengeArmyId)
                         .then(function () {
                             for (var i = 0; i < vm.armies.length; i++) {
-                                if (vm.armies[i].username === vm.challengeArmy.username) {
-                                    vm.armies.splice(vm.armies.indexOf(vm.challengeArmy.username), 1);
+                                if (vm.armies[i].username === vm.challengeUser) {
+                                    vm.armies.splice(vm.armies.indexOf(vm.challengeUser), 1);
                                     vm.challengeHasArmy = false;
                                 }
                             }
@@ -270,60 +272,60 @@ angular.module('battleCtrl', [])
                 //Otherwise, update their army based on the units lost
                 else {
                     //This user was challenged so their wincount isn't affected
-                    Army.update(vm.challengeArmy._id, {
+                    Army.update(vm.challengeArmyId, {
                         infantry: vm.challengeInfantry,
                         cavalry: vm.challengeCavalry,
                         archers: vm.challengeArchers
                     });
                     //This user challenged and won, so their wincount increases
-                    Army.update(vm.userArmy._id, {
+                    Army.update(vm.armyId, {
                         infantry: vm.infantry,
                         cavalry: vm.cavalry,
                         archers: vm.archers,
-                        winCount: vm.userArmy.winCount
+                        winCount: vm.userWinCount
                     })
                 }
             }
             //If the opponents manages to get a higher attack score
             else {
                 //The person being challenged won, increase their win count
-                vm.challengeArmy.winCount++;
+                vm.challengeWinCount++;
                 //The logged in user lost, decrease their wincount
-                vm.userArmy.winCount--;
-                if (vm.userArmy.winCount < 0) {
-                    vm.userArmy.winCount = 0;
+                vm.userWinCount--;
+                if (vm.userWinCount < 0) {
+                    vm.userWinCount = 0;
                 }
                 //Increase the person who was challenged wincount if they've reached a certain number
-                switch (vm.challengeArmy.winCount) {
+                switch (vm.challengeWinCount) {
                     case 5:
-                        vm.challengeArmy.level++;
+                        vm.challengeLevel++;
                         break;
                     case 10:
-                        vm.challengeArmy.level++;
+                        vm.challengeLevel++;
                         break;
                     case 15:
-                        vm.challengeArmy.level++;
+                        vm.challengeLevel++;
                         break;
                     case 20:
-                        vm.challengeArmy.level++;
+                        vm.challengeLevel++;
                         break;
                 }
                 //Decrease the losers wincount if they've dropped to a different number
-                switch (vm.userArmy.winCount) {
+                switch (vm.userWinCount) {
                     case 0:
-                        vm.userArmy.level = 1;
+                        vm.userLevel = 1;
                         break;
                     case 4:
-                        vm.userArmy.level--;
+                        vm.userLevel--;
                         break;
                     case 9:
-                        vm.userArmy.level--;
+                        vm.userLevel--;
                         break;
                     case 14:
-                        vm.userArmy.level--;
+                        vm.userLevel--;
                         break;
                     case 19:
-                        vm.userArmy.level--;
+                        vm.userLevel--;
                         break;
                 }
                 //The logged in user has lost the fight
@@ -402,27 +404,26 @@ angular.module('battleCtrl', [])
                 //Otherwise, update their army based on the units lost
                 else {
                     //This user was challenged and won, so their wincount increases
-                    Army.update(vm.challengeArmy._id, {
+                    Army.update(vm.challengeArmyId, {
                         infantry: vm.challengeInfantry,
                         cavalry: vm.challengeCavalry,
                         archers: vm.challengeArchers,
-                        winCount: vm.challengeArmy.winCount,
-                        level: vm.challengeArmy.level
+                        winCount: vm.challengeWinCount,
+                        level: vm.challengeLevel
                     });
                     //This user challenged and lost, so their wincount decreases
-                    if (vm.userArmy.level < 0) {
-                        vm.userArmy.level = 0;
+                    if (vm.userLevel < 0) {
+                        vm.userLevel = 0;
                     }
                     Army.update(vm.userArmy._id, {
                         infantry: vm.infantry,
                         cavalry: vm.cavalry,
                         archers: vm.archers,
-                        winCount: vm.userArmy.winCount,
-                        level: vm.userArmy.level
+                        winCount: vm.userWinCount,
+                        level: vm.userLevel
                     })
                 }
             }
-            vm.getAllArmies();
         };
 
         $scope.sendMessage = function (msg) {

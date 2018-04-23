@@ -98,8 +98,9 @@ angular.module('battleCtrl', [])
         };
 
         $scope.challengeRequest = function(index){
-            vm.armies = '';
-            vm.resetArmies();
+            console.log('Before get all armies...' + vm.armies);
+            vm.getAllArmies();
+            console.log('After get all armies...' + vm.armies);
             $scope.getChallenger(index);
         };
 
@@ -122,9 +123,7 @@ angular.module('battleCtrl', [])
                 }
                 //If they have an army, set up the armies for battle
                 if (vm.challengeHasArmy && vm.userHasArmy) {
-                    console.log('Before get all armies...' + vm.armies);
-                    vm.getAllArmies();
-                    console.log('After get all armies...' + vm.armies);
+                    console.log('Going to set armies request...' + vm.armies);
                     vm.setArmies();
                 }
                 //If they dont have an army, then display a message to the logged in user
@@ -142,6 +141,7 @@ angular.module('battleCtrl', [])
         //Set up the armies for battle
         //This function takes the units from each army and gives them an attack score
         vm.setArmies = function () {
+            console.log('Start of set armies request...' + vm.armies);
             //The person who is logged in
             vm.userAttack = 0;
             //The person being challenged

@@ -10,7 +10,6 @@ angular.module('dashboardCtrl', [])
         var knight = new Image();
         vm.username = '';
         vm.inventoryId = '';
-        vm.inventoryId = '';
         vm.commands = [];
         vm.gold = 0;
         vm.wood = 0;
@@ -19,15 +18,17 @@ angular.module('dashboardCtrl', [])
         $scope.users = [];
         $scope.messages = [];
 
+        console.log($scope.users);
+
         var getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
                     vm.username = response.data.username;
-                    console.log(response.data);
                     Socket.emit('add-user', {username: response.data.username});
                 });
         };
         getUsername();
+        console.log($scope.users);
 
         var getInventory = function () {
             Inventory.all()

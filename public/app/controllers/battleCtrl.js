@@ -1,5 +1,5 @@
-angular.module('battleCtrl', [])
-    .controller('battleController', function ($http, $scope, $mdDialog, Socket, Auth, Inventory, Army, $location) {
+angular.module('battleCtrlt', [])
+    .controller('battleControllert', function ($http, $scope, $mdDialog, Socket, Auth, Inventory, Army, $location) {
         //Connect the socket
         Socket.connect();
         var vm = this;
@@ -466,6 +466,7 @@ angular.module('battleCtrl', [])
             }
         };
 
+
         $scope.sendMessage = function (msg) {
             if (msg != null && msg !== '')
                 Socket.emit('message', {message: msg});
@@ -502,6 +503,7 @@ angular.module('battleCtrl', [])
 
         $scope.$on('$locationChangeStart', function (event) {
             Socket.disconnect(true);
+            $scope.users.splice($scope.users.indexOf(data.username), 1);
         });
     })
 ;

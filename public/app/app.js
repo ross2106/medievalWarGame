@@ -58,6 +58,12 @@ angular.module('userApp', [
                 templateUrl: 'app/views/pages/loggedIn/battle.html',
                 controller: 'battleController',
                 controllerAs: 'battle'
+            })
+
+            .when('/leaderboard',{
+                templateUrl: 'app/views/pages/loggedIn/leaderboard.html',
+                controller: 'leaderboardController',
+                controllerAs: 'leaderboard'
             });
 
         $locationProvider.html5Mode(true);

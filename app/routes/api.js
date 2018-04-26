@@ -238,9 +238,7 @@ module.exports = function (app, express) {
                 if (req.body.winCount) army.winCount = req.body.winCount;
                 // save the inventory
                 army.save(function (err) {
-                    if (err) {
-                        return res.send();
-                    }
+                    if (err) res.send();
                     res.json({message: 'Army Updated!'});
                 });
             })
@@ -249,7 +247,6 @@ module.exports = function (app, express) {
         .get(function (req, res) {
             Army.findById(req.params.id, function (err, army) {
                 if (err) res.send(err);
-
                 //return the inventory
                 res.json(army);
             })
@@ -261,7 +258,6 @@ module.exports = function (app, express) {
                 _id: req.params.id
             }, function (err) {
                 if (err) res.send(err);
-
                 res.json({
                     message: 'Army destroyed.'
                 });

@@ -1,39 +1,37 @@
-<div class="jumbotron h1 text-center">
-    <h1>Welcome to the main lobby!</h1>
-    <h5>Interact with other players while you search for resources...</h5>
-</div>
 <div class="container-fluid">
-    <div class="col justify-content-md-center">
-        <h5>My Resources</h5>
-    </div>
     <div class="row">
         <div class="col justify-content-md-center">
-            <p><i class="fas fa-utensils"></i>{{ dashboard.food }}</p>
+            <div class = "row justify-content-md-center">
+                <h5><i class="fas fa-utensils"></i>{{ dashboard.food }}</h5>
+            </div>
+            <div class = "row" ng-click="dashboard.gatherFood()">
+                <button class="submit btn-lg btn-block btn-danger"><i class="fas fa-utensils"></i>Gather Food</button>
+            </div>
         </div>
         <div class="col justify-content-md-center">
-            <p><i class="fas fa-balance-scale"></i>{{ dashboard.gold }}</p>
+            <div class = "row justify-content-md-center">
+                <h5><i class="fas fa-balance-scale"></i>{{ dashboard.gold }}</h5>
+            </div>
+            <div class = "row justify-content-md-center" ng-click="dashboard.mineGold()">
+                <button class="submit btn-lg btn-block btn-warning"><i class="fas fa-balance-scale"></i>Mine gold</button>
+            </div>
         </div>
         <div class="col justify-content-md-center">
-            <p><i class="fas fa-tree"></i>{{ dashboard.wood }}</p>
+            <div class = "row justify-content-md-center">
+                <h5><i class="fas fa-tree"></i>{{ dashboard.wood }}</h5>
+            </div>
+            <div class = "row justify-content-md-center" ng-click="dashboard.chopWood()">
+                <button class="submit btn-lg btn-block btn-success"><i class="fas fa-tree"></i>Chop Wood</button>
+            </div>
+
         </div>
     </div>
 </div>
 <div class="container-fluid">
     <div class="row" style="height: 600px">
         <div class="card col-7">
-            <div class="row" style="height: 10%">
-                <div class="col" ng-click="dashboard.gatherFood()">
-                    <button class="submit btn-lg btn-block"><i class="fas fa-utensils"></i>Gather Food</button>
-                </div>
-                <div class="col" ng-click="dashboard.mineGold()">
-                    <button class="submit btn-lg btn-block"><i class="fas fa-balance-scale"></i>Mine gold</button>
-                </div>
-                <div class="col" ng-click="dashboard.chopWood()">
-                    <button class="submit btn-lg btn-block"><i class="fas fa-tree"></i>Chop Wood</button>
-                </div>
-            </div>
             <div class="row">
-                <canvas id="ctx" width="500" height="500" style="width: 100%; height: 70%;"></canvas>
+                <canvas id="ctx" width="500" height="500" style="width: 100%; height: 80%;"></canvas>
             </div>
             <div class="row" style="height:20%">
                 <ul style="overflow-y: auto; width: 100%;" scroll-glue>

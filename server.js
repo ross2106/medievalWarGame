@@ -11,8 +11,10 @@ var config = require('./config');
 var path = require('path');
 
 //socket IO stuff
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
+
+
 
 // APP CONFIGURATION ==================
 // ====================================
@@ -25,7 +27,7 @@ app.use(bodyParser.json());
 // configure our app to handle CORS requests
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     next();
 });
@@ -34,7 +36,7 @@ app.use(function (req, res, next) {
 app.use(morgan('dev'));
 
 // connect to our database (hosted on modulus.io)
-mongoose.connect(config.database);
+mongoose.connect(config.localdb);
 
 // set static files location
 // used for requests that our frontend will make
@@ -56,7 +58,9 @@ app.get('*', function (req, res) {
 
 // START THE SERVER
 // ====================================
-http.listen(config.port);
+//http.listen(config.port);
+var server = app.listen(config.port);
+var io = require('socket.io').listen(server);
 
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};

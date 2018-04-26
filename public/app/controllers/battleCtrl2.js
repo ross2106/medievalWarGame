@@ -14,8 +14,8 @@ angular.module('battleCtrl', [])
         //User who is being challenged
         vm.challengedUserIndex = '';
         vm.challengedUser = '';
-        vm.challengeArmy = '';
-        vm.challengeAttack = 0;
+        vm.challengedArmy = '';
+        vm.challengedAttack = 0;
 
         //Logged in user
         vm.username = '';
@@ -32,13 +32,20 @@ angular.module('battleCtrl', [])
         };
         vm.getUsername();
 
-        vm.getArmies = function () {
+        vm.getArmies = function (callback) {
             Army.all()
                 .then(function (data) {
                     vm.armies = data.data;
-                })
+                    for (var i = 0; i < vm.armies.length; i++) {
+                        if (vm.armies[i].username === vm.username) {
+                            vm.userArmy = data.data[i];
+                        } else if (vm.armies[i].username === vm.challengedUser) {
+                            vm.challengedArmy = data.data[i];
+                        }
+                    }
+                    callback();
+                });
         };
-        vm.getArmies();
 
         vm.getArmy = function (name) {
             var army = '';
@@ -53,47 +60,47 @@ angular.module('battleCtrl', [])
         $scope.challengeRequest = function (index) {
             vm.challengedUserIndex = index;
             vm.challengedUser = $scope.users[vm.challengedUserIndex];
-            if (vm.challengedUser === vm.username) {
-                Socket.emit('challenge', {message: 'You cannot challenge yourself!'}); //Make sure the logged in user is not trying to challenge themself
-            }
-            if (vm.challengedUser !== vm.username) {
-                //If both users have an army
-                if (vm.getArmy(vm.challengedUser) && vm.getArmy(vm.username)) {
-                    vm.setArmies();
-                } else {
-                    Socket.emit('challenge', {message: 'Both players need an army to battle!'});
+            vm.getArmies(function () {
+                console.log('Finished getting armies...');
+                if (vm.challengedUser === vm.username) {
+                    Socket.emit('challenge', {message: 'You cannot challenge yourself!'}); //Make sure the logged in user is not trying to challenge themself
                 }
-            }
+                if (vm.challengedUser !== vm.username) {
+                    //If both users have an army
+                    if (vm.challengedArmy && vm.userArmy) {
+                        vm.setArmies();
+                    } else {
+                        Socket.emit('challenge', {message: 'Both players need an army to battle!'});
+                    }
+                }
+            });
         };
 
         vm.setArmies = function () {
-            //Get the players armies
-            vm.userArmy = vm.getArmy(vm.username);
-            vm.challengeArmy = vm.getArmy(vm.challengeArmy);
             //Set the attack level of the person being challenged
-            vm.challengeAttack += vm.challengeArmy.infantry * (3 + vm.challengeArmy.level);
-            vm.challengeAttack += vm.challengeArmy.cavalry * (5 + vm.challengeArmy.level);
-            vm.challengeAttack += vm.challengeArmy.archers * (2 + vm.challengeArmy.level);
+            vm.challengedAttack += vm.challengedArmy.infantry * (3 + vm.challengedArmy.level);
+            vm.challengedAttack += vm.challengedArmy.cavalry * (5 + vm.challengedArmy.level);
+            vm.challengedAttack += vm.challengedArmy.archers * (2 + vm.challengedArmy.level);
             //Set the attack level of the logged in user
             vm.userAttack += vm.userArmy.infantry * (3 + vm.userArmy.level);
             vm.userAttack += vm.userArmy.cavalry * (3 + vm.userArmy.level);
             vm.userAttack += vm.userArmy.archers * (3 + vm.userArmy.level);
             //Take the difference between the two users attack point
-            var diff = Math.abs(vm.userAttack - vm.challengeAttack);
+            var diff = Math.abs(vm.userAttack - vm.challengedAttack);
             //If the user has a higher attack
-            if (vm.userAttack > vm.challengeAttack) {
+            if (vm.userAttack > vm.challengedAttack) {
                 //Give a new value to the user/challenge attack. User has a chance of getting a higher value so more likely to win the game
                 vm.userAttack = Math.floor(Math.random() * (100 + diff)) + 1;
-                vm.challengeAttack = Math.floor(Math.random() * (100 - diff)) + 1;
+                vm.challengedAttack = Math.floor(Math.random() * (100 - diff)) + 1;
             }
             //If the person being challenged has a higher attack
-            if (vm.challengeAttack > vm.userAttack) {
+            if (vm.challengedAttack > vm.userAttack) {
                 //Give a new value to the user/challenge attack. The person being challenged has a chance of getting a higher value so more likely to win the game
-                vm.challengeAttack = Math.floor(Math.random() * (100 + diff)) + 1;
+                vm.challengedAttack = Math.floor(Math.random() * (100 + diff)) + 1;
                 vm.userAttack = Math.floor(Math.random() * (100 - diff)) + 1;
             }
             //If the two players have the same attack score
-            if (vm.challengeAttack === vm.userAttack) {
+            if (vm.challengedAttack === vm.userAttack) {
                 //Scores remain the same
                 vm.userAttack = Math.floor(Math.random() * 100) + 1;
                 vm.challegeAttack = Math.floor(Math.random() * 100) + 1;
@@ -114,7 +121,7 @@ angular.module('battleCtrl', [])
             var userInfantryLost = 0;
             var userCavalryLost = 0;
             var userArchersLost = 0;
-            if (vm.userAttack > vm.challengeAttack) {
+            if (vm.userAttack > vm.challengedAttack) {
                 //Logged in user has won, increase their win count
                 vm.userArmy.winCount++;
                 //Increase their level if they've reached a certain win count
@@ -176,12 +183,12 @@ angular.module('battleCtrl', [])
                 }
                 //Based on how much of their army was lost, change reduce the size of their army
                 //Person who was challenged
-                challengedInfantryLost = Math.round((vm.challengeArmy.infantry / 100) * challengedPercentLost);
-                challengedCavalryLost = Math.round((vm.challengeArmy.cavalry / 100) * challengedPercentLost);
-                challengedArchersLost = Math.round((vm.challengeArmy.archers / 100) * challengedPercentLost);
-                vm.challengeArmy.infantry -= challengedInfantryLost;
-                vm.challengeArmy.cavalry -= challengedCavalryLost;
-                vm.challengeArmy.archers -= challengedArchersLost;
+                challengedInfantryLost = Math.round((vm.challengedArmy.infantry / 100) * challengedPercentLost);
+                challengedCavalryLost = Math.round((vm.challengedArmy.cavalry / 100) * challengedPercentLost);
+                challengedArchersLost = Math.round((vm.challengedArmy.archers / 100) * challengedPercentLost);
+                vm.challengedArmy.infantry -= challengedInfantryLost;
+                vm.challengedArmy.cavalry -= challengedCavalryLost;
+                vm.challengedArmy.archers -= challengedArchersLost;
                 //The logged in user
                 userInfantryLost = Math.round((vm.userArmy.infantry / 100) * userPercentLost);
                 userCavalryLost = Math.round((vm.userArmy.cavalry / 100) * userPercentLost);
@@ -191,11 +198,11 @@ angular.module('battleCtrl', [])
                 vm.userArmy.archers -= userArchersLost;
                 //If their whole army was destroyed, delete from DB and from variables
                 if (challengedPercentLost === 100) {
-                    Army.update(vm.challengeArmy._id, {
-                        infantry: 0,
-                        cavalry: 0,
-                        archers: 0
-                    });
+                    Army.delete(vm.challengedArmy._id)
+                        .then(function(){
+                            window.location.reload();
+                            alert('You destroyed all of their forces!');
+                        });
                     //This user challenged and won, so their win count increases
                     Army.update(vm.userArmy._id, {
                         infantry: vm.userArmy.infantry,
@@ -207,10 +214,10 @@ angular.module('battleCtrl', [])
                 //Otherwise, update their army based on the units lost
                 else {
                     //This user was challenged so their wincount isn't affected
-                    Army.update(vm.challengeArmy._id, {
-                        infantry: vm.challengeArmy.infantry,
-                        cavalry: vm.challengeArmy.cavalry,
-                        archers: vm.challengeArmy.archers
+                    Army.update(vm.challengedArmy._id, {
+                        infantry: vm.challengedArmy.infantry,
+                        cavalry: vm.challengedArmy.cavalry,
+                        archers: vm.challengedArmy.archers
                     });
                     //This user challenged and won, so their wincount increases
                     Army.update(vm.userArmy._id, {
@@ -224,25 +231,25 @@ angular.module('battleCtrl', [])
             //If the opponents manages to get a higher attack score
             else {
                 //The person being challenged won, increase their win count
-                vm.challengeArmy.winCount++;
+                vm.challengedArmy.winCount++;
                 //The logged in user lost, decrease their wincount
                 vm.userArmy.winCount--;
                 if (vm.userArmy.winCount < 0) {
                     vm.userArmy.winCount = 0;
                 }
                 //Increase the person who was challenged wincount if they've reached a certain number
-                switch (vm.challengeArmy.winCount) {
+                switch (vm.challengedArmy.winCount) {
                     case 5:
-                        vm.challengeArmy.level++;
+                        vm.challengedArmy.level++;
                         break;
                     case 10:
-                        vm.challengeArmy.level++;
+                        vm.challengedArmy.level++;
                         break;
                     case 15:
-                        vm.challengeArmy.level++;
+                        vm.challengedArmy.level++;
                         break;
                     case 20:
-                        vm.challengeArmy.level++;
+                        vm.challengedArmy.level++;
                         break;
                 }
                 //Decrease the losers wincount if they've dropped to a different number
@@ -307,12 +314,12 @@ angular.module('battleCtrl', [])
                 }
                 //Based on how much of their army was lost, reduce the size of their army
                 //Person who was challenged
-                challengedInfantryLost = Math.round((vm.challengeArmy.infantry / 100) * challengedPercentLost);
-                challengedCavalryLost = Math.round((vm.challengeArmy.cavalry / 100) * challengedPercentLost);
-                challengedArchersLost = Math.round((vm.challengeArmy.archers / 100) * challengedPercentLost);
-                vm.challengeArmy.infantry -= challengedInfantryLost;
-                vm.challengeArmy.cavalry -= challengedCavalryLost;
-                vm.challengeArmy.archers -= challengedArchersLost;
+                challengedInfantryLost = Math.round((vm.challengedArmy.infantry / 100) * challengedPercentLost);
+                challengedCavalryLost = Math.round((vm.challengedArmy.cavalry / 100) * challengedPercentLost);
+                challengedArchersLost = Math.round((vm.challengedArmy.archers / 100) * challengedPercentLost);
+                vm.challengedArmy.infantry -= challengedInfantryLost;
+                vm.challengedArmy.cavalry -= challengedCavalryLost;
+                vm.challengedArmy.archers -= challengedArchersLost;
                 //The logged in user
                 userInfantryLost = Math.round((vm.userArmy.infantry / 100) * userPercentLost);
                 userCavalryLost = Math.round((vm.userArmy.cavalry / 100) * userPercentLost);
@@ -322,23 +329,22 @@ angular.module('battleCtrl', [])
                 vm.userArmy.archers -= userArchersLost;
                 //If their whole army was destroyed, delete from DB and from variables
                 if (userPercentLost === 100) {
-                    Army.update(vm.userArmy._id, {
-                        infantry: 0,
-                        cavalry: 0,
-                        archers: 0
-                    });
+                    Army.delete(vm.userArmy._id)
+                        .then(function(data){
+
+                        });
                     $location.path("/armoury");
                     alert('Your entire army was destroyed!');
                 }
                 //Otherwise, update their army based on the units lost
                 else {
                     //This user was challenged and won, so their wincount increases
-                    Army.update(vm.challengeArmy._id, {
-                        infantry: vm.challengeArmy.infantry,
-                        cavalry: vm.challengeArmy.cavalry,
-                        archers: vm.challengeArmy.archers,
-                        winCount: vm.challengeArmy.winCount,
-                        level: vm.challengeArmy.level
+                    Army.update(vm.challengedArmy._id, {
+                        infantry: vm.challengedArmy.infantry,
+                        cavalry: vm.challengedArmy.cavalry,
+                        archers: vm.challengedArmy.archers,
+                        winCount: vm.challengedArmy.winCount,
+                        level: vm.challengedArmy.level
                     });
                     //This user challenged and lost, so their wincount decreases
                     if (vm.userArmy.level < 0) {

@@ -33,13 +33,13 @@ module.exports = function (app, express) {
                 } else{
                     res.json({
                         success: false,
-                        message: 'Password must be at least 6 characters'
+                        message: 'Password must be at least 6 characters.'
                     });
                 }
             } else {
                 res.json({
                     success: false,
-                    message: 'A user with that username already exists'
+                    message: 'A user with that username already exists.'
                 });
             }
         });

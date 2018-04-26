@@ -4,13 +4,13 @@ Medieval War is an MMORPG developed as part of CM4025. The aim of the game is to
 
 ## Page Breakdown
 
-### Home Page
+### Main Page
 #### Logged Out
 Users are presented with options to register or login to gain access to the games full functionality. A short description is also provided about the aim of the game.
 #### Logged In
 Users are presented with a breakdown of each of the main pages.
 
-### Dashboard
+### Home Base
 Users are presented with an interactive 'lobby'. Users can click on the 'map' to move their character round whilst talking in the chat and socialising with other players. 
 
 This page is where players will gather their resources by clicking on the different resource buttons. When the buttons are pressed, the players 'villagers' will go off to find the resources. They might not always return with something so you'll need to be patient!

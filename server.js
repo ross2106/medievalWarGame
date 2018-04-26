@@ -99,7 +99,7 @@ var Player = function (id, username) {
             }
         }
         if (self.pressingDown) {
-            if (self.y > 480) {
+            if (self.y > 470) {
                 self.y -= 1;
             }
             else {

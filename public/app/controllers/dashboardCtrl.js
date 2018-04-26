@@ -4,6 +4,7 @@ angular.module('dashboardCtrl', [])
         var vm = this;
         var canvas = document.getElementById('ctx');
         var ctx = canvas.getContext('2d');
+        ctx.focus();
         ctx.font = '15px Arial';
         ctx.fontStyle = 'bold';
         var map = new Image();
@@ -62,14 +63,8 @@ angular.module('dashboardCtrl', [])
         });
 
         Socket.on('add-user', function (data) {
-            for(var i = 0; i < $scope.users.length; i++){
-                if($scope.users[i].username === data.username){
-                    break;
-                } else{
-                    $scope.users.push(data.username);
-                    $scope.messages.push({username: data.username, message: 'has entered the channel'});
-                }
-            }
+            $scope.users.push(data.username);
+            $scope.messages.push({username: data.username, message: 'has entered the channel'});
         });
 
         Socket.on('remove-user', function (data) {
@@ -80,6 +75,10 @@ angular.module('dashboardCtrl', [])
         $scope.$on('$locationChangeStart', function (event) {
             Socket.disconnect(true);
         });
+
+        vm.focus = function(event){
+            event.target.focus();
+        };
 
         Socket.on('newPositions', function (data) {
             ctx.clearRect(0, 0, 500, 500);
@@ -97,6 +96,7 @@ angular.module('dashboardCtrl', [])
         map.src = "/assets/img/Grass.png";
 
         document.onkeydown = function (event) {
+            event.preventDefault();
             if (event.keyCode === 68)    //d
                 Socket.emit('keyPress', {inputId: 'right', state: true});
             else if (event.keyCode === 83)   //s

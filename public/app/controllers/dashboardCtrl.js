@@ -4,7 +4,6 @@ angular.module('dashboardCtrl', [])
         var vm = this;
         var canvas = document.getElementById('ctx');
         var ctx = canvas.getContext('2d');
-        $('#ctx').focus();
         ctx.font = '15px Arial';
         ctx.fontStyle = 'bold';
         var map = new Image();
@@ -96,7 +95,6 @@ angular.module('dashboardCtrl', [])
         map.src = "/assets/img/Grass.png";
 
         document.onkeydown = function (event) {
-            event.preventDefault();
             if (event.keyCode === 68)    //d
                 Socket.emit('keyPress', {inputId: 'right', state: true});
             else if (event.keyCode === 83)   //s

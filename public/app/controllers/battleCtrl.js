@@ -4,8 +4,6 @@ angular.module('battleCtrl', [])
         Socket.connect();
         var vm = this;
 
-        $('[data-toggle="tooltip"]').tooltip();
-
         //User variables
         vm.username = ''; //Logged in user
         $scope.users = [];

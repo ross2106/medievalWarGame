@@ -77,19 +77,26 @@ var Player = function (id, username) {
         maxSpd: 7
     };
     self.updatePosition = function () {
-        if(self.x < 480 && self.y < 480 && self.x > 10 && self.y > 10) {
-            if (self.pressingRight)
-                self.x += self.maxSpd;
-            if (self.pressingLeft)
-                self.x -= self.maxSpd;
-            if (self.pressingUp)
-                self.y -= self.maxSpd;
-            if (self.pressingDown)
-                self.y += self.maxSpd;
-        } else{
+        if (self.x > 490) {
             self.x -= 1;
-            self.y -= 1
         }
+        if (self.x < 10) {
+            self.x += 1;
+        }
+        if (self.y > 490) {
+            self.y -= 1;
+        }
+        if (self.y < 10) {
+            self.y += 1;
+        }
+        if (self.pressingRight)
+            self.x += self.maxSpd;
+        if (self.pressingLeft)
+            self.x -= self.maxSpd;
+        if (self.pressingUp)
+            self.y -= self.maxSpd;
+        if (self.pressingDown)
+            self.y += self.maxSpd;
     };
     return self;
 };

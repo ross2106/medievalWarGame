@@ -26,7 +26,7 @@ angular.module('userApp', [
 
         // route for the home page
             .when('/', {
-                templateUrl: 'app/views/pages/home.html',
+                templateUrl: 'app/views/pages/home.html'
             })
 
             // login page

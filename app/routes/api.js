@@ -15,24 +15,32 @@ module.exports = function (app, express) {
     // route to register a user
     apiRouter.post('/register', function (req, res) {
 
-        // look for the user named chris
         User.findOne({
             'username': req.body.username
         }, function (err, user) {
-            // if there is no chris user, create one
             if (!user) {
-                var newUser = new User();
-                newUser.name = req.body.name;
-                newUser.username = req.body.username;
-                newUser.password = req.body.password;
-                newUser.save();
-                // return the information including token as JSON
-                res.json({
-                    success: true,
-                    message: 'New user created!'
-                });
+                if(req.body.password.length >= 6){
+                    var newUser = new User();
+                    newUser.name = req.body.name;
+                    newUser.username = req.body.username;
+                    newUser.password = req.body.password;
+                    newUser.save();
+                    // return the information including token as JSON
+                    res.json({
+                        success: true,
+                        message: 'New user created!'
+                    });
+                } else{
+                    res.json({
+                        success: false,
+                        message: 'Password must be at least 6 characters'
+                    });
+                }
             } else {
-
+                res.json({
+                    success: false,
+                    message: 'A user with that username already exists'
+                });
             }
         });
 
@@ -55,7 +63,6 @@ module.exports = function (app, express) {
                     message: 'Incorrect username or password'
                 });
             } else if (user) {
-
                 // check if password matches
                 var validPassword = user.comparePassword(req.body.password);
                 if (!validPassword) {

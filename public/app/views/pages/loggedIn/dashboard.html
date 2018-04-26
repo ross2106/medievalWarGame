@@ -1,44 +1,47 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col justify-content-md-center">
-            <div class = "row justify-content-md-center">
+            <div class="row justify-content-md-center">
                 <h5><i class="fas fa-utensils"></i>{{ dashboard.food }}</h5>
             </div>
-            <div class = "row" ng-click="dashboard.gatherFood()">
+            <div class="row" ng-click="dashboard.gatherFood()">
                 <button class="submit btn-lg btn-block btn-danger"><i class="fas fa-utensils"></i>Gather Food</button>
             </div>
         </div>
         <div class="col justify-content-md-center">
-            <div class = "row justify-content-md-center">
+            <div class="row justify-content-md-center">
                 <h5><i class="fas fa-balance-scale"></i>{{ dashboard.gold }}</h5>
             </div>
-            <div class = "row justify-content-md-center" ng-click="dashboard.mineGold()">
-                <button class="submit btn-lg btn-block btn-warning"><i class="fas fa-balance-scale"></i>Mine gold</button>
+            <div class="row justify-content-md-center" ng-click="dashboard.mineGold()">
+                <button class="submit btn-lg btn-block btn-warning"><i class="fas fa-balance-scale"></i>Mine gold
+                </button>
             </div>
         </div>
         <div class="col justify-content-md-center">
-            <div class = "row justify-content-md-center">
+            <div class="row justify-content-md-center">
                 <h5><i class="fas fa-tree"></i>{{ dashboard.wood }}</h5>
             </div>
-            <div class = "row justify-content-md-center" ng-click="dashboard.chopWood()">
+            <div class="row justify-content-md-center" ng-click="dashboard.chopWood()">
                 <button class="submit btn-lg btn-block btn-success"><i class="fas fa-tree"></i>Chop Wood</button>
             </div>
 
         </div>
+    </div>
+    <div class="row">
+        <ul style="overflow-y: auto; width: 100%;" scroll-glue>
+            <li ng-repeat="command in dashboard.commands track by $index">{{ command }}</li>
+        </ul>
     </div>
 </div>
 <div class="container-fluid">
     <div class="row" style="height: 550px">
         <div class="card col-8">
             <div class="row">
-                <canvas ng-click="dashboard.focus($event)" tabindex = "0" ng-keydown="dashboard.onkeydown($event)" ng-keyup="dashboard.onkeyup($event)"
-                        id="ctx" width="500" height="500"></canvas>
+                <canvas ng-click="dashboard.focus($event)" tabindex="0" ng-keydown="dashboard.onkeydown($event)"
+                        ng-keyup="dashboard.onkeyup($event)"
+                        id="ctx" width="500" height="500" style="width: 100%; height: 100%;"></canvas>
             </div>
-<!--            <div class="row" style="height:20%">
-                <ul style="overflow-y: auto; width: 100%;" scroll-glue>
-                    <li ng-repeat="command in dashboard.commands track by $index">{{ command }}</li>
-                </ul>
-            </div>-->
+
         </div>
         <div class="card col-4">
             <div class="row" style="height:90%;">
@@ -60,7 +63,8 @@
             </div>
             <div class="row" style="height:10%;">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter Text Here..." ng-click="dashboard.focus($event)" ng-model="msg"
+                    <input type="text" class="form-control" placeholder="Enter Text Here..."
+                           ng-click="dashboard.focus($event)" ng-model="msg"
                            id="chatInput">
                     <div class="input-group-append">
                         <button class="btn btn-outline-primary" type="submit" ng-click="sendMessage(msg)">Send Message

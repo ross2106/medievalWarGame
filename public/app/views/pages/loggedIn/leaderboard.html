@@ -1,0 +1,16 @@
+<table class="table table-bordered table-striped" ng-show="armies">
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Level</th>
+        <th>Win Count</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="army in armies | orderBy: 'winCount':true">
+        <td>{{ army.username }}</td>
+        <td>{{ army.level }}</td>
+        <td>{{ army.winCount }}</td>
+    </tr>
+    </tbody>
+</table>

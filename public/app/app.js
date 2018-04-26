@@ -10,6 +10,7 @@ angular.module('userApp', [
     'socketFactory',
     'mainCtrl',
     'userCtrl',
+    'leaderboardCtrl',
     'battleCtrl',
     'dashboardCtrl',
     'armouryCtrl',

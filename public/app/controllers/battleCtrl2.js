@@ -123,7 +123,9 @@ angular.module('battleCtrl', [])
             var userArchersLost = 0;
             if (vm.userAttack > vm.challengedAttack) {
                 //Logged in user has won, increase their win count
+                console.log('Win count before' + vm.userArmy.winCount);
                 vm.userArmy.winCount++;
+                console.log('Win count after' + vm.userArmy.winCount);
                 //Increase their level if they've reached a certain win count
                 switch (vm.userArmy.winCount) {
                     case 5:
@@ -139,6 +141,7 @@ angular.module('battleCtrl', [])
                         vm.userArmy.level++;
                         break;
                 }
+                console.log('New user level...' + vm.userArmy.level);
                 //Challenge attack is going to lose.
                 //They will either lost half their army or their whole army
                 //Coin toss
@@ -183,16 +186,16 @@ angular.module('battleCtrl', [])
                 }
                 //Based on how much of their army was lost, change reduce the size of their army
                 //Person who was challenged
-                challengedInfantryLost = Math.round((vm.challengedArmy.infantry / 100) * challengedPercentLost);
-                challengedCavalryLost = Math.round((vm.challengedArmy.cavalry / 100) * challengedPercentLost);
-                challengedArchersLost = Math.round((vm.challengedArmy.archers / 100) * challengedPercentLost);
+                challengedInfantryLost = Math.ceil((vm.challengedArmy.infantry / 100) * challengedPercentLost);
+                challengedCavalryLost = Math.ceil((vm.challengedArmy.cavalry / 100) * challengedPercentLost);
+                challengedArchersLost = Math.ceil((vm.challengedArmy.archers / 100) * challengedPercentLost);
                 vm.challengedArmy.infantry -= challengedInfantryLost;
                 vm.challengedArmy.cavalry -= challengedCavalryLost;
                 vm.challengedArmy.archers -= challengedArchersLost;
                 //The logged in user
-                userInfantryLost = Math.round((vm.userArmy.infantry / 100) * userPercentLost);
-                userCavalryLost = Math.round((vm.userArmy.cavalry / 100) * userPercentLost);
-                userArchersLost = Math.round((vm.userArmy.archers / 100) * userPercentLost);
+                userInfantryLost = Math.ceil((vm.userArmy.infantry / 100) * userPercentLost);
+                userCavalryLost = Math.ceil((vm.userArmy.cavalry / 100) * userPercentLost);
+                userArchersLost = Math.ceil((vm.userArmy.archers / 100) * userPercentLost);
                 vm.userArmy.infantry -= userInfantryLost;
                 vm.userArmy.cavalry -= userCavalryLost;
                 vm.userArmy.archers -= userArchersLost;
@@ -200,15 +203,15 @@ angular.module('battleCtrl', [])
                 if (challengedPercentLost === 100) {
                     Army.delete(vm.challengedArmy._id)
                         .then(function(){
-                            window.location.reload();
-                            alert('You destroyed all of their forces!');
+                            vm.challengedArmy = '';
                         });
                     //This user challenged and won, so their win count increases
                     Army.update(vm.userArmy._id, {
                         infantry: vm.userArmy.infantry,
                         cavalry: vm.userArmy.cavalry,
                         archers: vm.userArmy.archers,
-                        winCount: vm.userArmy.winCount
+                        winCount: vm.userArmy.winCount,
+                        level: vm.userArmy.level
                     });
                 }
                 //Otherwise, update their army based on the units lost
@@ -224,7 +227,8 @@ angular.module('battleCtrl', [])
                         infantry: vm.userArmy.infantry,
                         cavalry: vm.userArmy.cavalry,
                         archers: vm.userArmy.archers,
-                        winCount: vm.userArmy.winCount
+                        winCount: vm.userArmy.winCount,
+                        level: vm.userArmy.level
                     });
                 }
             }
@@ -314,16 +318,16 @@ angular.module('battleCtrl', [])
                 }
                 //Based on how much of their army was lost, reduce the size of their army
                 //Person who was challenged
-                challengedInfantryLost = Math.round((vm.challengedArmy.infantry / 100) * challengedPercentLost);
-                challengedCavalryLost = Math.round((vm.challengedArmy.cavalry / 100) * challengedPercentLost);
-                challengedArchersLost = Math.round((vm.challengedArmy.archers / 100) * challengedPercentLost);
+                challengedInfantryLost = Math.ceil((vm.challengedArmy.infantry / 100) * challengedPercentLost);
+                challengedCavalryLost = Math.ceil((vm.challengedArmy.cavalry / 100) * challengedPercentLost);
+                challengedArchersLost = Math.ceil((vm.challengedArmy.archers / 100) * challengedPercentLost);
                 vm.challengedArmy.infantry -= challengedInfantryLost;
                 vm.challengedArmy.cavalry -= challengedCavalryLost;
                 vm.challengedArmy.archers -= challengedArchersLost;
                 //The logged in user
-                userInfantryLost = Math.round((vm.userArmy.infantry / 100) * userPercentLost);
-                userCavalryLost = Math.round((vm.userArmy.cavalry / 100) * userPercentLost);
-                userArchersLost = Math.round((vm.userArmy.archers / 100) * userPercentLost);
+                userInfantryLost = Math.ceil((vm.userArmy.infantry / 100) * userPercentLost);
+                userCavalryLost = Math.ceil((vm.userArmy.cavalry / 100) * userPercentLost);
+                userArchersLost = Math.ceil((vm.userArmy.archers / 100) * userPercentLost);
                 vm.userArmy.infantry -= userInfantryLost;
                 vm.userArmy.cavalry -= userCavalryLost;
                 vm.userArmy.archers -= userArchersLost;

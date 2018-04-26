@@ -86,6 +86,9 @@ var Player = function (id, username) {
                 self.y -= self.maxSpd;
             if (self.pressingDown)
                 self.y += self.maxSpd;
+        } else{
+            self.x -= 1;
+            self.y -= 1
         }
     };
     return self;

@@ -78,14 +78,14 @@ var Player = function (id, username) {
     };
     self.updatePosition = function () {
         if (self.pressingRight) {
-            if (self.x > 480) {
+            if (self.x > 470) {
                 self.x -= 1;
             } else {
                 self.x += self.maxSpd;
             }
         }
         if (self.pressingLeft) {
-            if (self.x < 20) {
+            if (self.x < 10) {
                 self.x += 1;
             } else {
                 self.x -= self.maxSpd;

@@ -84,9 +84,7 @@ angular.module('dashboardCtrl', [])
             drawMap();
             for (var i = 0; i < data.length; i++) {
                 ctx.fillText(data[i].username, data[i].x, data[i].y);
-                //ctx.drawImage(knight, data[i].x - 30, data[i].y - 20, 100, 100);
-                ctx.drawImage(knight,
-                    0, 0, 100, 100, data[i].x-50, data[i].y-50, 100, 100);
+                ctx.drawImage(knight, data[i].x - 30, data[i].y - 20, 100, 100);
             }
         });
 

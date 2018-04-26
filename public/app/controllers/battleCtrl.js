@@ -4,12 +4,8 @@ angular.module('battleCtrl', [])
         Socket.connect();
         var vm = this;
 
-        $('[data-toggle=tooltip]').hover(function(){
-            // on mouseenter
-            $(this).tooltip('show');
-        }, function(){
-            // on mouseleave
-            $(this).tooltip('hide');
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
         });
 
         //User variables

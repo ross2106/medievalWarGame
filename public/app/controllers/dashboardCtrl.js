@@ -94,7 +94,7 @@ angular.module('dashboardCtrl', [])
         knight.src = "/assets/img/knight.png";
         map.src = "/assets/img/Grass.png";
 
-        document.onkeydown = function (event) {
+        vm.onkeydown = function (event) {
             if (event.keyCode === 68)    //d
                 Socket.emit('keyPress', {inputId: 'right', state: true});
             else if (event.keyCode === 83)   //s
@@ -105,7 +105,7 @@ angular.module('dashboardCtrl', [])
                 Socket.emit('keyPress', {inputId: 'up', state: true});
         };
 
-        document.onkeyup = function (event) {
+        vm.onkeyup = function (event) {
             if (event.keyCode === 68)    //d
                 Socket.emit('keyPress', {inputId: 'right', state: false});
             else if (event.keyCode === 83)   //s

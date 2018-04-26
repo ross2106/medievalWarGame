@@ -4,9 +4,7 @@ angular.module('battleCtrl', [])
         Socket.connect();
         var vm = this;
 
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        });
+        $('[data-toggle="tooltip"]').tooltip();
 
         //User variables
         vm.username = ''; //Logged in user
@@ -206,7 +204,7 @@ angular.module('battleCtrl', [])
                 //If their whole army was destroyed, delete from DB and from variables
                 if (challengedPercentLost === 100) {
                     Army.delete(vm.challengedArmy._id)
-                        .then(function(){
+                        .then(function () {
                             vm.challengedArmy = '';
                         });
                     //This user challenged and won, so their win count increases
@@ -338,7 +336,7 @@ angular.module('battleCtrl', [])
                 //If their whole army was destroyed, delete from DB and from variables
                 if (userPercentLost === 100) {
                     Army.delete(vm.userArmy._id)
-                        .then(function(data){
+                        .then(function (data) {
 
                         });
                     $location.path("/armoury");

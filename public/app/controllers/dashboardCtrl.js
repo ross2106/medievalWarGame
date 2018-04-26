@@ -4,7 +4,7 @@ angular.module('dashboardCtrl', [])
         var vm = this;
         var canvas = document.getElementById('ctx');
         var ctx = canvas.getContext('2d');
-        ctx.focus();
+        $('#ctx').focus();
         ctx.font = '15px Arial';
         ctx.fontStyle = 'bold';
         var map = new Image();

@@ -15,7 +15,6 @@ var path = require('path');
 // var io = require('socket.io')(http);
 
 
-
 // APP CONFIGURATION ==================
 // ====================================
 // use body parser so we can grab information from POST requests
@@ -78,14 +77,16 @@ var Player = function (id, username) {
         maxSpd: 7
     };
     self.updatePosition = function () {
-        if (self.pressingRight)
-            self.x += self.maxSpd;
-        if (self.pressingLeft)
-            self.x -= self.maxSpd;
-        if (self.pressingUp)
-            self.y -= self.maxSpd;
-        if (self.pressingDown)
-            self.y += self.maxSpd;
+        while (self.x < 490 && self.y < 490) {
+            if (self.pressingRight)
+                self.x += self.maxSpd;
+            if (self.pressingLeft)
+                self.x -= self.maxSpd;
+            if (self.pressingUp)
+                self.y -= self.maxSpd;
+            if (self.pressingDown)
+                self.y += self.maxSpd;
+        }
     };
     return self;
 };

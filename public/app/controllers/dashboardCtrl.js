@@ -75,7 +75,7 @@ angular.module('dashboardCtrl', [])
             Socket.disconnect(true);
         });
 
-        vm.focus = function(event){
+        vm.focus = function (event) {
             event.target.focus();
         };
 
@@ -83,10 +83,8 @@ angular.module('dashboardCtrl', [])
             ctx.clearRect(0, 0, 500, 500);
             drawMap();
             for (var i = 0; i < data.length; i++) {
-                if(data[i].x < 490 && data[i].y < 490){
-                    ctx.fillText(data[i].username, data[i].x, data[i].y);
-                    ctx.drawImage(knight, data[i].x - 30, data[i].y - 20, 100, 100);
-                }
+                ctx.fillText(data[i].username, data[i].x, data[i].y);
+                ctx.drawImage(knight, data[i].x - 30, data[i].y - 20, 100, 100);
             }
         });
 

@@ -89,11 +89,9 @@
       <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/app/views/pages/loggedIn/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="41" column="32" lean-forward="true" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
-              <folding>
-                <element signature="n#style#0;n#canvas#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="114">
+              <caret line="33" column="185" lean-forward="false" selection-start-line="33" selection-start-column="185" selection-end-line="33" selection-end-column="185" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -418,7 +416,7 @@
       <workItem from="1524469879534" duration="10893000" />
       <workItem from="1524687993399" duration="628000" />
       <workItem from="1524692325854" duration="5869000" />
-      <workItem from="1524727741312" duration="25384000" />
+      <workItem from="1524727741312" duration="25482000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1524146162575</created>
@@ -431,7 +429,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="210116000" />
+    <option name="totallyTimeSpent" value="210214000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -884,11 +882,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/views/pages/loggedIn/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="41" column="32" lean-forward="true" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
-          <folding>
-            <element signature="n#style#0;n#canvas#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="114">
+          <caret line="33" column="185" lean-forward="false" selection-start-line="33" selection-start-column="185" selection-end-line="33" selection-end-column="185" />
+          <folding />
         </state>
       </provider>
     </entry>

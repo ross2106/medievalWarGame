@@ -4,6 +4,14 @@ angular.module('battleCtrl', [])
         Socket.connect();
         var vm = this;
 
+        $('[data-toggle=tooltip]').hover(function(){
+            // on mouseenter
+            $(this).tooltip('show');
+        }, function(){
+            // on mouseleave
+            $(this).tooltip('hide');
+        });
+
         //User variables
         vm.username = ''; //Logged in user
         $scope.users = [];

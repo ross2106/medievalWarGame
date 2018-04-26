@@ -62,8 +62,14 @@ angular.module('dashboardCtrl', [])
         });
 
         Socket.on('add-user', function (data) {
-            $scope.users.push(data.username);
-            $scope.messages.push({username: data.username, message: 'has entered the channel'});
+            for(var i = 0; i < $scope.users.length; i++){
+                if($scope.users[i].username === data.username){
+                    break;
+                } else{
+                    $scope.users.push(data.username);
+                    $scope.messages.push({username: data.username, message: 'has entered the channel'});
+                }
+            }
         });
 
         Socket.on('remove-user', function (data) {

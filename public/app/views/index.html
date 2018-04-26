@@ -1,4 +1,3 @@
-
 <html lang="en" ng-app="userApp">
 
 <head>
@@ -10,9 +9,11 @@
 
     <!-- CSS  -->
     <!-- load bootstrap from CDN and custom CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
+          integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
 </head>
 
@@ -21,8 +22,8 @@
     <a href="/" class="navbar-brand">Medieval War</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class = "nav-item" ng-if="main.loggedIn">
-                <a class = "nav-link" href="/dashboard"><i class="fas fa-home"></i>Home Base</a>
+            <li class="nav-item" ng-if="main.loggedIn">
+                <a class="nav-link" href="/dashboard"><i class="fas fa-home"></i>Home Base</a>
             </li>
             <li class="nav-item" ng-if="main.loggedIn">
                 <a class="nav-link" href="/armoury"><i class="fas fa-shield-alt"></i>Armoury</a>
@@ -35,17 +36,17 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class = "nav-item" ng-if="!main.loggedIn">
+            <li class="nav-item" ng-if="!main.loggedIn">
                 <a class="nav-link" href="/login"><i class="fas fa-user"></i>Login</a>
             </li>
-            <li class = "nav-item" ng-if="!main.loggedIn">
+            <li class="nav-item" ng-if="!main.loggedIn">
                 <a class="nav-link" href="/register"><i class="fas fa-user-plus"></i>Register</a>
             </li>
-            <li class = "nav-item" ng-if="main.loggedIn">
-                <p class ="navbar-text">Hello {{ main.user.username }}!</p>
+            <li class="nav-item" ng-if="main.loggedIn">
+                <p class="navbar-text">Hello {{ main.user.username }}!</p>
             </li>
-            <li class = "nav-item" ng-if="main.loggedIn">
-                <a class="nav-link" href = "/" ng-click="main.doLogout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
+            <li class="nav-item" ng-if="main.loggedIn">
+                <a class="nav-link" href="/" ng-click="main.doLogout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
             </li>
         </ul>
     </div>
@@ -56,27 +57,29 @@
 </main>
 <!-- JS -->
 <!-- load angular and angular-route via CDN -->
-<!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-aria.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-messages.min.js"></script>
-
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-animate.js"></script>-->
-
 <!-- Angular Material requires Angular.js Libraries -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
 
 <!-- Angular Material Library -->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
 
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
 
 <!-- Socket -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>

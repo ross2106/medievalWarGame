@@ -4,6 +4,7 @@ angular.module('leaderboardCtrl', [])
 
         $scope.armies = '';
 
+        //Function to get all the armies to be used on the leaderboard
         $scope.getStats = function (callback) {
             Army.all()
                 .then(function (data) {

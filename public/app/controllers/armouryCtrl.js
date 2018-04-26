@@ -3,20 +3,24 @@ angular.module('armouryCtrl', [])
         var vm = this;
         vm.username = '';
 
+        //Variables for the users army
         vm.armyId = '';
         vm.infantry = 0;
         vm.archers = 0;
         vm.cavalry = 0;
 
+        //Variables for the users inventory
         vm.inventoryId = '';
         vm.gold = 0;
         vm.wood = 0;
         vm.food = 0;
 
+        //Error messages
         vm.infantryError = '';
         vm.cavalryError = '';
         vm.archerError = '';
 
+        //Get the logged in user
         var getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
@@ -25,6 +29,7 @@ angular.module('armouryCtrl', [])
         };
         getUsername();
 
+        //Get the army of the logged in user
         var getArmy = function () {
             Army.all()
                 .then(function (data) {
@@ -40,6 +45,7 @@ angular.module('armouryCtrl', [])
         };
         getArmy();
 
+        //Get the inventory of the logged in user
         var getInventory = function () {
             Inventory.all()
                 .then(function (data) {
@@ -55,24 +61,25 @@ angular.module('armouryCtrl', [])
         };
         getInventory();
 
+        //Called when a user buys infantry
         vm.buyInfantry = function () {
             vm.cavalryError = '';
             vm.infantryError = '';
             vm.archerError = '';
-            if (vm.gold >= 120 && vm.food >= 150) {
+            if (vm.gold >= 120 && vm.food >= 150) { //If they can afford it
                 if (vm.armyId !== '') {
                     Army.update(vm.armyId, {
-                        infantry: vm.infantry + 10
+                        infantry: vm.infantry + 10 //Update their troops
                     });
                     Inventory.update(vm.inventoryId, {
-                        gold: vm.gold - 120,
+                        gold: vm.gold - 120, //Take away their resources
                         food: vm.food - 150
                     });
                     vm.gold -= 120;
-                    vm.food -= 150;
+                    vm.food -= 150; //local variables
                     vm.infantry += 10;
                 } else {
-                    Army.create({
+                    Army.create({ //If they can afford it but don't have an army yet, create one
                         username: vm.username,
                         infantry: 10,
                         archers: 0,
@@ -82,15 +89,15 @@ angular.module('armouryCtrl', [])
                     });
                     Inventory.update(vm.inventoryId, {
                         gold: vm.gold - 120,
-                        food: vm.food - 150
+                        food: vm.food - 150 //Take away their resources
                     });
                     vm.gold -= 120;
                     vm.food -= 150;
-                    getInventory();
+                    getInventory(); //Update the values
                     getArmy();
                 }
             } else {
-                vm.infantryError = 'You do not have the resources to purchase this unit!';
+                vm.infantryError = 'You do not have the resources to purchase this unit!'; //Error message
             }
         };
         vm.buyCavalry = function () {

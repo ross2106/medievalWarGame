@@ -6,14 +6,9 @@ var express = require('express');
 var app = express(); // define our app using express
 var bodyParser = require('body-parser'); // get body-parser
 var morgan = require('morgan'); // used to see requests
-var mongoose = require('mongoose');
-var config = require('./config');
-var path = require('path');
-
-//socket IO stuff
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
-
+var mongoose = require('mongoose'); // used for database connection
+var config = require('./config'); //configuration files
+var path = require('path'); //Ensures we can work with file directories
 
 // APP CONFIGURATION ==================
 // ====================================
@@ -34,15 +29,12 @@ app.use(function (req, res, next) {
 // log all requests to the console
 app.use(morgan('dev'));
 
-// connect to our database (hosted on modulus.io)
+// connect to our database
 mongoose.connect(config.database);
 
 // set static files location
 // used for requests that our frontend will make
 app.use(express.static(__dirname + '/public'));
-
-// ROUTES FOR OUR API =================
-// ====================================
 
 // API ROUTES ------------------------
 var apiRoutes = require('./app/routes/api')(app, express);
@@ -61,9 +53,11 @@ app.get('*', function (req, res) {
 var server = app.listen(config.port);
 var io = require('socket.io').listen(server);
 
+// Those connected via socket IO
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 
+//Used on the 'Home base' page and 'Battle page' for the chat and interactive user map
 var Player = function (id, username) {
     var self = {
         x: 250,
@@ -76,6 +70,7 @@ var Player = function (id, username) {
         pressingDown: false,
         maxSpd: 7
     };
+    //Function to update the position of your character on the map
     self.updatePosition = function () {
         if (self.pressingRight) {
             if (self.x > 450) {
@@ -111,32 +106,34 @@ var Player = function (id, username) {
     return self;
 };
 
-//SOCKET
-var users = [];
+//Socket Connections
+var users = []; //List of users
 io.on('connection', function (socket) {
     var username = '';
     var player = '';
+    //Assign a random ID for each socket and add it to the list
     socket.id = Math.random();
     SOCKET_LIST[socket.id] = socket;
 
-    console.log('A user has connected');
+    console.log('A user has connected'); //Called whenever a new socket connection is initialized
 
     socket.on('request-users', function () {
-        socket.emit('users', {users: users});
+        socket.emit('users', {users: users}); //Online user list
     });
 
     socket.on('message', function (data) {
-        io.emit('message', {username: username, message: data.message});
+        io.emit('message', {username: username, message: data.message}); //Emit messages to the chat
     });
 
     socket.on('challenge', function (data) {
-        socket.emit('challenge', {username: username, message: data.message});
+        socket.emit('challenge', {username: username, message: data.message}); //Emit challenge information for the battle page
     });
 
     socket.on('announcement', function (data) {
-        io.emit('announcement', {message: data.message});
+        io.emit('announcement', {message: data.message}); //Announcement made on the battle page
     });
 
+    // Adds a new user to the connection list
     socket.on('add-user', function (data) {
         io.emit('add-user', {
             username: data.username
@@ -147,6 +144,7 @@ io.on('connection', function (socket) {
         PLAYER_LIST[socket.id] = player;
     });
 
+    //Called whenever a user disconnects
     socket.on('disconnect', function () {
         console.log(username + ' has disconnected!');
         users.splice(users.indexOf(username), 1);
@@ -156,6 +154,7 @@ io.on('connection', function (socket) {
         io.emit('battle-remove-user', {username: username});
     });
 
+    //Called on each key press on the interactive map
     socket.on('keyPress', function (data) {
         if (data.inputId === 'left')
             player.pressingLeft = data.state;
@@ -167,6 +166,7 @@ io.on('connection', function (socket) {
             player.pressingDown = data.state;
     });
 });
+//Draws the players position on the map
 setInterval(function () {
     var pack = [];
     for (var i in PLAYER_LIST) {

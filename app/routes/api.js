@@ -1,4 +1,4 @@
-var bodyParser = require('body-parser'); // get body-parser
+var bodyParser = require('body-parser');
 var User = require('../models/user');
 var Inventory = require('../models/inventory');
 var Army = require('../models/army');
@@ -28,30 +28,30 @@ module.exports = function (app, express) {
                     // return the information including token as JSON
                     res.json({
                         success: true,
-                        message: 'New user created!'
+                        message: 'New user created!' //User created successfully
                     });
                 } else{
                     res.json({
                         success: false,
-                        message: 'Password must be at least 6 characters.'
+                        message: 'Password must be at least 6 characters.' //Doesn't meet the password criteria
                     });
                 }
             } else {
                 res.json({
                     success: false,
-                    message: 'A user with that username already exists.'
+                    message: 'A user with that username already exists.' //User already exists
                 });
             }
         });
 
     });
 
-    // route to authenticate a user (POST http://localhost:8080/api/authenticate)
+    // route to authenticate a user
     apiRouter.post('/authenticate', function (req, res) {
 
         // find the user
         User.findOne({
-            username: req.body.username
+            username: req.body.username //Check if the user exists
         }).select('name username password').exec(function (err, user) {
 
             if (err) throw err;
@@ -140,7 +140,7 @@ module.exports = function (app, express) {
         });
     });
 
-    // on routes that end in /resources
+    // on routes that end in /inventory
     // *********************************************************************************
     // *********************************************************************************
     // *********************************************************************************

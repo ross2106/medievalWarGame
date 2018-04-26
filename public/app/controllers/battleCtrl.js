@@ -9,7 +9,7 @@ angular.module('battleCtrl', [])
         $scope.users = [];
         $scope.messages = [];
 
-        vm.armies = [];
+        vm.armies = []; //array of armies
 
         //User who is being challenged
         vm.challengedUserIndex = '';
@@ -32,6 +32,8 @@ angular.module('battleCtrl', [])
         };
         vm.getUsername();
 
+        //Get armies and populate the array
+        //Set the user/challenger armies
         vm.getArmies = function (callback) {
             Army.all()
                 .then(function (data) {
@@ -47,6 +49,7 @@ angular.module('battleCtrl', [])
                 });
         };
 
+        //Get a single army based on a username from the array
         vm.getArmy = function (name) {
             var army = '';
             for (var i = 0; i < vm.armies.length; i++) {
@@ -57,10 +60,11 @@ angular.module('battleCtrl', [])
             return army;
         };
 
+        //Called when somebody tries to challenge a user
         $scope.challengeRequest = function (index) {
-            vm.challengedUserIndex = index;
-            vm.challengedUser = $scope.users[vm.challengedUserIndex];
-            vm.getArmies(function () {
+            vm.challengedUserIndex = index; //Get the index of the user challenged in the list of online users
+            vm.challengedUser = $scope.users[vm.challengedUserIndex]; //set that user
+            vm.getArmies(function () { //Get the armies
                 console.log('Finished getting armies...');
                 if (vm.challengedUser === vm.username) {
                     Socket.emit('challenge', {message: 'You cannot challenge yourself!'}); //Make sure the logged in user is not trying to challenge themself
@@ -68,20 +72,22 @@ angular.module('battleCtrl', [])
                 if (vm.challengedUser !== vm.username) {
                     //If both users have an army
                     if (vm.challengedArmy && vm.userArmy) {
-                        vm.setArmies();
+                        vm.setArmies(); //Set the armies for battle
                     } else {
-                        Socket.emit('challenge', {message: 'Both players need an army to battle!'});
+                        Socket.emit('challenge', {message: 'Both players need an army to battle!'}); //both players must have an army to fight
                     }
                 }
             });
         };
 
+        //Set the armies up for battle
         vm.setArmies = function () {
-            //Set the attack level of the person being challenged
+            //Set the attack score of the person being challenged
+            //The higher your level in the game, the better your advantage over other players
             vm.challengedAttack += vm.challengedArmy.infantry * (3 + vm.challengedArmy.level);
             vm.challengedAttack += vm.challengedArmy.cavalry * (5 + vm.challengedArmy.level);
             vm.challengedAttack += vm.challengedArmy.archers * (2 + vm.challengedArmy.level);
-            //Set the attack level of the logged in user
+            //Set the attack score of the logged in user
             vm.userAttack += vm.userArmy.infantry * (3 + vm.userArmy.level);
             vm.userAttack += vm.userArmy.cavalry * (3 + vm.userArmy.level);
             vm.userAttack += vm.userArmy.archers * (3 + vm.userArmy.level);
@@ -111,6 +117,8 @@ angular.module('battleCtrl', [])
 
         //Function called to start a battle
         vm.doBattle = function () {
+            //Local variables set as part of the battle
+            //Calculate how many units are lost during the fight
             var challengedUnitsLost = 0;
             var challengedPercentLost = 0;
             var challengedInfantryLost = 0;
@@ -141,7 +149,6 @@ angular.module('battleCtrl', [])
                         vm.userArmy.level++;
                         break;
                 }
-                console.log('New user level...' + vm.userArmy.level);
                 //Challenge attack is going to lose.
                 //They will either lost half their army or their whole army
                 //Coin toss
@@ -153,7 +160,7 @@ angular.module('battleCtrl', [])
                         Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengedUser + ' and destroyed half their forces!'});
                         break;
                     case 2:
-                        //Half their forces were destroyed
+                        //75 percent of their forces were destroyed
                         challengedPercentLost = 75;
                         Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengedUser + ' and destroyed the majority of their forces!'});
                         break;
@@ -184,7 +191,7 @@ angular.module('battleCtrl', [])
                         Socket.emit('announcement', {message: vm.username + ' lost ' + userPercentLost + '% of their forces in the battle.'});
                         break;
                 }
-                //Based on how much of their army was lost, change reduce the size of their army
+                //Based on how much of their army was lost, reduce the size of their army
                 //Person who was challenged
                 challengedInfantryLost = Math.ceil((vm.challengedArmy.infantry / 100) * challengedPercentLost);
                 challengedCavalryLost = Math.ceil((vm.challengedArmy.cavalry / 100) * challengedPercentLost);
@@ -363,9 +370,11 @@ angular.module('battleCtrl', [])
                     });
                 }
             }
+            //Reset the armies
             vm.armies = '';
         };
 
+        //Socket IO functions for chat
         $scope.sendMessage = function (msg) {
             if (msg != null && msg !== '')
                 Socket.emit('message', {message: msg});

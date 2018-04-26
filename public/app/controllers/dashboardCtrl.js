@@ -2,12 +2,16 @@ angular.module('dashboardCtrl', [])
     .controller('dashboardController', function ($http, $scope, Socket, Auth, Inventory) {
         Socket.connect();
         var vm = this;
+        //Set the canvas
         var canvas = document.getElementById('ctx');
         var ctx = canvas.getContext('2d');
+        $('#ctx').focus(); //Focus on the canvas from the start
         ctx.font = '15px Arial';
         ctx.fontStyle = 'bold';
         var map = new Image();
         var knight = new Image();
+
+        //User information and inventory information for resource gathering
         vm.username = '';
         vm.inventoryId = '';
         vm.commands = [];
@@ -15,10 +19,12 @@ angular.module('dashboardCtrl', [])
         vm.wood = 0;
         vm.food = 0;
 
+        //Socket info for chat messages and users
         $scope.users = [];
         $scope.messages = [];
 
 
+        //Get the logged in user
         var getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
@@ -28,6 +34,7 @@ angular.module('dashboardCtrl', [])
         };
         getUsername();
 
+        //Get the inventory for that user
         var getInventory = function () {
             Inventory.all()
                 .then(function (data) {
@@ -43,40 +50,49 @@ angular.module('dashboardCtrl', [])
         };
         getInventory();
 
+        //Send a message in the chat
         $scope.sendMessage = function (msg) {
             if (msg != null && msg !== '')
                 Socket.emit('message', {message: msg});
             $scope.msg = '';
         };
 
+        //Get the online users
         Socket.emit('request-users', {});
 
+        //list of users
         Socket.on('users', function (data) {
             $scope.users = data.users;
         });
 
+        //list of messages in chat
         Socket.on('message', function (data) {
             $scope.messages.push(data);
         });
 
+        //new user connects, add to the list
         Socket.on('add-user', function (data) {
             $scope.users.push(data.username);
             $scope.messages.push({username: data.username, message: 'has entered the channel'});
         });
 
+        //user disconnects, remove from lists
         Socket.on('remove-user', function (data) {
             $scope.users.splice($scope.users.indexOf(data.username), 1);
             $scope.messages.push({username: data.username, message: 'has left the channel'});
         });
 
+        //When somebody navigates off the page
         $scope.$on('$locationChangeStart', function (event) {
             Socket.disconnect(true);
         });
 
+        //Focus click for the canvas
         vm.focus = function (event) {
             event.target.focus();
         };
 
+        //Every time a user moves, they are drawn on the map
         Socket.on('newPositions', function (data) {
             ctx.clearRect(0, 0, 500, 500);
             drawMap();
@@ -86,12 +102,14 @@ angular.module('dashboardCtrl', [])
             }
         });
 
+        //Draw the background for the canvas
         var drawMap = function () {
             ctx.drawImage(map, 0, 0);
         };
         knight.src = "/assets/img/knight.png";
         map.src = "/assets/img/Grass.png";
 
+        //If a user presses down a key
         vm.onkeydown = function (event) {
             if (event.keyCode === 68)    //d
                 Socket.emit('keyPress', {inputId: 'right', state: true});
@@ -103,6 +121,7 @@ angular.module('dashboardCtrl', [])
                 Socket.emit('keyPress', {inputId: 'up', state: true});
         };
 
+        //If a user lets go of the key
         vm.onkeyup = function (event) {
             if (event.keyCode === 68)    //d
                 Socket.emit('keyPress', {inputId: 'right', state: false});
@@ -114,26 +133,27 @@ angular.module('dashboardCtrl', [])
                 Socket.emit('keyPress', {inputId: 'up', state: false});
         };
 
+        //Called whenever the user clicks the mine gold button
         vm.mineGold = function () {
-            var random = Math.floor(Math.random() * 100) + 1;
-            var chance = Math.floor(Math.random() * 50) + 1;
-            if (chance > 35) {
+            var random = Math.floor(Math.random() * 100) + 1; //Random amount of gold found
+            var chance = Math.floor(Math.random() * 50) + 1; //Random chance of finding gold
+            if (chance > 35) { //Gold is rarest
                 vm.commands.push('You mined ' + random + ' gold!');
                 vm.command = '';
                 console.log(vm.commands);
                 if (vm.inventoryId !== '') {
                     Inventory.update(vm.inventoryId, {
-                        gold: vm.gold + random
+                        gold: vm.gold + random //Update the inventory
                     });
                     vm.gold += random;
                 } else {
-                    Inventory.create({
+                    Inventory.create({ //Create the inventory if they don't have one yet
                         username: vm.username,
                         gold: random,
                         food: 0,
                         wood: 0
                     });
-                    getInventory();
+                    getInventory(); //update it
                 }
             } else {
                 vm.commands.push('Your villagers are searching for gold...');
@@ -141,6 +161,8 @@ angular.module('dashboardCtrl', [])
             }
         };
 
+        //Called whenever somebody clicks the gather food button
+        //Same procedure as above
         vm.gatherFood = function () {
             var random = Math.floor(Math.random() * 100) + 1;
             var chance = Math.floor(Math.random() * 50) + 1;
@@ -169,13 +191,15 @@ angular.module('dashboardCtrl', [])
             }
         };
 
+        //Called whenever somebody clicks the gather wood button
+        //Same procedure as above
         vm.chopWood = function () {
             var random = Math.floor(Math.random() * 100) + 1;
             var chance = Math.floor(Math.random() * 50) + 1;
             if (chance > 25) {
                 vm.commands.push('You chopped ' + random + ' wood!');
                 vm.command = '';
-                if (vm.inventoryId != '') {
+                if (vm.inventoryId !== '') {
                     Inventory.update(vm.inventoryId, {
                         wood: vm.wood + random
                     });

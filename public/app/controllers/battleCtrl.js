@@ -1,5 +1,5 @@
 angular.module('battleCtrl', [])
-    .controller('battleController', function ($http, $scope, $mdDialog, Socket, Auth, Inventory, Army, $location) {
+    .controller('battleController', function ($http, $scope, Socket, Auth, Inventory, Army, $location) {
         //Connect the socket
         Socket.connect();
         var vm = this;
@@ -9,192 +9,98 @@ angular.module('battleCtrl', [])
         $scope.users = [];
         $scope.messages = [];
 
-        //User army variables
-        vm.userHasArmy = false;
-        vm.userArmy = '';
-        vm.armyId = '';
-        vm.infantry = 0;
-        vm.archers = 0;
-        vm.cavalry = 0;
-        vm.userAttack = 0;
-        vm.userWinCount = 0;
-        vm.userLevel = 0;
-
-        //Information about the user being challenged
-        $scope.challenge = null;
-        vm.challengeHasArmy = false;
-        vm.challengeArmy = '';
-        vm.challengeArmyId = '';
-        vm.challengeUser = '';
-        vm.challengeInfantry = 0;
-        vm.challengeArchers = 0;
-        vm.challengeCavalry = 0;
-        vm.challengeAttack = 0;
-        vm.challengeWinCount = 0;
-        vm.challengeLevel = 0;
-
         vm.armies = [];
 
+        //User who is being challenged
+        vm.challengedUserIndex = '';
+        vm.challengedUser = '';
+        vm.challengedArmy = '';
+        vm.challengedAttack = 0;
+
+        //Logged in user
+        vm.username = '';
+        vm.userArmy = '';
+        vm.userAttack = 0;
+
         //Get the username of the person logged in
-        var getUsername = function () {
+        vm.getUsername = function () {
             Auth.getUser()
                 .then(function (response) {
                     vm.username = response.data.username;
                     Socket.emit('add-user', {username: response.data.username});
                 });
         };
-        getUsername();
+        vm.getUsername();
 
-        //Get an army given a username
-        vm.getArmy = function (username) {
+        vm.getArmies = function (callback) {
             Army.all()
                 .then(function (data) {
-                    for (var i = 0; i < data.data.length; i++) {
-                        vm.armies.push(data.data[i]);
-                        if (data.data[i].username === username) {
-                            vm.armyId = data.data[i]._id;
-                            vm.infantry = parseInt(data.data[i].infantry);
-                            vm.cavalry = parseInt(data.data[i].cavalry);
-                            vm.archers = parseInt(data.data[i].archers);
-                            vm.userLevel = parseInt(data.data[i].level);
+                    vm.armies = data.data;
+                    for (var i = 0; i < vm.armies.length; i++) {
+                        if (vm.armies[i].username === vm.username) {
+                            vm.userArmy = data.data[i];
+                        } else if (vm.armies[i].username === vm.challengedUser) {
+                            vm.challengedArmy = data.data[i];
                         }
                     }
+                    callback();
                 });
         };
-        vm.getArmy(vm.username);
 
-        //Get all of the armies
-        vm.getAllArmies = function () {
-            Army.all()
-                .then(function (data) {
-                    for(var i = 0; i < data.length; i++){
-                        vm.armies.push(data.data[i]);
-                    }
-                });
-        };
-        //vm.getAllArmies();
-
-        vm.resetArmies = function () {
-            //User army variables
-            vm.userHasArmy = false;
-            vm.userArmy = '';
-            vm.armyId = '';
-            vm.infantry = 0;
-            vm.archers = 0;
-            vm.cavalry = 0;
-            vm.userAttack = 0;
-            vm.userWinCount = 0;
-            vm.userLevel = 0;
-
-            //Information about the user being challenged
-            $scope.challenge = null;
-            vm.challengeHasArmy = false;
-            vm.challengeArmy = '';
-            vm.challengeArmyId = '';
-            vm.challengeUser = '';
-            vm.challengeInfantry = 0;
-            vm.challengeArchers = 0;
-            vm.challengeCavalry = 0;
-            vm.challengeAttack = 0;
-            vm.challengeWinCount = 0;
-            vm.challengeLevel = 0;
+        vm.getArmy = function (name) {
+            var army = '';
+            for (var i = 0; i < vm.armies.length; i++) {
+                if (vm.armies[i].username === name) {
+                    army = vm.armies[i];
+                }
+            }
+            return army;
         };
 
         $scope.challengeRequest = function (index) {
-            $scope.getChallenger(index);
-        };
-
-        //When somebody is challenged, get the details about the person being challenged
-        $scope.getChallenger = function (index) {
-            $scope.challenge = index; //The person who is being challenged
-            vm.challengeUser = $scope.users[$scope.challenge];
-            if ($scope.users[$scope.challenge] === vm.username) {
-                Socket.emit('challenge', {message: 'You cannot challenge yourself!'}); //Make sure the logged in user is not trying to challenge themself
-            }
-            if ($scope.users[$scope.challenge] !== vm.username) {
-                for (var i = 0; i < vm.armies.length; i++) {
-                    //Make sure the person being challenged actually has an army
-                    if (vm.armies[i].username === vm.challengeUser) {
-                        vm.challengeHasArmy = true;
-                    }
-                    if (vm.armies[i].username === vm.username) {
-                        vm.userHasArmy = true;
+            vm.challengedUserIndex = index;
+            vm.challengedUser = $scope.users[vm.challengedUserIndex];
+            vm.getArmies(function () {
+                console.log('Finished getting armies...');
+                if (vm.challengedUser === vm.username) {
+                    Socket.emit('challenge', {message: 'You cannot challenge yourself!'}); //Make sure the logged in user is not trying to challenge themself
+                }
+                if (vm.challengedUser !== vm.username) {
+                    //If both users have an army
+                    if (vm.challengedArmy && vm.userArmy) {
+                        vm.setArmies();
+                    } else {
+                        Socket.emit('challenge', {message: 'Both players need an army to battle!'});
                     }
                 }
-                //If they have an army, set up the armies for battle
-                if (vm.challengeHasArmy && vm.userHasArmy) {
-                    vm.setArmies();
-                }
-                //If they dont have an army, then display a message to the logged in user
-                if (!vm.challengeHasArmy) {
-                    Socket.emit('challenge', {message: 'This player does not currently have an army!'});
-                }
-                if (!vm.userHasArmy) {
-                    Socket.emit('challenge', {message: 'You need to make an army to do this!'});
-                }
-            }
+            });
         };
 
-
-        //Set up the armies for battle
-        //This function takes the units from each army and gives them an attack score
         vm.setArmies = function () {
-            //The person who is logged in
-            vm.userAttack = 0;
-            //The person being challenged
-            vm.challengeAttack = 0;
-            //Loop through the armies
-            for (var i = 0; i < vm.armies.length; i++) {
-                //The person being challenged
-                if (vm.armies[i].username === vm.challengeUser) {
-                    //Set the army for the person being challenged
-                    vm.challengeArmy = vm.armies[i];
-                    vm.challengeArmyId = vm.armies[i]._id;
-                    vm.challengeWinCount = vm.armies[i].winCount;
-                    vm.challengeLevel = vm.armies[i].level;
-                    //Set the units for that army
-                    vm.challengeInfantry = vm.armies[i].infantry;
-                    vm.challengeCavalry = vm.armies[i].cavalry;
-                    vm.challengeArchers = vm.armies[i].archers;
-                    //Set the attack points based off of the default attack points and the level of the user
-                    //Infantry default is 2 attack points
-                    //Cavalry default is 5 attack points
-                    //Archer default is 1 attack point
-                    vm.challengeAttack += vm.armies[i].infantry * (3 + vm.challengeLevel);
-                    vm.challengeAttack += vm.armies[i].cavalry * (5 + vm.challengeLevel);
-                    vm.challengeAttack += vm.armies[i].archers * (2 + vm.challengeLevel);
-                }
-                //The logged in user
-                if (vm.armies[i].username === vm.username) {
-                    //Same process as above
-                    vm.userArmy = vm.armies[i];
-                    vm.armyId = vm.armies[i]._id;
-                    vm.userWinCount = vm.armies[i].winCount;
-                    vm.userLevel = vm.armies[i].level;
-                    vm.infantry = vm.armies[i].infantry;
-                    vm.cavalry = vm.armies[i].cavalry;
-                    vm.archers = vm.armies[i].archers;
-                    vm.userAttack += vm.armies[i].infantry * (3 + vm.userLevel);
-                    vm.userAttack += vm.armies[i].cavalry * (5 + vm.userLevel);
-                    vm.userAttack += vm.armies[i].archers * (2 + vm.userLevel);
-                }
-            }
+            //Set the attack level of the person being challenged
+            vm.challengedAttack += vm.challengedArmy.infantry * (3 + vm.challengedArmy.level);
+            vm.challengedAttack += vm.challengedArmy.cavalry * (5 + vm.challengedArmy.level);
+            vm.challengedAttack += vm.challengedArmy.archers * (2 + vm.challengedArmy.level);
+            //Set the attack level of the logged in user
+            vm.userAttack += vm.userArmy.infantry * (3 + vm.userArmy.level);
+            vm.userAttack += vm.userArmy.cavalry * (3 + vm.userArmy.level);
+            vm.userAttack += vm.userArmy.archers * (3 + vm.userArmy.level);
             //Take the difference between the two users attack point
-            var diff = Math.abs(vm.userAttack - vm.challengeAttack);
+            var diff = Math.abs(vm.userAttack - vm.challengedAttack);
             //If the user has a higher attack
-            if (vm.userAttack > vm.challengeAttack) {
+            if (vm.userAttack > vm.challengedAttack) {
                 //Give a new value to the user/challenge attack. User has a chance of getting a higher value so more likely to win the game
                 vm.userAttack = Math.floor(Math.random() * (100 + diff)) + 1;
-                vm.challengeAttack = Math.floor(Math.random() * (100 - diff)) + 1;
+                vm.challengedAttack = Math.floor(Math.random() * (100 - diff)) + 1;
             }
             //If the person being challenged has a higher attack
-            if (vm.challengeAttack > vm.userAttack) {
+            if (vm.challengedAttack > vm.userAttack) {
                 //Give a new value to the user/challenge attack. The person being challenged has a chance of getting a higher value so more likely to win the game
-                vm.challengeAttack = Math.floor(Math.random() * (100 + diff)) + 1;
+                vm.challengedAttack = Math.floor(Math.random() * (100 + diff)) + 1;
                 vm.userAttack = Math.floor(Math.random() * (100 - diff)) + 1;
             }
             //If the two players have the same attack score
-            if (vm.challengeAttack === vm.userAttack) {
+            if (vm.challengedAttack === vm.userAttack) {
                 //Scores remain the same
                 vm.userAttack = Math.floor(Math.random() * 100) + 1;
                 vm.challegeAttack = Math.floor(Math.random() * 100) + 1;
@@ -210,53 +116,56 @@ angular.module('battleCtrl', [])
             var challengedInfantryLost = 0;
             var challengedCavalryLost = 0;
             var challengedArchersLost = 0;
+            var userUnitsLost = 0;
+            var userPercentLost = 0;
             var userInfantryLost = 0;
             var userCavalryLost = 0;
             var userArchersLost = 0;
-            if (vm.userAttack > vm.challengeAttack) {
+            if (vm.userAttack > vm.challengedAttack) {
                 //Logged in user has won, increase their win count
-                vm.userWinCount = vm.userWinCount + 1;
+                console.log('Win count before' + vm.userArmy.winCount);
+                vm.userArmy.winCount++;
+                console.log('Win count after' + vm.userArmy.winCount);
                 //Increase their level if they've reached a certain win count
-                switch (vm.userWinCount) {
+                switch (vm.userArmy.winCount) {
                     case 5:
-                        vm.userLevel++;
+                        vm.userArmy.level++;
                         break;
                     case 10:
-                        vm.userLevel++;
+                        vm.userArmy.level++;
                         break;
                     case 15:
-                        vm.userLevel++;
+                        vm.userArmy.level++;
                         break;
                     case 20:
-                        vm.userLevel++;
+                        vm.userArmy.level++;
                         break;
                 }
+                console.log('New user level...' + vm.userArmy.level);
                 //Challenge attack is going to lose.
                 //They will either lost half their army or their whole army
                 //Coin toss
                 challengedUnitsLost = Math.floor(Math.random() * 3) + 1;
-                challengedPercentLost = 0;
                 switch (challengedUnitsLost) {
                     case 1:
                         //Half their forces were destroyed
                         challengedPercentLost = 50;
-                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengeUser + ' and destroyed half their forces!'});
+                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengedUser + ' and destroyed half their forces!'});
                         break;
                     case 2:
                         //Half their forces were destroyed
                         challengedPercentLost = 75;
-                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengeUser + ' and destroyed the majority of their forces!'});
+                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengedUser + ' and destroyed the majority of their forces!'});
                         break;
                     case 3:
                         //Their whole army was wiped out
                         challengedPercentLost = 100;
-                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengeUser + ' and destroyed all their forces!'});
+                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengedUser + ' and destroyed all their forces!'});
                         break;
                 }
                 //The person logged in will also lose some units in the battle
                 //This will also be based on a coin toss with a much smaller chunk of army lost
-                var userUnitsLost = Math.floor(Math.random() * 4) + 1;
-                var userPercentLost = 0;
+                userUnitsLost = Math.floor(Math.random() * 4) + 1;
                 switch (userUnitsLost) {
                     case 1:
                         userPercentLost = 10;
@@ -277,195 +186,185 @@ angular.module('battleCtrl', [])
                 }
                 //Based on how much of their army was lost, change reduce the size of their army
                 //Person who was challenged
-                challengedInfantryLost = Math.round((vm.challengeInfantry / 100) * challengedPercentLost);
-                challengedCavalryLost = Math.round((vm.challengeCavalry / 100) * challengedPercentLost);
-                challengedArchersLost = Math.round((vm.challengeArchers / 100) * challengedPercentLost);
-                vm.challengeInfantry = vm.challengeInfantry - challengedInfantryLost;
-                vm.challengeCavalry = vm.challengeCavalry - challengedCavalryLost;
-                vm.challengeArchers = vm.challengeArchers - challengedArchersLost;
+                challengedInfantryLost = Math.ceil((vm.challengedArmy.infantry / 100) * challengedPercentLost);
+                challengedCavalryLost = Math.ceil((vm.challengedArmy.cavalry / 100) * challengedPercentLost);
+                challengedArchersLost = Math.ceil((vm.challengedArmy.archers / 100) * challengedPercentLost);
+                vm.challengedArmy.infantry -= challengedInfantryLost;
+                vm.challengedArmy.cavalry -= challengedCavalryLost;
+                vm.challengedArmy.archers -= challengedArchersLost;
                 //The logged in user
-                userInfantryLost = Math.round((vm.infantry / 100) * userPercentLost);
-                userCavalryLost = Math.round((vm.cavalry / 100) * userPercentLost);
-                userArchersLost = Math.round((vm.archers / 100) * userPercentLost);
-                vm.infantry = vm.infantry - userInfantryLost;
-                vm.cavalry = vm.cavalry - userCavalryLost;
-                vm.archers = vm.archers - userArchersLost;
+                userInfantryLost = Math.ceil((vm.userArmy.infantry / 100) * userPercentLost);
+                userCavalryLost = Math.ceil((vm.userArmy.cavalry / 100) * userPercentLost);
+                userArchersLost = Math.ceil((vm.userArmy.archers / 100) * userPercentLost);
+                vm.userArmy.infantry -= userInfantryLost;
+                vm.userArmy.cavalry -= userCavalryLost;
+                vm.userArmy.archers -= userArchersLost;
                 //If their whole army was destroyed, delete from DB and from variables
                 if (challengedPercentLost === 100) {
-                    Army.delete(vm.challengeArmyId)
-                        .then(function () {
-                            for (var i = 0; i < vm.armies.length; i++) {
-                                if (vm.armies[i].username === vm.challengeUser) {
-                                    vm.armies.splice(vm.armies.indexOf(vm.challengeUser), 1);
-                                    vm.challengeHasArmy = false;
-                                }
-                            }
+                    Army.delete(vm.challengedArmy._id)
+                        .then(function(){
+                            vm.challengedArmy = '';
                         });
-                    //This user challenged and won, so their wincount increases
-                    Army.update(vm.armyId, {
-                        infantry: vm.infantry,
-                        cavalry: vm.cavalry,
-                        archers: vm.archers,
-                        winCount: vm.userWinCount
+                    //This user challenged and won, so their win count increases
+                    Army.update(vm.userArmy._id, {
+                        infantry: vm.userArmy.infantry,
+                        cavalry: vm.userArmy.cavalry,
+                        archers: vm.userArmy.archers,
+                        winCount: vm.userArmy.winCount,
+                        level: vm.userArmy.level
                     });
                 }
                 //Otherwise, update their army based on the units lost
                 else {
                     //This user was challenged so their wincount isn't affected
-                    Army.update(vm.challengeArmyId, {
-                        infantry: vm.challengeInfantry,
-                        cavalry: vm.challengeCavalry,
-                        archers: vm.challengeArchers
+                    Army.update(vm.challengedArmy._id, {
+                        infantry: vm.challengedArmy.infantry,
+                        cavalry: vm.challengedArmy.cavalry,
+                        archers: vm.challengedArmy.archers
                     });
                     //This user challenged and won, so their wincount increases
-                    Army.update(vm.armyId, {
-                        infantry: vm.infantry,
-                        cavalry: vm.cavalry,
-                        archers: vm.archers,
-                        winCount: vm.userWinCount
+                    Army.update(vm.userArmy._id, {
+                        infantry: vm.userArmy.infantry,
+                        cavalry: vm.userArmy.cavalry,
+                        archers: vm.userArmy.archers,
+                        winCount: vm.userArmy.winCount,
+                        level: vm.userArmy.level
                     });
                 }
             }
             //If the opponents manages to get a higher attack score
             else {
                 //The person being challenged won, increase their win count
-                vm.challengeWinCount++;
+                vm.challengedArmy.winCount++;
                 //The logged in user lost, decrease their wincount
-                vm.userWinCount--;
-                if (vm.userWinCount < 0) {
-                    vm.userWinCount = 0;
+                vm.userArmy.winCount--;
+                if (vm.userArmy.winCount < 0) {
+                    vm.userArmy.winCount = 0;
                 }
                 //Increase the person who was challenged wincount if they've reached a certain number
-                switch (vm.challengeWinCount) {
+                switch (vm.challengedArmy.winCount) {
                     case 5:
-                        vm.challengeLevel++;
+                        vm.challengedArmy.level++;
                         break;
                     case 10:
-                        vm.challengeLevel++;
+                        vm.challengedArmy.level++;
                         break;
                     case 15:
-                        vm.challengeLevel++;
+                        vm.challengedArmy.level++;
                         break;
                     case 20:
-                        vm.challengeLevel++;
+                        vm.challengedArmy.level++;
                         break;
                 }
                 //Decrease the losers wincount if they've dropped to a different number
-                switch (vm.userWinCount) {
+                switch (vm.userArmy.winCount) {
                     case 0:
-                        vm.userLevel = 1;
+                        vm.userArmy.level = 1;
                         break;
                     case 4:
-                        vm.userLevel--;
+                        vm.userArmy.level--;
                         break;
                     case 9:
-                        vm.userLevel--;
+                        vm.userArmy.level--;
                         break;
                     case 14:
-                        vm.userLevel--;
+                        vm.userArmy.level--;
                         break;
                     case 19:
-                        vm.userLevel--;
+                        vm.userArmy.level--;
                         break;
                 }
                 //The logged in user has lost the fight
                 //They will either lose half their army or their whole army
                 //Coin toss
                 userUnitsLost = Math.floor(Math.random() * 3) + 1;
-                userPercentLost = 0;
                 switch (userUnitsLost) {
                     case 1:
                         //Half their forces were destroyed
                         userPercentLost = 50;
-                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengeUser + ' but it failed! Half of their forces were wiped out.'});
+                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengedUser + ' but it failed! Half of their forces were wiped out.'});
                         break;
                     case 2:
                         //Half their forces were destroyed
                         userPercentLost = 75;
-                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengeUser + ' but it failed! The majority of their forces were wiped out!'});
+                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengedUser + ' but it failed! The majority of their forces were wiped out!'});
                         break;
                     case 3:
                         //Their whole army was wiped out
                         userPercentLost = 100;
-                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengeUser + ' but it failed! Their entire army was wiped out!'});
+                        Socket.emit('announcement', {message: vm.username + ' ambushed ' + vm.challengedUser + ' but it failed! Their entire army was wiped out!'});
                         break;
                 }
                 //The person who was challenged will also lose some units in the battle
                 //This will also be based on a coin toss with a much smaller chunk of army lost
                 challengedUnitsLost = Math.floor(Math.random() * 4) + 1;
-                challengedPercentLost = 0;
                 switch (challengedUnitsLost) {
                     case 1:
                         challengedPercentLost = 10;
-                        Socket.emit('announcement', {message: vm.challengeUser + ' lost ' + challengedPercentLost + '% of their forces in the battle.'});
+                        Socket.emit('announcement', {message: vm.challengedUser + ' lost ' + challengedPercentLost + '% of their forces in the battle.'});
                         break;
                     case 2:
                         challengedPercentLost = 20;
-                        Socket.emit('announcement', {message: vm.challengeUser + ' lost ' + challengedPercentLost + '% of their forces in the battle.'});
+                        Socket.emit('announcement', {message: vm.challengedUser + ' lost ' + challengedPercentLost + '% of their forces in the battle.'});
                         break;
                     case 3:
                         challengedPercentLost = 30;
-                        Socket.emit('announcement', {message: vm.challengeUser + ' lost ' + challengedPercentLost + '% of their forces in the battle.'});
+                        Socket.emit('announcement', {message: vm.challengedUser + ' lost ' + challengedPercentLost + '% of their forces in the battle.'});
                         break;
                     case 4:
                         challengedPercentLost = 40;
-                        Socket.emit('announcement', {message: vm.challengeUser + ' lost ' + challengedPercentLost + '% of their forces in the battle.'});
+                        Socket.emit('announcement', {message: vm.challengedUser + ' lost ' + challengedPercentLost + '% of their forces in the battle.'});
                         break;
                 }
                 //Based on how much of their army was lost, reduce the size of their army
                 //Person who was challenged
-                challengedInfantryLost = Math.round((vm.challengeInfantry / 100) * challengedPercentLost);
-                challengedCavalryLost = Math.round((vm.challengeCavalry / 100) * challengedPercentLost);
-                challengedArchersLost = Math.round((vm.challengeArchers / 100) * challengedPercentLost);
-                vm.challengeInfantry = vm.challengeInfantry - challengedInfantryLost;
-                vm.challengeCavalry = vm.challengeCavalry - challengedCavalryLost;
-                vm.challengeArchers = vm.challengeArchers - challengedArchersLost;
+                challengedInfantryLost = Math.ceil((vm.challengedArmy.infantry / 100) * challengedPercentLost);
+                challengedCavalryLost = Math.ceil((vm.challengedArmy.cavalry / 100) * challengedPercentLost);
+                challengedArchersLost = Math.ceil((vm.challengedArmy.archers / 100) * challengedPercentLost);
+                vm.challengedArmy.infantry -= challengedInfantryLost;
+                vm.challengedArmy.cavalry -= challengedCavalryLost;
+                vm.challengedArmy.archers -= challengedArchersLost;
                 //The logged in user
-                userInfantryLost = Math.round((vm.infantry / 100) * userPercentLost);
-                userCavalryLost = Math.round((vm.cavalry / 100) * userPercentLost);
-                userArchersLost = Math.round((vm.archers / 100) * userPercentLost);
-                vm.infantry = vm.infantry - userInfantryLost;
-                vm.cavalry = vm.cavalry - userCavalryLost;
-                vm.archers = vm.archers - userArchersLost;
+                userInfantryLost = Math.ceil((vm.userArmy.infantry / 100) * userPercentLost);
+                userCavalryLost = Math.ceil((vm.userArmy.cavalry / 100) * userPercentLost);
+                userArchersLost = Math.ceil((vm.userArmy.archers / 100) * userPercentLost);
+                vm.userArmy.infantry -= userInfantryLost;
+                vm.userArmy.cavalry -= userCavalryLost;
+                vm.userArmy.archers -= userArchersLost;
                 //If their whole army was destroyed, delete from DB and from variables
                 if (userPercentLost === 100) {
                     Army.delete(vm.userArmy._id)
-                        .then(function () {
-                            for (var i = 0; i < vm.armies.length; i++) {
-                                if (vm.armies[i].username === vm.username) {
-                                    vm.armies.splice(vm.armies.indexOf(vm.username), 1);
-                                    vm.userHasArmy = false;
-                                }
-                            }
-                            $location.path("/armoury");
-                            alert('Your entire army was destroyed!');
+                        .then(function(data){
+
                         });
+                    $location.path("/armoury");
+                    alert('Your entire army was destroyed!');
                 }
                 //Otherwise, update their army based on the units lost
                 else {
                     //This user was challenged and won, so their wincount increases
-                    Army.update(vm.challengeArmyId, {
-                        infantry: vm.challengeInfantry,
-                        cavalry: vm.challengeCavalry,
-                        archers: vm.challengeArchers,
-                        winCount: vm.challengeWinCount,
-                        level: vm.challengeLevel
+                    Army.update(vm.challengedArmy._id, {
+                        infantry: vm.challengedArmy.infantry,
+                        cavalry: vm.challengedArmy.cavalry,
+                        archers: vm.challengedArmy.archers,
+                        winCount: vm.challengedArmy.winCount,
+                        level: vm.challengedArmy.level
                     });
                     //This user challenged and lost, so their wincount decreases
-                    if (vm.userLevel < 0) {
-                        vm.userLevel = 0;
+                    if (vm.userArmy.level < 0) {
+                        vm.userArmy.level = 0;
                     }
-                    Army.update(vm.armyId, {
-                        infantry: vm.infantry,
-                        cavalry: vm.cavalry,
-                        archers: vm.archers,
-                        winCount: vm.userWinCount,
-                        level: vm.userLevel
-                    })
+                    Army.update(vm.userArmy._id, {
+                        infantry: vm.userArmy.infantry,
+                        cavalry: vm.userArmy.cavalry,
+                        archers: vm.userArmy.archers,
+                        winCount: vm.userArmy.winCount,
+                        level: vm.userArmy.level
+                    });
                 }
             }
+            vm.armies = '';
         };
-
 
         $scope.sendMessage = function (msg) {
             if (msg != null && msg !== '')
@@ -504,5 +403,4 @@ angular.module('battleCtrl', [])
         $scope.$on('$locationChangeStart', function (event) {
             Socket.disconnect(true);
         });
-    })
-;
+    });

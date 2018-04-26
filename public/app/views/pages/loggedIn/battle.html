@@ -18,12 +18,8 @@
                 <div class="card col-4">
                     <h5 class="text-center">Online Users</h5>
                     <span>Challenge a user by clicking on their name!</span>
-                    <ul style="padding-left: 0">
+                    <ul>
                         <button class="btn btn-outline-danger"
-                                onmouseenter="$(this).tooltip('show')"
-                                onmouseout="$(this).tooltip('hide')"
-                                ng-repeat="user in users" data-toggle="tooltip"
-                                data-placement="top" title="Level: {{ level }} Win Count: {{ winCount }}"
                                 ng-click="challengeRequest($index)">{{ user }}</button>
                     </ul>
                 </div>

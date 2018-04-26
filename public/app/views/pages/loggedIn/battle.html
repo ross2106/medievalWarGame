@@ -23,7 +23,7 @@
                                 onmouseenter="$(this).tooltip('show')"
                                 onmouseout="$(this).tooltip('hide')"
                                 ng-repeat="user in users" data-toggle="tooltip"
-                                data-placement="top" title="Tooltip on top"
+                                data-placement="top" title="Level: {{ level }} Win Count: {{ winCount }}"
                                 ng-click="challengeRequest($index)">{{ user }}</button>
                     </ul>
                 </div>

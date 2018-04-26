@@ -77,16 +77,16 @@ var Player = function (id, username) {
         maxSpd: 7
     };
     self.updatePosition = function () {
-        if (self.x > 490) {
+        if (self.x > 480) {
             self.x -= 1;
         }
-        if (self.x < 10) {
+        if (self.x < 20) {
             self.x += 1;
         }
-        if (self.y > 490) {
+        if (self.y > 480) {
             self.y -= 1;
         }
-        if (self.y < 10) {
+        if (self.y < 20) {
             self.y += 1;
         }
         if (self.pressingRight)

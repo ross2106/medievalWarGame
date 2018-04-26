@@ -18,7 +18,6 @@ angular.module('dashboardCtrl', [])
         $scope.users = [];
         $scope.messages = [];
 
-        console.log($scope.users);
 
         var getUsername = function () {
             Auth.getUser()
@@ -28,7 +27,6 @@ angular.module('dashboardCtrl', [])
                 });
         };
         getUsername();
-        console.log($scope.users);
 
         var getInventory = function () {
             Inventory.all()
